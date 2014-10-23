@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UCRRunner.iml" filepath="$PROJECT_DIR$/UCRRunner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UcrRunner.iml" filepath="$PROJECT_DIR$/UcrRunner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

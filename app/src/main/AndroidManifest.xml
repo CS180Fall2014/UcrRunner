@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.murraycole.ucrrunner">
+    package="com.ucrrunner.firebase" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         android:debuggable="true"
-        <uses-permission android:name="android.permission.INTERNET" />
+
+
+
+
         <activity
-            android:name=".view.MyActivity"
-            android:label="@string/app_name">
+            android:name="com.ucrrunner.firebase.firebaseTest"
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

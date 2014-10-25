@@ -27,3 +27,4 @@ proguard/
 
 #Idea files
 .idea
+/.project

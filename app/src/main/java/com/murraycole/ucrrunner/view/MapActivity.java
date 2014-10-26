@@ -1,31 +1,28 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
+import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.os.Build;
 
 import com.murraycole.ucrrunner.R;
 
-
-public class MyActivity extends Activity {
+public class MapActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_map);
         if (savedInstanceState == null) {
-            Intent mapActivity = new Intent(this,MapsActivity.class);
-            startActivity(mapActivity);
-//            getFragmentManager().beginTransaction()
-////                    .add(R.id.container, new PlaceholderFragment())
-//                    .add(R.id.container, new MapActivity.PlaceholderFragment())
-//                    .commit();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
         }
     }
 
@@ -33,7 +30,7 @@ public class MyActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
+        getMenuInflater().inflate(R.menu.map, menu);
         return true;
     }
 
@@ -59,8 +56,9 @@ public class MyActivity extends Activity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_my, container, false);
+                Bundle savedInstanceState) {
+           View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+           // View rootView = inflater.inflate(R.layout.activity_maps, container, false);
             return rootView;
         }
     }

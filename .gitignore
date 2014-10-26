@@ -29,3 +29,4 @@ proguard/
 .idea
 
 #test random
+/.project

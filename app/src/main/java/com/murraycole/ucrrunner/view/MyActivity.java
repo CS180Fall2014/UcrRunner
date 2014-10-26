@@ -20,7 +20,7 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new LoginFragment())
                     .commit();
         }
     }
@@ -48,15 +48,15 @@ public class MyActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class LoginFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        public LoginFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_my, container, false);
+            View rootView = inflater.inflate(R.layout.login_fragment, container, false);
             return rootView;
         }
     }

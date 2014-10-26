@@ -5,3 +5,4 @@
     android:layout_height="match_parent"
     tools:context=".MyActivity"
     tools:ignore="MergeRootFrame" />
+

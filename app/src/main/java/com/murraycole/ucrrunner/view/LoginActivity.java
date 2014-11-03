@@ -2,7 +2,9 @@ package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +16,7 @@ import android.widget.Button;
 import com.murraycole.ucrrunner.R;
 
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,19 @@ public class LoginActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
     public static class LoginFragment extends Fragment {
+        Button login;
+        Button register;
+        Context mContext;
+        View mView;
 
         public LoginFragment() {
         }
@@ -58,8 +69,34 @@ public class LoginActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.login_fragment, container, false);
-            Button login = (Button) rootView.findViewById(R.id.login_login_button);
+            mView = inflater.inflate(R.layout.login_fragment, container, false);
+            mContext = mView.getContext();
+            register = (Button) mView.findViewById(R.id.login_register_button);
+            login = (Button) mView.findViewById(R.id.login_login_button);
+
+
+            setupLoginOnClick(login);
+            setupRegisterOnClick(register);
+
+
+            return mView;
+        }
+
+        private void setupRegisterOnClick(Button register) {
+            register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getFragmentManager().beginTransaction().
+                            replace(R.id.container,
+                                    new CreateAccountFragment()
+                            ).commit();
+                }
+            });
+
+
+        }
+
+        private void setupLoginOnClick(Button login) {
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,7 +105,6 @@ public class LoginActivity extends Activity {
                     startActivity(intent);
                 }
             });
-            return rootView;
         }
     }
 }

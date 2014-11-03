@@ -19,4 +19,13 @@
     <string name="email_edittext">Email</string>
     <string name="birthday_edittext">Birthday</string>
 
+    <!-- Create Account Spinner Entries -->
+    <string name="gender_prompt">Gender</string>
+    <string-array name="gender_arrays">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Unspecified</item>
+    </string-array>
+
+
 </resources>

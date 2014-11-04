@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.murraycole.ucrrunner.R;
@@ -19,6 +20,8 @@ public class Profile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ImageView profile_image = (ImageView) findViewById(R.id.profile_image_imageView);
+        ImageButton profile_friendsImage =(ImageButton) findViewById((R.id.profile_friends_imageButton));
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())

@@ -10,7 +10,7 @@
 
     <ImageView
         android:contentDescription="@string/hello_world"
-        android:src="@drawable/test"
+        android:src="@drawable/default_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/profile_image_imageView"
@@ -38,4 +38,76 @@
         android:layout_alignLeft="@+id/profile_username_textView"
         android:layout_alignStart="@+id/profile_username_textView"
         android:editable="false"/>
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/profile_friends_imageButton"
+        android:scaleType="fitCenter"
+        android:src="@drawable/default_profile"
+        android:layout_below="@+id/profile_image_imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Friends"
+        android:id="@+id/profile_friends_textView"
+        android:layout_below="@+id/profile_friends_imageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/profile_achievements_imageButton"
+        android:src="@drawable/trophy"
+        android:layout_alignTop="@+id/profile_friends_imageButton"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Awards"
+        android:id="@+id/profile_awards_textView"
+        android:layout_alignTop="@+id/profile_friends_textView"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/run"
+        android:id="@+id/profile_recent_imageButton"
+        android:layout_alignTop="@+id/profile_achievements_imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Recent"
+        android:id="@+id/profile_recent_textView"
+        android:layout_alignTop="@+id/profile_awards_textView"
+        android:layout_alignLeft="@+id/profile_recent_imageButton"
+        android:layout_alignStart="@+id/profile_recent_imageButton"
+        android:paddingLeft="10dp" />
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="270dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_graph"
+        android:id="@+id/profile_graph_imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

@@ -27,8 +27,8 @@ public class MyActivity extends Activity {
                     .add(R.id.container, new LoginFragment())
                     .commit();
             // author: mike. going to incorporate gate keeping
-            // Intent mapActivity = new Intent(this,MapsActivity.class);
-           // startActivity(mapActivity);
+//            Intent mapActivity = new Intent(this,MapsActivity.class);
+//           startActivity(mapActivity);
         }
     }
 

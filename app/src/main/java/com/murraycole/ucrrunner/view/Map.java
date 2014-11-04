@@ -1,21 +1,26 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.Fragment;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.murraycole.ucrrunner.R;
 
-public class MapsActivity extends FragmentActivity {
+public class Map extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private Location loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,20 @@ public class MapsActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+    }
+
+    private void drawRoute() {
+        mMap.clear();
+        PolylineOptions rectOptions = new PolylineOptions()
+                .add(new LatLng(loc.getLatitude(), loc.getLongitude()))
+                .add(new LatLng(loc.getLatitude() + 0.006, loc.getLongitude()  + 0.006))
+                .add(new LatLng(loc.getLatitude() + 0.007, loc.getLongitude()  + 0.007))
+                .add(new LatLng(loc.getLatitude()  + 0.008, loc.getLongitude()  + 0.008))
+                .add(new LatLng(loc.getLatitude() + 0.01, loc.getLongitude() + 0.01))
+                .add(new LatLng(loc.getLatitude() + 0.01 , loc.getLongitude() + 0.02))
+                .add(new LatLng(loc.getLatitude() - 0.01, loc.getLongitude() + 0.03))
+                .add(new LatLng(loc.getLatitude() - 0.01, loc.getLongitude() + 0.04));
+        Polyline polyline = mMap.addPolyline(rectOptions);
     }
 
     /**
@@ -51,9 +70,21 @@ public class MapsActivity extends FragmentActivity {
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
+            mMap.setMyLocationEnabled(true);
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                setUpMap();
+
+
+                mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                    @Override
+                    public void onMyLocationChange(Location location) {
+                        loc = location;
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 16));
+                        drawRoute();
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("It's Me!"));
+                    }
+                });
+
             }
         }
     }
@@ -65,6 +96,6 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }

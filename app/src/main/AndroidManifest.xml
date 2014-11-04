@@ -21,11 +21,7 @@
             android:label="@string/title_activity_profile" >
         </activity>
         <activity
-            android:name=".view.MapActivity"
-            android:label="@string/title_activity_map" >
-        </activity>
-        <activity
-            android:name=".view.MapsActivity"
+            android:name=".view.Map"
             android:label="@string/title_activity_maps" >
         </activity>
 

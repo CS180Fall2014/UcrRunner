@@ -1,6 +1,7 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -87,15 +88,21 @@ public class LoginActivity extends Activity {
                             Intent intent = new Intent( getActivity(), Profile.class);
                             intent.putExtra("userData.username", userET.getText().toString());
                             intent.putExtra("userData.uid", authData.getUid());
+
+                            //ActivityOptions options = ActivityOptions.makeScaleUpAnimation(this, androidRobotView, "robot");
+                            // start the new activity
+                            startActivity(intent);
+
                         }
 
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
                             //pop up message
+                            String fbLoginError = firebaseError.getMessage();
 
                             new AlertDialog.Builder(getActivity())
                                     .setTitle("Login Error")
-                                    .setMessage("Invalid username/password combination. Please try again.")
+                                    .setMessage(fbLoginError)
                                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {

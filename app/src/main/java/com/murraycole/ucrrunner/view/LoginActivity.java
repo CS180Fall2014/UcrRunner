@@ -1,12 +1,14 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +24,7 @@ import com.murraycole.ucrrunner.R;
 
 import com.murraycole.ucrrunner.view.Profile;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +57,19 @@ public class LoginActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
-     * A placeholder fragment containing a simple view.
+     * Fragment: LoginFragment
+     * LoginFragment contains the view with user/pass text boxes with a Login and Register button.
+     * This fragment transitions to profile on successful login or user registration screen.
+     * On failure to authenticate user, a dialog will pop up.
      */
     public static class LoginFragment extends Fragment {
-        static public Button loginButton, registerButton;
+        Context mContext;
+        View mView;
+
         EditText userET, passET;
+        Button login, register;
 
         public LoginFragment() {
         }
@@ -68,71 +77,19 @@ public class LoginActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.login_fragment, container, false);
+            mView = inflater.inflate(R.layout.login_fragment, container, false);
+            mContext = mView.getContext();
+            register = (Button) mView.findViewById(R.id.login_register_button);
+            login = (Button) mView.findViewById(R.id.login_login_button);
 
-            userET = (EditText) rootView.findViewById(R.id.login_username_edittext);
-            passET = (EditText) rootView.findViewById(R.id.login_password_edittext);
+            assignButtons(login);
 
-            loginButton = (Button) rootView.findViewById(R.id.login_login_button);
-            loginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            return mView;
+        }
 
-                    Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/");
-                    ref.setAndroidContext(getActivity());
-                    ref.authWithPassword(userET.getText().toString(), passET.getText().toString(), new Firebase.AuthResultHandler() {
-                        @Override
-                        public void onAuthenticated(AuthData authData) {
-                            System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                            //forward to next page
-                            Intent intent = new Intent( getActivity(), Profile.class);
-                            intent.putExtra("userData.username", userET.getText().toString());
-                            intent.putExtra("userData.uid", authData.getUid());
-
-                            //ActivityOptions options = ActivityOptions.makeScaleUpAnimation(this, androidRobotView, "robot");
-                            // start the new activity
-                            startActivity(intent);
-
-                        }
-
-                        @Override
-                        public void onAuthenticationError(FirebaseError firebaseError) {
-                            //pop up message
-                            String fbLoginError = firebaseError.getMessage();
-
-                            new AlertDialog.Builder(getActivity())
-                                    .setTitle("Login Error")
-                                    .setMessage(fbLoginError)
-                                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            //do nothing at all
-                                            return;
-                                        }
-                                    })
-                                    .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            //Reset fields
-                                            userET.setText("");
-                                            passET.setText("");
-                                        }
-                                    }).setIcon(android.R.drawable.ic_dialog_alert).show();
-
-
-                        }
-                    });
-                }
-            });
-
-            registerButton = (Button) rootView.findViewById(R.id.login_register_button);
-            registerButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-            return rootView;
+        private void assignButtons(Button login) {
+            login.setOnClickListener(new LoginButtonListener());
+            register.setOnClickListener(new LoginButtonListener());
         }
     }
 }

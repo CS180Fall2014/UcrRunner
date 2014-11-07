@@ -2,51 +2,115 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F6f6f6"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.murraycole.ucrrunner.view.CreateAccountFragment">
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:conhint="com.murraycole.ucrrunner.view.CreateAccountFragment">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/username_edittext" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/nickname_edittext" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/createaccount_username_edittext"
+                style="@style/DefaultTextInput"
+                android:layout_weight="1"
+                android:hint="@string/username_edittext" />
+
+            <EditText
+                android:id="@+id/createaccount_nickname_edittext"
+                style="@style/DefaultTextInput"
+                android:layout_weight="1"
+                android:hint="@string/nickname_edittext" />
+        </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="@string/password_edittext" />
+        <EditText
+            android:id="@+id/createaccount_password_edittext"
+            style="@style/DefaultTextInput"
+            android:hint="@string/password_edittext"
+            android:inputType="textPassword" />
+    </LinearLayout>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/male_edittext" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/height_edittext" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/weight_edittext" />
+        <EditText
+            android:id="@+id/createaccount_age_edittext"
+            style="@style/DefaultTextInput"
+            android:hint="@string/age_edittext"
+            android:inputType="number" />
 
-    <Spinner
-        android:id="@+id/spinner"
+        <EditText
+            android:id="@+id/createaccount_height_edittext"
+            style="@style/DefaultTextInput"
+            android:hint="@string/height_edittext" />
+
+        <EditText
+            android:id="@+id/createaccount_weight_edittext"
+            style="@style/DefaultTextInput"
+            android:hint="@string/weight_edittext" />
+
+        <RadioGroup
+            android:id="@+id/gender_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/createaccount_male_radioButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/male_edittext" />
+
+            <RadioButton
+                android:id="@+id/createaccount_female_radioButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/female_edittext" />
+
+
+        </RadioGroup>
+
+
+        <!-- <Spinner
+             android:id="@+id/spinner"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             android:entries="@array/gender_arrays"
+             android:prompt="@string/gender_prompt"
+             android:spinnerMode="dropdown" /> -->
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:entries="@array/gender_arrays"
-        android:prompt="@string/gender_prompt"
-        android:spinnerMode="dropdown" />
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/createaccount_joinnow_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/createaccount_finish_button" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

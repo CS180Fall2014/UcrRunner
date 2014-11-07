@@ -1,14 +1,11 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,14 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.murraycole.ucrrunner.R;
 
-import com.murraycole.ucrrunner.view.Profile;
 
-public class LoginActivity extends Activity{
+
+public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +53,10 @@ public class LoginActivity extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 
     /**
      * Fragment: LoginFragment
@@ -65,11 +65,10 @@ public class LoginActivity extends Activity{
      * On failure to authenticate user, a dialog will pop up.
      */
     public static class LoginFragment extends Fragment {
+        Button login;
+        Button register;
         Context mContext;
         View mView;
-
-        EditText userET, passET;
-        Button login, register;
 
         public LoginFragment() {
         }
@@ -82,14 +81,28 @@ public class LoginActivity extends Activity{
             register = (Button) mView.findViewById(R.id.login_register_button);
             login = (Button) mView.findViewById(R.id.login_login_button);
 
-            assignButtons(login);
+
+            setupLoginOnClick(login);
+            setupRegisterOnClick(register);
+
 
             return mView;
         }
 
-        private void assignButtons(Button login) {
+        private void setupRegisterOnClick(Button register) {
+            register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getFragmentManager().beginTransaction().
+                            replace(R.id.container,
+                                    new CreateAccountFragment()
+                            ).commit();
+                }
+            });
+        }
+
+        private void setupLoginOnClick(Button login) {
             login.setOnClickListener(new LoginButtonListener());
-            register.setOnClickListener(new LoginButtonListener());
         }
     }
 }

@@ -17,8 +17,6 @@ import android.widget.EditText;
 import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
 
-
-
 public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
 
     @Override

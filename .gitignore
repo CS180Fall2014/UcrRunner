@@ -28,3 +28,6 @@ proguard/
 #Idea files
 .idea
 /.project
+
+#iml files
+*.iml

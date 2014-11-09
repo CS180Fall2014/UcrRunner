@@ -34,6 +34,4 @@ public class MapProvider {
     static ArrayList<LatLng> retrieveRoute(int routeID){
         return null;
     }
-
-
 }

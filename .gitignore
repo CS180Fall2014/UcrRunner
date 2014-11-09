@@ -30,3 +30,6 @@ proguard/
 
 #test random
 /.project
+
+#IML  
+*.iml

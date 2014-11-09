@@ -25,15 +25,15 @@ public class MapProvider {
     }
 
     ////////////////// MapProvider FUNCTIONS //////////////////////
-    ArrayList<> getRoutesForUser(int userID){
+    //ArrayList<> getRoutesForUser(int userID){
 
-    }
+   // }
 
 
     ////////////////// STATIC FUNCTIONS //////////////////////
-    static ArrayList<LatLng> retrieveRoute(int routeID){
+    //static ArrayList<LatLng> retrieveRoute(int routeID){
 
-    }
+    //}
 
 
 }

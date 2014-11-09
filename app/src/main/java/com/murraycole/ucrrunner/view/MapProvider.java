@@ -25,14 +25,14 @@ public class MapProvider {
     }
 
     ////////////////// MapProvider FUNCTIONS //////////////////////
-    ArrayList<> getRoutesForUser(int userID){
-
+    ArrayList<LatLng> getRoutesForUser(int userID){
+        return null;
     }
 
 
     ////////////////// STATIC FUNCTIONS //////////////////////
     static ArrayList<LatLng> retrieveRoute(int routeID){
-
+        return null;
     }
 
 

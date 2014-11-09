@@ -88,6 +88,9 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
         }
 
         private void setupRegisterOnClick(Button register) {
+            //Intent intent = new Intent(getActivity(), Map.class);
+            //startActivity(intent);
+
             register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

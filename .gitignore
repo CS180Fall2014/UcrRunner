@@ -27,8 +27,6 @@ proguard/
 
 #Idea files
 .idea
-
-#test random
 /.project
 
 #iml files

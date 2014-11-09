@@ -12,9 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
-
 
 public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
 
@@ -27,6 +28,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                     .add(R.id.container, new LoginFragment())
                     .commit();
         }
+        Firebase.setAndroidContext(this);
     }
 
 
@@ -55,7 +57,10 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * Fragment: LoginFragment
+     * LoginFragment contains the view with user/pass text boxes with a Login and Register button.
+     * This fragment transitions to profile on successful login or user registration screen.
+     * On failure to authenticate user, a dialog will pop up.
      */
     public static class LoginFragment extends Fragment {
         Button login;
@@ -83,6 +88,9 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
         }
 
         private void setupRegisterOnClick(Button register) {
+            //Intent intent = new Intent(getActivity(), Map.class);
+            //startActivity(intent);
+
             register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -92,19 +100,10 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                             ).commit();
                 }
             });
-
-
         }
 
         private void setupLoginOnClick(Button login) {
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //insert logic for on click
-                    Intent intent = new Intent(getActivity(), Profile.class);
-                    startActivity(intent);
-                }
-            });
+            login.setOnClickListener(new LoginButtonListener());
         }
     }
 }

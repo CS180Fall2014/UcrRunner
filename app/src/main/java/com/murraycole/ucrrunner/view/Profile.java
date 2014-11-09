@@ -2,7 +2,6 @@ package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,25 +9,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.murraycole.ucrrunner.R;
 
-
-public class MyActivity extends Activity {
+public class Profile extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new LoginFragment())
-                    .commit();
-            // author: mike. going to incorporate gate keeping
-//            Intent mapActivity = new Intent(this,MapsActivity.class);
-//           startActivity(mapActivity);
+//            getFragmentManager().beginTransaction()
+//                    .add(R.id.container, new PlaceholderFragment())
+//                    .commit();
+
+            // mike : map stuff (testing here)
+            Intent mapActivity = new Intent(this,Map.class);
+            startActivity(mapActivity);
         }
     }
 
@@ -36,7 +33,7 @@ public class MyActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
+        getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
 
@@ -55,24 +52,15 @@ public class MyActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class LoginFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment {
 
-        public LoginFragment() {
+        public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.login_fragment, container, false);
-            Button login = (Button)rootView.findViewById(R.id.login_login_button);
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //insert logic for on click
-                    Intent intent = new Intent (getActivity(),Profile.class);
-                    startActivity(intent);
-                }
-            });
+                Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
             return rootView;
         }
     }

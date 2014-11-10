@@ -23,9 +23,9 @@ public class Profile extends Activity {
 //                    .add(R.id.container, new PlaceholderFragment())
 //                    .commit();
 
-            // mike : map stuff (testing here)
-            Map map = new Map();
-            Intent mapActivity = new Intent(this,map.getClass());
+            // mike : mapRunning stuff (testing here)
+            MapRunning mapRunning = new MapRunning();
+            Intent mapActivity = new Intent(this, mapRunning.getClass());
             startActivity(mapActivity);
 
         }

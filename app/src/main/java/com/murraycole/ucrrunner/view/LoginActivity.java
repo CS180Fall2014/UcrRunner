@@ -85,7 +85,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             bypass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), Map.class));
+                    startActivity(new Intent(getActivity(), MapRunning.class));
                 }
             });
 
@@ -97,7 +97,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
         }
 
         private void setupRegisterOnClick(Button register) {
-            //Intent intent = new Intent(getActivity(), Map.class);
+            //Intent intent = new Intent(getActivity(), MapRunning.class);
             //startActivity(intent);
 
             register.setOnClickListener(new View.OnClickListener() {

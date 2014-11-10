@@ -1,6 +1,5 @@
 package com.murraycole.ucrrunner.view;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -13,6 +12,7 @@ import com.murraycole.ucrrunner.R;
 public abstract class BaseMapActivity extends FragmentActivity {
     GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapInformation mapInfo;
+    MapInformation.LocationStatsListener locationStatsListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,8 @@ public abstract class BaseMapActivity extends FragmentActivity {
             mMap.setMyLocationEnabled(true);
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                mapInfo = new MapInformation(mMap);
+                mapInfo = new MapInformation(mMap, locationStatsListener);
+
             }
         }
     }

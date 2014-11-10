@@ -8,7 +8,10 @@ public class Stats {
     double topSpeed;
     double caloriesBurned;
     double distance;
-    double elevation;
+    int duration;
+    //duration
+    //current running speed
+    double elevation; //extra
 
     Stats() {
         averageSpeed = -1.0;
@@ -18,12 +21,13 @@ public class Stats {
         elevation = -1.0;
     }
 
-    Stats(double averageSpeed, double topSpeed, double caloriesBurned, double distance, double elevation) {
+    Stats(double averageSpeed, double topSpeed, double caloriesBurned, double distance, double elevation, int duration) {
         this.averageSpeed = averageSpeed;
         this.topSpeed = topSpeed;
         this.caloriesBurned = caloriesBurned;
         this.distance = distance;
         this.elevation = elevation;
+        this.duration = duration;
     }
 
 
@@ -47,6 +51,8 @@ public class Stats {
         this.elevation = elevation;
     }
 
+    public void setDuration(int duration) { this.duration = duration; }
+
     public double getAverageSpeed() {
         return averageSpeed;
     }
@@ -66,4 +72,6 @@ public class Stats {
     public double getElevation() {
         return elevation;
     }
+
+    public int getDuration() { return duration; }
 }

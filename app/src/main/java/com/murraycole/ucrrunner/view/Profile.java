@@ -27,6 +27,7 @@ public class Profile extends Activity {
             Map map = new Map();
             Intent mapActivity = new Intent(this,map.getClass());
             startActivity(mapActivity);
+
         }
     }
 

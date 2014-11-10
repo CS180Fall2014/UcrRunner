@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">UCRRunner</string>
+    <string name="app_name">UCRRunner </string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_profile">Profile</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Create Account strings -->
+    <string name="create_account_edittext">Create Account</string>
+    <string name="username_edittext">Username</string>
+    <string name="nickname_edittext">Nickname</string>
+    <string name="password_edittext">Password</string>
+    <string name="height_edittext">Height</string>
+    <string name="weight_edittext">Width</string>
+    <string name="age_edittext">Age</string>
+    <string name="male_edittext">Male</string>
+    <string name="female_edittext">Female</string>
+    <string name="email_edittext">Email</string>
+    <string name="birthday_edittext">Birthday</string>
+    <string name="createaccount_finish_button">Join Now</string>
+
+    <!-- Create Account Spinner Entries -->
+    <string name="gender_prompt">Gender</string>
+    <string-array name="gender_arrays">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Unspecified</item>
+    </string-array>
+
 
 </resources>

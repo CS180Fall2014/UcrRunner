@@ -5,4 +5,14 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <!-- Text input Default style -->
+    <style name="DefaultTextInput">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:paddingLeft">@dimen/edittext_padding_left</item>
+        <item name="android:background">@drawable/text_input_background</item>
+
+    </style>
+
 </resources>

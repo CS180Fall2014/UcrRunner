@@ -2,7 +2,9 @@ package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,11 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
 
-
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class LoginActivity extends Activity {
                     .add(R.id.container, new LoginFragment())
                     .commit();
         }
+        Firebase.setAndroidContext(this);
     }
 
 
@@ -47,10 +51,22 @@ public class LoginActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
-     * A placeholder fragment containing a simple view.
+     * Fragment: LoginFragment
+     * LoginFragment contains the view with user/pass text boxes with a Login and Register button.
+     * This fragment transitions to profile on successful login or user registration screen.
+     * On failure to authenticate user, a dialog will pop up.
      */
     public static class LoginFragment extends Fragment {
+        Button login;
+        Button register;
+        Context mContext;
+        View mView;
 
         public LoginFragment() {
         }
@@ -58,17 +74,36 @@ public class LoginActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.login_fragment, container, false);
-            Button login = (Button) rootView.findViewById(R.id.login_login_button);
-            login.setOnClickListener(new View.OnClickListener() {
+            mView = inflater.inflate(R.layout.login_fragment, container, false);
+            mContext = mView.getContext();
+            register = (Button) mView.findViewById(R.id.login_register_button);
+            login = (Button) mView.findViewById(R.id.login_login_button);
+
+
+            setupLoginOnClick(login);
+            setupRegisterOnClick(register);
+
+
+            return mView;
+        }
+
+        private void setupRegisterOnClick(Button register) {
+            //Intent intent = new Intent(getActivity(), Map.class);
+            //startActivity(intent);
+
+            register.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    //insert logic for on click
-                    Intent intent = new Intent(getActivity(), Profile.class);
-                    startActivity(intent);
+                public void onClick(View view) {
+                    getFragmentManager().beginTransaction().
+                            replace(R.id.container,
+                                    new CreateAccountFragment()
+                            ).commit();
                 }
             });
-            return rootView;
+        }
+
+        private void setupLoginOnClick(Button login) {
+            login.setOnClickListener(new LoginButtonListener());
         }
     }
 }

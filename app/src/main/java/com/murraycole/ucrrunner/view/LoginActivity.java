@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
@@ -79,6 +78,16 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             register = (Button) mView.findViewById(R.id.login_register_button);
             login = (Button) mView.findViewById(R.id.login_login_button);
 
+            /* THIS IS FOR DEBUGGGING *?
+
+             */
+            Button bypass = (Button) mView.findViewById(R.id.button);
+            bypass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), Map.class));
+                }
+            });
 
             setupLoginOnClick(login);
             setupRegisterOnClick(register);

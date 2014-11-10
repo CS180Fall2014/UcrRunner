@@ -26,6 +26,27 @@ public class Stats {
         this.elevation = elevation;
     }
 
+
+    public void setAverageSpeed(double averageSpeed) {
+        this.averageSpeed = averageSpeed;
+    }
+
+    public void setTopSpeed(double topSpeed) {
+        this.topSpeed = topSpeed;
+    }
+
+    public void setCaloriesBurned(double caloriesBurned) {
+        this.caloriesBurned = caloriesBurned;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void setElevation(double elevation) {
+        this.elevation = elevation;
+    }
+
     public double getAverageSpeed() {
         return averageSpeed;
     }

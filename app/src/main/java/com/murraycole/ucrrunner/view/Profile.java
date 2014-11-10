@@ -24,7 +24,8 @@ public class Profile extends Activity {
 //                    .commit();
 
             // mike : map stuff (testing here)
-            Intent mapActivity = new Intent(this,Map.class);
+            Map map = new Map();
+            Intent mapActivity = new Intent(this,map.getClass());
             startActivity(mapActivity);
         }
     }

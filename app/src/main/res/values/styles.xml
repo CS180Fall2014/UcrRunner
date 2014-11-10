@@ -15,4 +15,14 @@
 
     </style>
 
+    <!-- TextView for upper map stats -->
+    <style name="TextViewMapStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/activity_horizontal_margin</item>
+        <item name="android:fontFamily">serif-thin</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

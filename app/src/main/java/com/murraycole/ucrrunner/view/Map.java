@@ -22,6 +22,21 @@ public class Map extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Location loc;
 
+    //TODO:
+    public void startRoute() {
+
+    }
+
+    //TODO:
+    public void pauseRoute() {
+
+    }
+
+    //TODO:
+    public void stopRoute() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

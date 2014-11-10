@@ -25,11 +25,14 @@
 
     <!-- Create Account Spinner Entries -->
     <string name="gender_prompt">Gender</string>
+
     <string-array name="gender_arrays">
         <item>Male</item>
         <item>Female</item>
         <item>Unspecified</item>
     </string-array>
 
+    <string name="title_activity_map_pre_start">MapPreStart</string>
+    <string name="title_activity_base_map">BaseMapActivity</string>
 
 </resources>

@@ -20,6 +20,7 @@
         android:background="@drawable/glass_textview_background">
 
         <TextView
+            android:id="@+id/maprunning_cal_textview"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -27,6 +28,7 @@
             android:text="Cal: 800" />
 
         <TextView
+            android:id="@+id/maprunning_dist_textview"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -41,12 +43,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/maprunning_stop_textview"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Stop" />
 
         <Button
+            android:id="@+id/maprunning_pause_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

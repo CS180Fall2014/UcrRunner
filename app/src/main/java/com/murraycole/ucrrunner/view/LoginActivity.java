@@ -133,10 +133,10 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                     r.setCurrentRoute(tempRoute);
 
                     FirebaseManager.saveUser(u,"simplelogin:100");
-                    FirebaseManager.saveRoute(r, "simplelogin:100");
+                    //FirebaseManager.saveRoute(r, "simplelogin:100");
 
                     FirebaseManager.saveUser(u,"simplelogin:101");
-                    FirebaseManager.saveRoute(r, "simplelogin:101");
+                    //FirebaseManager.saveRoute(r, "simplelogin:101");
                     //User r = FirebaseManager.getUser("420");
 
                     User userHundo = FirebaseManager.getUser("100");

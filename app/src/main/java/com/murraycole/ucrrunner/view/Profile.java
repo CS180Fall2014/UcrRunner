@@ -19,9 +19,6 @@ public class Profile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
-//            getFragmentManager().beginTransaction()
-//                    .add(R.id.container, new PlaceholderFragment())
-//                    .commit();
             //Redirect from Login to MapPreStart Screen
                 MapPreStart mapPreStart = new MapPreStart();
                 Intent mapActivity = new Intent(this, mapPreStart.getClass());
@@ -29,7 +26,6 @@ public class Profile extends Activity {
                 // MapRunning mapRunning = new MapRunning();
                 //Intent mapActivity = new Intent(this, mapRunning.getClass());
             startActivity(mapActivity);
-
         }
     }
 

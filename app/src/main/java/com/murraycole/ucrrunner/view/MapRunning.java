@@ -2,6 +2,8 @@ package com.murraycole.ucrrunner.view;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,6 +25,24 @@ public class MapRunning extends BaseMapActivity {
         distance = (TextView)findViewById(R.id.maprunning_dist_textview);
         calories = (TextView)findViewById(R.id.maprunning_cal_textview);
         avgspeed = (TextView)findViewById(R.id.maprunning_avgspeed_textview);
+
+
+        Button PauseRun = (Button)findViewById(R.id.maprunning_pause_textview);
+        PauseRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapInfo.pauseRoute();
+            }
+        });
+
+        Button StopRun = (Button)findViewById(R.id.maprunning_stop_textview);
+        StopRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapInfo.stopRoute(-1);
+            }
+        });
+
         setupLocationStatsListener();
 
 

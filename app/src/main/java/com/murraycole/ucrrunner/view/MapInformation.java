@@ -25,8 +25,8 @@ public class MapInformation {
     private LocationStatsListener locationStatsListener;
     private double currentDistance = 0.0;
     //test flags
-    private Boolean testFlagOnce = true;
-    private Boolean isTesting = true;
+    private Boolean testFlagOnce = false;
+    private Boolean isTesting = false;
 
     MapInformation(GoogleMap googleMap, LocationStatsListener locationStatsListener) {
         this.googleMap = googleMap;

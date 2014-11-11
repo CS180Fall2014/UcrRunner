@@ -32,7 +32,7 @@ public class MapInformation {
     // initializations
     private GoogleMap googleMap;
     private LocationStatsListener locationStatsListener;
-    private String UUID = "12345"; //TODO get real UUID
+    private String UUID = "12345:3423"; //TODO get real UUID
 
     /**
      * initializes the MapInformation which is dependent on the Google Map API v2
@@ -44,6 +44,8 @@ public class MapInformation {
         this.googleMap = googleMap;
         this.locationStatsListener = (LocationStatsListener) locationStatsListener;
         setUpMap();
+
+        //options.color() match in app color
     }
 
     /**
@@ -51,27 +53,23 @@ public class MapInformation {
      */
     public void startRoute() {
         pointsSectionOfRoute = new ArrayList<LatLng>(); //pts for polyline
-        PolylineOptions options = new PolylineOptions();
-        //options.color() match in app color
-        sectionOfRoute = googleMap.addPolyline(options);
-        isStart = true;
-        isPause = false;
+        setStartPause(true);
     }
 
     /**
      * pauses the current route, waits for a startRoute() to be called to resume route
      */
     public void pauseRoute() {
-        entireRoute.add(sectionOfRoute);
-        isStart = false;
-        isPause = true;
+        pointsSectionOfRoute = new ArrayList<LatLng>();
+        setStartPause(false);
     }
 
     /**
      * resumes the current route after the route is paused
      */
     public void resumeRoute() {
-        //TODO;
+        newPolyline();
+        setStartPause(true);
     }
 
     /**
@@ -85,8 +83,10 @@ public class MapInformation {
         for (Polyline l : entireRoute)
             r.add(l.getPoints());
 
-        FirebaseManager.saveRoute(new Route(r, new Stats()), UUID); //TODO: save real stuff
-
+        Route route = new Route();
+        route.setCurrentRoute(r);
+        route.setCurrentStats(new Stats()); //TODO: save real stuff
+        FirebaseManager.saveRoute(route, UUID);
     }
 
     /**
@@ -117,6 +117,12 @@ public class MapInformation {
         return -1.0;
     }
 
+
+    public interface LocationStatsListener {
+        public void onLocationUpdate(Location location);
+    }
+
+
     /**
      * gets average speed of current route
      *
@@ -142,34 +148,53 @@ public class MapInformation {
         return -1.0;
     }
 
-    private void savePoint(Location location) {
-        locationEntireRoute.add(location);
-        pointsSectionOfRoute.add(new LatLng(location.getLatitude(), location.getLongitude()));
-        sectionOfRoute.setPoints(pointsSectionOfRoute);
+    /**
+     * creates a new Polyline
+     */
+    private void newPolyline() {
+        Polyline polyline = googleMap.addPolyline(new PolylineOptions());
+        entireRoute.add(polyline);
     }
 
     /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that is not null.
+     * saves a point to the line and adds the Location information to the respected fields.
+     *
+     * @param location
      */
-    private void setUpMap() {
-        googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location location) {
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 25));
-                if (isStart && !isPause)
-                    savePoint(location);
-                locationStatsListener.onLocationUpdate(location);
+    private void savePoint(Location location) {
+        if (entireRoute.isEmpty())
+            newPolyline();
 
-            }
-        });
-
+        locationEntireRoute.add(location);
+        pointsSectionOfRoute.add(new LatLng(location.getLatitude(), location.getLongitude()));
+        entireRoute.get(entireRoute.size() - 1).setPoints(pointsSectionOfRoute);
     }
 
-    public interface LocationStatsListener {
-        public void onLocationUpdate(Location location);
+    /**
+     * location listener that is used to follow the user
+     */
+    private GoogleMap.OnMyLocationChangeListener listener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 25));
+            locationStatsListener.onLocationUpdate(location);
+
+            if (isStart && !isPause)
+                savePoint(location);
+
+        }
+    };
+
+    /**
+     * map fields are set
+     */
+    private void setUpMap() {
+        googleMap.setOnMyLocationChangeListener(listener);
+    }
+
+    private void setStartPause(boolean isStart) {
+        this.isStart = isStart;
+        isPause = !isStart;
     }
 
 }

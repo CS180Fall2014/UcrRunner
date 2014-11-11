@@ -1,6 +1,7 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -18,6 +19,7 @@ public class MapPreStart extends BaseMapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_pre_start);
 
+
         Button StartRun = (Button)findViewById(R.id.map_pre_start_startRun_button);
         StartRun.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,11 +27,23 @@ public class MapPreStart extends BaseMapActivity {
                 start_time = System.currentTimeMillis();
                 mapInfo.startRoute();
                 startActivity(new Intent(getBaseContext(), MapRunning.class));
-                //setContentView(R.layout.activity_maps_running);
             }
         });
+
+        setupLocationStatsListener();
+        setUpMapIfNeeded();
     }
 
+
+    private void setupLocationStatsListener() {
+        locationStatsListener = new MapInformation.LocationStatsListener() {
+            @Override
+            public void onLocationUpdate(Location location) {
+
+            }
+
+        };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

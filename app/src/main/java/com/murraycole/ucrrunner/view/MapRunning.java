@@ -34,8 +34,7 @@ public class MapRunning extends BaseMapActivity {
                 if (PauseRun.getText().equals("Pause")) {
                     PauseRun.setText("Start");
                     mapInfo.pauseRoute();
-                }
-                if (PauseRun.getText().equals("Start")) {
+                } else if (PauseRun.getText().equals("Start")) {
                     PauseRun.setText("Pause");
                     mapInfo.resumeRoute();
                 }

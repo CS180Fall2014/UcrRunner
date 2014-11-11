@@ -1,14 +1,12 @@
 package com.murraycole.ucrrunner.view;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.content.Intent;
 
 import com.murraycole.ucrrunner.R;
 
@@ -20,6 +18,9 @@ public class MapPreStart extends BaseMapActivity {
         setContentView(R.layout.activity_map_pre_start);
 
 
+        setupLocationStatsListener();
+        setUpMapIfNeeded();
+
         Button StartRun = (Button)findViewById(R.id.map_pre_start_startRun_button);
         StartRun.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,9 +30,6 @@ public class MapPreStart extends BaseMapActivity {
                 startActivity(new Intent(getBaseContext(), MapRunning.class));
             }
         });
-
-        setupLocationStatsListener();
-        setUpMapIfNeeded();
     }
 
 

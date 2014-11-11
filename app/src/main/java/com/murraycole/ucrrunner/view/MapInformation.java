@@ -84,13 +84,19 @@ public class MapInformation {
             r.add(l.getPoints());
 
         Route route = new Route();
+        Stats stats = new Stats();
+        stats.setAverageSpeed(getAverageSpeed());
+        stats.setCaloriesBurned(getCalories());
+        stats.setDistance(getDistance());
+        stats.setElevation(-1.0); // set up elevation Milestone 1
+        stats.setTopSpeed(getTopSpeed());
         route.setCurrentRoute(r);
-        route.setCurrentStats(new Stats()); //TODO: save real stuff
+        route.setCurrentStats(stats);
         FirebaseManager.saveRoute(route, UUID);
     }
 
     /**
-     * current speed in miles per hour
+     * current speed in meters per hour
      *
      * @return the current speed
      */
@@ -101,32 +107,9 @@ public class MapInformation {
     }
 
     /**
-     * gets the distance
-     *
-     * @return distance in miles per hour
-     */
-    public double getDistance() {
-        //TODO
-        //Location.distanceBetween();
-//        double distance = 0.0;
-//        for (Polyline p : entireRoute)
-//            googleMap.
-//
-//
-//        distance += p.
-        return -1.0;
-    }
-
-
-    public interface LocationStatsListener {
-        public void onLocationUpdate(Location location);
-    }
-
-
-    /**
      * gets average speed of current route
      *
-     * @return average speed in miles per hour
+     * @return average speed in meters per hour
      */
     public double getAverageSpeed() {
         double averageSpeed = 0.0;
@@ -136,6 +119,42 @@ public class MapInformation {
         averageSpeed /= locationEntireRoute.size();
 
         return averageSpeed;
+    }
+
+    /**
+     * gets the top speed of current route
+     *
+     * @return top speed in meters per hour
+     */
+    public double getTopSpeed() {
+        double topSpeed = 0.0;
+        for (Location l : locationEntireRoute)
+            if (l.getSpeed() > topSpeed)
+                topSpeed = l.getSpeed();
+
+        return topSpeed;
+    }
+
+
+    /**
+     * gets the distance
+     *
+     * @return distance in meters
+     */
+    public double getDistance() {
+        double distance = 0.0;
+        LatLng p1, p2;
+        float[] results = new float[1];
+        for (Polyline p : entireRoute) {
+            for (int i = 0; i < p.getPoints().size() - 1; i++) {
+                p1 = p.getPoints().get(i);
+                p2 = p.getPoints().get(i + 1);
+                Location.distanceBetween(p1.latitude, p1.longitude, p2.latitude, p2.longitude, results);
+                distance += results[0];
+            }
+        }
+
+        return distance;
     }
 
     /**
@@ -192,9 +211,22 @@ public class MapInformation {
         googleMap.setOnMyLocationChangeListener(listener);
     }
 
+    /**
+     * set the flags for Start and Pause
+     *
+     * @param isStart is start than true, otherwise false
+     */
     private void setStartPause(boolean isStart) {
         this.isStart = isStart;
         isPause = !isStart;
     }
+
+    /**
+     * Location listener for UI side
+     */
+    public interface LocationStatsListener {
+        public void onLocationUpdate(Location location);
+    }
+
 
 }

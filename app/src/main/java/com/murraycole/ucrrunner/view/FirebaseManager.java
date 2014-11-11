@@ -25,7 +25,7 @@ public class FirebaseManager {
         baseRef = getRef();
     }
 
-    static List<Route> getRoute( String uid ){
+    static List<Route> getRoutes( String uid ){
         uid = uid.split(":")[1];
         //reference to the user[uid]'s directory for their routes.
         Firebase userRoutesRef = new Firebase("https://torid-inferno-2246.firebaseio.com/routes/"+uid+"/");
@@ -106,7 +106,7 @@ public class FirebaseManager {
         //routeRef to outes/uid/
         Firebase routesRef = getRef().child("routes").child(uid);
 
-        //set to routes/uid/<genid_currRoute>/currRoute
+        //set to routes/uid/<genid_currRoute>/_currRouteData
         routesRef.push().setValue(currRoute);
 
         return null;

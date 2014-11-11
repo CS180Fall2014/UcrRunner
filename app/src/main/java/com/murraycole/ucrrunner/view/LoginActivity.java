@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
@@ -84,7 +85,11 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             bypass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), MapRunning.class));
+                    EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
+                            passET = (EditText) mView.findViewById(R.id.login_password_edittext);
+                    userET.setText("test@yahoo.com");
+                    passET.setText("test");
+                    new LoginButtonListener().onClick(view);
                 }
             });
 

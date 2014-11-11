@@ -22,10 +22,12 @@ public class Profile extends Activity {
 //            getFragmentManager().beginTransaction()
 //                    .add(R.id.container, new PlaceholderFragment())
 //                    .commit();
-
+            //Redirect from Login to MapPreStart Screen
+                MapPreStart mapPreStart = new MapPreStart();
+                Intent mapActivity = new Intent(this, mapPreStart.getClass());
             // mike : mapRunning stuff (testing here)
-            MapRunning mapRunning = new MapRunning();
-            Intent mapActivity = new Intent(this, mapRunning.getClass());
+                // MapRunning mapRunning = new MapRunning();
+                //Intent mapActivity = new Intent(this, mapRunning.getClass());
             startActivity(mapActivity);
 
         }

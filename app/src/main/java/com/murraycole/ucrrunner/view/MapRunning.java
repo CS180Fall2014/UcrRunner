@@ -9,12 +9,20 @@ import com.murraycole.ucrrunner.R;
 
 public class MapRunning extends BaseMapActivity {
     TextView currspeed;
+    TextView duration;
+    TextView distance;
+    TextView calories;
+    TextView avgspeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_running);
         currspeed = (TextView) findViewById(R.id.maprunning_currspeed_textview);
+        duration = (TextView)findViewById(R.id.maprunning_duration_textview);
+        distance = (TextView)findViewById(R.id.maprunning_dist_textview);
+        calories = (TextView)findViewById(R.id.maprunning_cal_textview);
+        avgspeed = (TextView)findViewById(R.id.maprunning_avgspeed_textview);
         setupLocationStatsListener();
 
 
@@ -25,9 +33,14 @@ public class MapRunning extends BaseMapActivity {
         locationStatsListener = new MapInformation.LocationStatsListener() {
             @Override
             public void onLocationUpdate(Location location) {
-                currspeed.setText("Speed:\n" + String.valueOf(location.getSpeed()));
+                currspeed.setText("Speed:\n" + String.valueOf(mapInfo.getCurrentSpeed())); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
+                duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
+                distance.setText("Distance:" + String.valueOf(mapInfo.getDistance()));
+                calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories()));
+                avgspeed.setText("Avg Speed:" + String.valueOf(mapInfo.getAverageSpeed()));
 
             }
+
         };
     }
 

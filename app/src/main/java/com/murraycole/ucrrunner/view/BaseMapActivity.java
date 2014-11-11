@@ -13,6 +13,7 @@ public abstract class BaseMapActivity extends FragmentActivity {
     GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapInformation mapInfo;
     MapInformation.LocationStatsListener locationStatsListener;
+    long start_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

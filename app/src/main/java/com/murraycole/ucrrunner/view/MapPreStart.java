@@ -22,7 +22,9 @@ public class MapPreStart extends BaseMapActivity {
         StartRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.activity_maps_running);
+                startActivity(new Intent(getBaseContext(), MapRunning.class));
+                //setContentView(R.layout.activity_maps_running);
+                start_time = System.currentTimeMillis();
             }
         });
     }

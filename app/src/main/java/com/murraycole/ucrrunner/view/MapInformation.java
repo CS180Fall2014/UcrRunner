@@ -23,6 +23,7 @@ public class MapInformation {
     private Boolean isPause = false;
     private GoogleMap googleMap;
     private LocationStatsListener locationStatsListener;
+    private double currentDistance = 0.0;
     //test flags
     private Boolean testFlagOnce = true;
     private Boolean isTesting = true;
@@ -70,16 +71,18 @@ public class MapInformation {
      * @return the current speed
      */
     public double getCurrentSpeed() {
-        if (locationEntireRoute.size() != 0)
-            return locationEntireRoute.get(locationEntireRoute.size()).getSpeed();
-        return -1.0;
+        if (locationEntireRoute == null || locationEntireRoute.isEmpty())
+            return -1.0;
+        return locationEntireRoute.get(locationEntireRoute.size() - 1).getSpeed();
     }
 
     /**
      * gets the distance
+     *
      * @return distance in miles per hour
      */
     public double getDistance() {
+        //Location.distanceBetween();
 //        double distance = 0.0;
 //        for (Polyline p : entireRoute)
 //            googleMap.
@@ -91,15 +94,23 @@ public class MapInformation {
 
     /**
      * gets average speed of current route
+     *
      * @return average speed in miles per hour
      */
     public double getAverageSpeed() {
-        return -1.0;
+        double averageSpeed = 0.0;
+        for (Location l : locationEntireRoute)
+            averageSpeed += l.getSpeed();
+
+        averageSpeed /= locationEntireRoute.size();
+
+        return averageSpeed;
     }
 
     /**
      * gets calories of current route
-     * @return calories 
+     *
+     * @return calories
      */
     public double getCalories() {
         return -1.0;
@@ -112,7 +123,8 @@ public class MapInformation {
 
         //testing (information)
         if (isTesting) {
-            //Toast.makeText("Hello World")
+            System.out.println("Current Speed: " + getCurrentSpeed());
+            System.out.println("Average Speed: " + getAverageSpeed());
         }
     }
 

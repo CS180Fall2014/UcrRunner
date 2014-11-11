@@ -1,8 +1,10 @@
 package com.murraycole.ucrrunner.view;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -29,14 +31,19 @@ public class LoginButtonListener extends LoginActivity.LoginFragment implements 
         userET = (EditText) mView.findViewById(R.id.login_username_edittext);
         passET = (EditText) mView.findViewById(R.id.login_password_edittext);
         Log.d(tag, "ETs are instantiated.");
+        final Context myContext = getActivity();
         Log.i("LoginButtonListener", "Logging in with credentials: [" + userET.getText().toString() + ", " + passET.getText().toString() + "]");
         ref.authWithPassword(userET.getText().toString(), passET.getText().toString(), new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
                 Log.i("LoginButtonListener", "Authentication successful. " + authData.getUid() + " | " + authData.getProvider());
+                //add auth data to SharedPreferences
+                SharedPreferences fbPrefs = mView.getContext().getSharedPreferences("FBPREFS", 0);
+                SharedPreferences.Editor fbPrefEditor = fbPrefs.edit();
+                fbPrefEditor.putString("userData.uid", userET.getText().toString());
+                fbPrefEditor.putString("userData.username", userET.getText().toString());
+                //preferably also do a getUser and then populate those fields.
 
-
-                //forward to next page
                 Intent intent = new Intent(mView.getContext(), Profile.class);
                 intent.putExtra("userData.username", userET.getText().toString());
                 intent.putExtra("userData.uid", authData.getUid());

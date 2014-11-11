@@ -31,11 +31,11 @@ public class MapRunning extends BaseMapActivity {
         PauseRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (PauseRun.getText() == "Pause") {
+                if (PauseRun.getText().equals("Pause")) {
                     PauseRun.setText("Start");
                     mapInfo.pauseRoute();
                 }
-                if (PauseRun.getText() == "Start") {
+                if (PauseRun.getText().equals("Start")) {
                     PauseRun.setText("Pause");
                     mapInfo.resumeRoute();
                 }

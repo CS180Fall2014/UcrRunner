@@ -27,6 +27,7 @@ public class MapInformation {
     //test flags
     private Boolean testFlagOnce = false;
     private Boolean isTesting = false;
+    private String UUID = "12345"; //TODO get real UUID
 
     MapInformation(GoogleMap googleMap, LocationStatsListener locationStatsListener) {
         this.googleMap = googleMap;
@@ -55,14 +56,18 @@ public class MapInformation {
         isPause = true;
     }
 
+    public void resumeRoute() {
+        
+    }
+
     /**
      * stops the current route and saves to firebase
      *
      * @param seconds is the duration of the run
      */
     public void stopRoute(int seconds) {
-        //TODO: save to firebase
-        //save to firebase
+        isStart = isPause = false;
+        FirebaseManager.saveRoute(new Route(new ArrayList<List<LatLng>>(), new Stats()), UUID); //TODO: save real stuff
     }
 
     /**

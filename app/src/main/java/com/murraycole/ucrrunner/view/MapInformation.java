@@ -5,6 +5,7 @@ import android.location.Location;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -72,6 +73,16 @@ public class MapInformation {
         setStartPause(true);
     }
 
+    private void zoomToFitRoute() {
+        LatLngBounds.Builder b = new LatLngBounds.Builder();
+        for (Polyline p : entireRoute) {
+            for (LatLng l : p.getPoints())
+                b.include(l);
+        }
+        LatLngBounds bounds = b.build();
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,5));
+    }
+
     /**
      * stops the current route and saves to Firebase
      *
@@ -83,6 +94,12 @@ public class MapInformation {
         for (Polyline l : entireRoute)
             r.add(l.getPoints());
 
+        //zoom map to entire route
+        googleMap.setOnMyLocationChangeListener(null);
+        zoomToFitRoute();
+
+
+        //save information from route to Firebase
         Route route = new Route();
         Stats stats = new Stats();
         stats.setAverageSpeed(getAverageSpeed());

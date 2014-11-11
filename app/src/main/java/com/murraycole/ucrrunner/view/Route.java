@@ -12,29 +12,19 @@ public class Route {
     private List<List<LatLng>> currentRoute;
     private Stats currentStats;
 
-    Route() {
-        currentRoute = new ArrayList<List<LatLng>>();
-        currentStats = new Stats();
-    }
-
-    Route(List<List<LatLng>> route, Stats stats) {
-        currentRoute = route;
-        currentStats = stats;
-    }
-
-    public void setCurrentRoute(List<List<LatLng>> route) {
-        currentRoute = route;
-    }
-
-    public void setCurrentStats(Stats stats) {
-        currentStats = stats;
-    }
-
     public List<List<LatLng>> getCurrentRoute() {
         return currentRoute;
     }
 
+    public void setCurrentRoute(List<List<LatLng>> currentRoute) {
+        this.currentRoute = currentRoute;
+    }
+
     public Stats getCurrentStats() {
         return currentStats;
+    }
+
+    public void setCurrentStats(Stats currentStats) {
+        this.currentStats = currentStats;
     }
 }

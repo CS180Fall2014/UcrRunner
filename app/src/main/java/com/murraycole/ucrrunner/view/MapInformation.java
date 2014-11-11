@@ -85,7 +85,6 @@ public class MapInformation {
         for (Polyline l : entireRoute)
             r.add(l.getPoints());
 
-        FirebaseManager.saveRoute(new Route(r, new Stats()), UUID); //TODO: save real stuff
 
     }
 

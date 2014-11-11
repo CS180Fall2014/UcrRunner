@@ -66,7 +66,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
         Button register;
         Context mContext;
         View mView;
-
+        Firebase ref = ;
         public LoginFragment() {
         }
 
@@ -103,10 +103,12 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getFragmentManager().beginTransaction().
+                  /*  getFragmentManager().beginTransaction().
                             replace(R.id.container,
                                     new CreateAccountFragment()
-                            ).commit();
+                            ).commit();*/
+
+                    FirebaseManager.saveRoute();
                 }
             });
         }

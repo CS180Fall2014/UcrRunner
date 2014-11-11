@@ -22,12 +22,14 @@ public class MapInformation {
     private Boolean isStart = false;
     private Boolean isPause = false;
     private GoogleMap googleMap;
+    private LocationStatsListener locationStatsListener;
     //test flags
     private Boolean testFlagOnce = true;
     private Boolean isTesting = true;
 
-    MapInformation(GoogleMap googleMap) {
+    MapInformation(GoogleMap googleMap, LocationStatsListener locationStatsListener) {
         this.googleMap = googleMap;
+        this.locationStatsListener = (LocationStatsListener) locationStatsListener;
         setUpMap();
     }
 
@@ -66,7 +68,6 @@ public class MapInformation {
         return -1.0;
     }
 
-
     private void savePoint(Location location) {
         locationEntireRoute.add(location);
         pointsSectionOfRoute.add(new LatLng(location.getLatitude(), location.getLongitude()));
@@ -97,8 +98,15 @@ public class MapInformation {
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 25));
                 if (isStart && !isPause)
                     savePoint(location);
+                locationStatsListener.onLocationUpdate(location);
+
             }
         });
 
     }
+
+    public interface LocationStatsListener {
+        public void onLocationUpdate(Location location);
+    }
+
 }

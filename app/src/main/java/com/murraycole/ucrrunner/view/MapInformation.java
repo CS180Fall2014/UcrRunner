@@ -15,20 +15,31 @@ import java.util.List;
  * Created by mbrevard on 11/9/14.
  */
 public class MapInformation {
+
+    //current route (entirety)
     private List<Polyline> entireRoute = new ArrayList<Polyline>();
+    private List<Location> locationEntireRoute = new ArrayList<Location>();
+    private double entireDistance = 0.0;
+
+    //current route (section)
     private Polyline sectionOfRoute;
     private List<LatLng> pointsSectionOfRoute;
-    private List<Location> locationEntireRoute = new ArrayList<Location>();
+
+    // flags to know current state
     private Boolean isStart = false;
     private Boolean isPause = false;
+
+    // initializations
     private GoogleMap googleMap;
     private LocationStatsListener locationStatsListener;
-    private double currentDistance = 0.0;
-    //test flags
-    private Boolean testFlagOnce = false;
-    private Boolean isTesting = false;
     private String UUID = "12345"; //TODO get real UUID
 
+    /**
+     * initializes the MapInformation which is dependent on the Google Map API v2
+     *
+     * @param googleMap             the Google Map API service (v2)
+     * @param locationStatsListener location listener to update the information on the UI
+     */
     MapInformation(GoogleMap googleMap, LocationStatsListener locationStatsListener) {
         this.googleMap = googleMap;
         this.locationStatsListener = (LocationStatsListener) locationStatsListener;
@@ -56,18 +67,26 @@ public class MapInformation {
         isPause = true;
     }
 
+    /**
+     * resumes the current route after the route is paused
+     */
     public void resumeRoute() {
-        
+        //TODO;
     }
 
     /**
-     * stops the current route and saves to firebase
+     * stops the current route and saves to Firebase
      *
      * @param seconds is the duration of the run
      */
     public void stopRoute(int seconds) {
         isStart = isPause = false;
-        FirebaseManager.saveRoute(new Route(new ArrayList<List<LatLng>>(), new Stats()), UUID); //TODO: save real stuff
+        List<List<LatLng>> r = new ArrayList<List<LatLng>>();
+        for (Polyline l : entireRoute)
+            r.add(l.getPoints());
+
+        FirebaseManager.saveRoute(new Route(r, new Stats()), UUID); //TODO: save real stuff
+
     }
 
     /**
@@ -87,6 +106,7 @@ public class MapInformation {
      * @return distance in miles per hour
      */
     public double getDistance() {
+        //TODO
         //Location.distanceBetween();
 //        double distance = 0.0;
 //        for (Polyline p : entireRoute)
@@ -118,6 +138,7 @@ public class MapInformation {
      * @return calories
      */
     public double getCalories() {
+        //TODO:
         return -1.0;
     }
 
@@ -125,12 +146,6 @@ public class MapInformation {
         locationEntireRoute.add(location);
         pointsSectionOfRoute.add(new LatLng(location.getLatitude(), location.getLongitude()));
         sectionOfRoute.setPoints(pointsSectionOfRoute);
-
-        //testing (information)
-        if (isTesting) {
-            System.out.println("Current Speed: " + getCurrentSpeed());
-            System.out.println("Average Speed: " + getAverageSpeed());
-        }
     }
 
     /**
@@ -140,12 +155,6 @@ public class MapInformation {
      * This should only be called once and when we are sure that is not null.
      */
     private void setUpMap() {
-        //TODO: testing area (delete)
-        if (testFlagOnce) {
-            startRoute();
-            testFlagOnce = false;
-        }
-
         googleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {

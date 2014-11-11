@@ -26,7 +26,6 @@ public class MapPreStart extends BaseMapActivity {
             @Override
             public void onClick(View view) {
                 start_time = System.currentTimeMillis();
-                mapInfo.startRoute();
                 startActivity(new Intent(getBaseContext(), MapRunning.class));
             }
         });

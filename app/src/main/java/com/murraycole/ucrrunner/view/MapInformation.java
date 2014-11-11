@@ -45,15 +45,22 @@ public class MapInformation {
         isPause = false;
     }
 
-    //TODO:
+    /**
+     * pauses the current route, waits for a startRoute() to be called to resume route
+     */
     public void pauseRoute() {
         entireRoute.add(sectionOfRoute);
         isStart = false;
         isPause = true;
     }
 
-    //TODO:
-    public void stopRoute() {
+    /**
+     * stops the current route and saves to firebase
+     *
+     * @param seconds is the duration of the run
+     */
+    public void stopRoute(int seconds) {
+        //TODO: save to firebase
         //save to firebase
     }
 
@@ -65,6 +72,36 @@ public class MapInformation {
     public double getCurrentSpeed() {
         if (locationEntireRoute.size() != 0)
             return locationEntireRoute.get(locationEntireRoute.size()).getSpeed();
+        return -1.0;
+    }
+
+    /**
+     * gets the distance
+     * @return distance in miles per hour
+     */
+    public double getDistance() {
+//        double distance = 0.0;
+//        for (Polyline p : entireRoute)
+//            googleMap.
+//
+//
+//        distance += p.
+        return -1.0;
+    }
+
+    /**
+     * gets average speed of current route
+     * @return average speed in miles per hour
+     */
+    public double getAverageSpeed() {
+        return -1.0;
+    }
+
+    /**
+     * gets calories of current route
+     * @return calories 
+     */
+    public double getCalories() {
         return -1.0;
     }
 

@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.view;
 
+import android.graphics.Color;
 import android.location.Location;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * MapInformaion class has the functionality for the Google Map. These includes start,pause, stop
+ * route and the information about the route
  * Created by mbrevard on 11/9/14.
  */
 public class MapInformation {
@@ -20,10 +23,8 @@ public class MapInformation {
     //current route (entirety)
     private List<Polyline> entireRoute = new ArrayList<Polyline>();
     private List<Location> locationEntireRoute = new ArrayList<Location>();
-    private double entireDistance = 0.0;
 
     //current route (section)
-    private Polyline sectionOfRoute;
     private List<LatLng> pointsSectionOfRoute;
 
     // flags to know current state
@@ -43,7 +44,7 @@ public class MapInformation {
      */
     MapInformation(GoogleMap googleMap, LocationStatsListener locationStatsListener) {
         this.googleMap = googleMap;
-        this.locationStatsListener = (LocationStatsListener) locationStatsListener;
+        this.locationStatsListener = locationStatsListener;
         setUpMap();
 
         //options.color() match in app color
@@ -73,16 +74,6 @@ public class MapInformation {
         setStartPause(true);
     }
 
-    private void zoomToFitRoute() {
-        LatLngBounds.Builder b = new LatLngBounds.Builder();
-        for (Polyline p : entireRoute) {
-            for (LatLng l : p.getPoints())
-                b.include(l);
-        }
-        LatLngBounds bounds = b.build();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds,5));
-    }
-
     /**
      * stops the current route and saves to Firebase
      *
@@ -107,6 +98,7 @@ public class MapInformation {
         stats.setDistance(getDistance());
         stats.setElevation(-1.0); // set up elevation Milestone 1
         stats.setTopSpeed(getTopSpeed());
+        stats.setDuration(seconds);
         route.setCurrentRoute(r);
         route.setCurrentStats(stats);
         FirebaseManager.saveRoute(route, UUID);
@@ -180,22 +172,38 @@ public class MapInformation {
      * @return calories
      */
     public double getCalories() {
-        //TODO:
-        return -1.0;
+        return new MapCalculation().calculateCalories();
     }
+
+
+    /**
+     * zooms to fit the entire route. Used when the route is stopped
+     */
+    private void zoomToFitRoute() {
+        LatLngBounds.Builder b = new LatLngBounds.Builder();
+        for (Polyline p : entireRoute) {
+            for (LatLng l : p.getPoints())
+                b.include(l);
+        }
+        LatLngBounds bounds = b.build();
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
+    }
+
 
     /**
      * creates a new Polyline
      */
     private void newPolyline() {
-        Polyline polyline = googleMap.addPolyline(new PolylineOptions());
+        PolylineOptions options = new PolylineOptions();
+        options.color(Color.BLUE);
+        Polyline polyline = googleMap.addPolyline(options);
         entireRoute.add(polyline);
     }
 
     /**
      * saves a point to the line and adds the Location information to the respected fields.
      *
-     * @param location
+     * @param location is the current location
      */
     private void savePoint(Location location) {
         if (entireRoute.isEmpty())

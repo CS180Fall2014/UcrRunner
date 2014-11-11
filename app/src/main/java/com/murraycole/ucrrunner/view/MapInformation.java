@@ -31,7 +31,9 @@ public class MapInformation {
         setUpMap();
     }
 
-    //TODO:
+    /**
+     * starts the route that is going to be displayed on the Google Map
+     */
     public void startRoute() {
         pointsSectionOfRoute = new ArrayList<LatLng>(); //pts for polyline
         PolylineOptions options = new PolylineOptions();

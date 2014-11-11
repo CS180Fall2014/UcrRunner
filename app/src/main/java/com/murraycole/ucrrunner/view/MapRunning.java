@@ -27,11 +27,19 @@ public class MapRunning extends BaseMapActivity {
         avgspeed = (TextView)findViewById(R.id.maprunning_avgspeed_textview);
 
 
-        Button PauseRun = (Button)findViewById(R.id.maprunning_pause_textview);
+        final Button PauseRun = (Button) findViewById(R.id.maprunning_pause_textview);
         PauseRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mapInfo.pauseRoute();
+                if (PauseRun.getText() == "Pause") {
+                    PauseRun.setText("Start");
+                    mapInfo.pauseRoute();
+                }
+                if (PauseRun.getText() == "Start") {
+                    PauseRun.setText("Pause");
+                    mapInfo.resumeRoute();
+                }
+
             }
         });
 

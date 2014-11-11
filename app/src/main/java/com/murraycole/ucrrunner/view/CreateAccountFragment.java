@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.murraycole.ucrrunner.R;
 
@@ -43,6 +44,12 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
      * @param param2 Parameter 2.
      * @return A new instance of fragment CreateAccountActivity.
      */
+
+
+
+    Button join;
+    View regView;
+
     // TODO: Rename and change types and number of parameters
     public static CreateAccountFragment newInstance(String param1, String param2) {
         CreateAccountFragment fragment = new CreateAccountFragment();
@@ -66,14 +73,18 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_account, container, false);
+        regView  = inflater.inflate(R.layout.fragment_create_account, container, false);
+        join = (Button) regView.findViewById(R.id.createaccount_joinnow_button);
+        setupLoginOnClick(join);
+        return regView;
+
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
+    private void setupLoginOnClick(Button login) {
+        RegisterButtonListener onclickRegButton = new RegisterButtonListener();
+        login.setOnClickListener(onclickRegButton);
     }
 
     @Override

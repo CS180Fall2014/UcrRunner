@@ -17,6 +17,7 @@ public class MapRunning extends BaseMapActivity {
     TextView distance;
     TextView calories;
     TextView avgspeed;
+    Boolean isRunning = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +41,13 @@ public class MapRunning extends BaseMapActivity {
                 if (PauseRun.getText().equals("Pause")) {
                     time_when_paused = mChronometer.getBase() - SystemClock.elapsedRealtime();
                     mChronometer.stop();
+                    isRunning = false;
                     PauseRun.setText("Start");
                     mapInfo.pauseRoute();
                 } else if (PauseRun.getText().equals("Start")) {
                     mChronometer.setBase(SystemClock.elapsedRealtime() + time_when_paused);
                     mChronometer.start();
+                    isRunning = true;
                     PauseRun.setText("Pause");
                     mapInfo.resumeRoute();
                 }
@@ -58,11 +61,13 @@ public class MapRunning extends BaseMapActivity {
             public void onClick(View v) {
                 time_when_stopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
                 time_when_paused = 0;
+                isRunning = false;
                 mChronometer.stop();
                 mapInfo.stopRoute(-1);
             }
         });
 
+        if(isRunning) delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
         setupLocationStatsListener();
 
 
@@ -76,8 +81,8 @@ public class MapRunning extends BaseMapActivity {
                 currspeed.setText(String.valueOf(mapInfo.getCurrentSpeed())); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
                // duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
                 distance.setText("Distance:\n" + String.valueOf(mapInfo.getDistance()));
-                if (false){
-                    calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(mChronometer.getBase() - SystemClock.elapsedRealtime())));
+                if (isRunning){
+                    calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(delta_time)));
                 }
                 avgspeed.setText("Avg Speed:\n" + String.valueOf(mapInfo.getAverageSpeed()));
 

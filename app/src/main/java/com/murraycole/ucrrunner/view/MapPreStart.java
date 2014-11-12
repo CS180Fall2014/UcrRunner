@@ -19,7 +19,7 @@ public class MapPreStart extends BaseMapActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_pre_start);
         mChronometer = (Chronometer)findViewById(R.id.chronometer);
-
+        long delta_time = 0;
 
         Button StartRun = (Button)findViewById(R.id.map_pre_start_startRun_button);
         StartRun.setOnClickListener(new View.OnClickListener() {

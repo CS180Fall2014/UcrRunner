@@ -20,8 +20,6 @@ public class MapPreStart extends BaseMapActivity {
         setContentView(R.layout.activity_map_pre_start);
         mChronometer = (Chronometer)findViewById(R.id.chronometer);
 
-        setupLocationStatsListener();
-        setUpMapIfNeeded();
 
         Button StartRun = (Button)findViewById(R.id.map_pre_start_startRun_button);
         StartRun.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +28,9 @@ public class MapPreStart extends BaseMapActivity {
                 startActivity(new Intent(getBaseContext(), MapRunning.class));
             }
         });
+
+        setupLocationStatsListener();
+        setUpMapIfNeeded();
     }
 
 

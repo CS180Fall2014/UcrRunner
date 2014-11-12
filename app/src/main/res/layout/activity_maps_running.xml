@@ -37,7 +37,7 @@
             android:id="@+id/maprunning_currspeed_textview"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="10 km/h"
+            android:text=""
             android:textSize="20sp" />
         </LinearLayout>
 
@@ -81,12 +81,12 @@
         <TextView
             android:id="@+id/maprunning_dist_textview"
             style="@style/TextViewMapStyle"
-            android:text="Distance:\n 1800km" />
+            android:text="Distance:\n" />
 
         <TextView
             android:id="@+id/maprunning_cal_textview"
             style="@style/TextViewMapStyle"
-            android:text="Cal:\n 800" />
+            android:text="Cal:\n" />
 
         <TextView
             android:id="@+id/maprunning_avgspeed_textview"

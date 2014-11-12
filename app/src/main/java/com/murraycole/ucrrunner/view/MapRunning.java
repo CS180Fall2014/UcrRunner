@@ -80,19 +80,17 @@ public class MapRunning extends BaseMapActivity {
             @Override
             public void onLocationUpdate(Location location) {
                 DecimalFormat valuesRounded = new DecimalFormat("#.##");
-                currspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getCurrentSpeed()))); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
-               // duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
-                distance.setText("Distance:\n" + String.valueOf(mapInfo.getDistance()));
+                currspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getCurrentSpeed())));
+                distance.setText("Distance:\n" +
+                        String.valueOf(valuesRounded.format(mapInfo.getDistance())));
+                avgspeed.setText("Avg Speed:\n" +
+                        String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())));
                 if (isRunning){
-                    if(isRunning) delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
-                    calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(delta_time)));
+                    delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
+                    calories.setText("Calories:\n" +
+                            String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))));
                 }
-
-                String avgSpeed =String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed()));
-                avgspeed.setText("Avg Speed:\n" + avgSpeed);
-
             }
-
         };
     }
 

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.murraycole.ucrrunner.R;
 
+import java.text.DecimalFormat;
+
 public class MapRunning extends BaseMapActivity {
     TextView currspeed;
     TextView duration;
@@ -66,6 +68,7 @@ public class MapRunning extends BaseMapActivity {
                 mapInfo.stopRoute(-1);
             }
         });
+
         setupLocationStatsListener();
 
 
@@ -76,14 +79,17 @@ public class MapRunning extends BaseMapActivity {
         locationStatsListener = new MapInformation.LocationStatsListener() {
             @Override
             public void onLocationUpdate(Location location) {
-                currspeed.setText(String.valueOf(mapInfo.getCurrentSpeed())); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
+                DecimalFormat valuesRounded = new DecimalFormat("#.##");
+                currspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getCurrentSpeed()))); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
                // duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
                 distance.setText("Distance:\n" + String.valueOf(mapInfo.getDistance()));
                 if (isRunning){
                     if(isRunning) delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
                     calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(delta_time)));
                 }
-                avgspeed.setText("Avg Speed:\n" + String.valueOf(mapInfo.getAverageSpeed()));
+
+                String avgSpeed =String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed()));
+                avgspeed.setText("Avg Speed:\n" + avgSpeed);
 
             }
 

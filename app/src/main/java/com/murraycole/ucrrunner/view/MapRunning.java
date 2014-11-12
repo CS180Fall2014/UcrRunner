@@ -92,7 +92,7 @@ public class MapRunning extends BaseMapActivity {
                     calories.setText("Calories:\n" +
                             String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))));
                 }
-                avgspeed.setText("Avg Speed:\n" + String.valueOf(mapInfo.getAverageSpeed()));
+                avgspeed.setText("Avg Speed:\n" + String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())));
 
             }
 
@@ -118,6 +118,8 @@ public class MapRunning extends BaseMapActivity {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 mapInfo = new MapInformation(mMap, locationStatsListener);

@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -48,6 +49,7 @@ public class LoginButtonListener extends LoginActivity.LoginFragment implements 
                 intent.putExtra("userData.username", userET.getText().toString());
                 intent.putExtra("userData.uid", authData.getUid());
                 mView.getContext().startActivity(intent);
+                ((Activity) mView.getContext()).overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
             }
 
             @Override

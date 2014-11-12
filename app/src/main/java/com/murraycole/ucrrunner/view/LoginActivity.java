@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.google.android.gms.maps.model.LatLng;
@@ -69,7 +70,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
      */
     public static class LoginFragment extends Fragment {
         Button login;
-        Button register;
+        TextView register;
         Context mContext;
         View mView;
         public LoginFragment() {
@@ -80,7 +81,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                                  Bundle savedInstanceState) {
             mView = inflater.inflate(R.layout.login_fragment, container, false);
             mContext = mView.getContext();
-            register = (Button) mView.findViewById(R.id.login_register_button);
+            register = (TextView) mView.findViewById(R.id.login_register_button);
             login = (Button) mView.findViewById(R.id.login_login_button);
 
             /* THIS IS FOR DEBUGGGING *?
@@ -104,19 +105,20 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             return mView;
         }
 
-        private void setupRegisterOnClick(Button register) {
+        private void setupRegisterOnClick(TextView register) {
             //Intent intent = new Intent(getActivity(), MapRunning.class);
             //startActivity(intent);
-
             register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                   getFragmentManager().beginTransaction().
-                            replace(R.id.container,
-                                    new CreateAccountFragment()
-                            ).commit();
+                            add(R.id.container,
+                                    new CreateAccountFragment())
+                          .addToBackStack(null)
+                          .commit();
                 }
             });
+
         }
 
         private void setupLoginOnClick(Button login) {

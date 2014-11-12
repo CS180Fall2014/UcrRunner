@@ -25,11 +25,34 @@
             android:text="Speed:\n 10 km/h"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/maprunning_duration_textview"
-            style="@style/TextViewMapStyle"
-            android:text="Duration:\n 1:50"
-            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/maprunning_duration_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Duration:"
+                android:textSize="20sp" />
+
+            <Chronometer
+                android:id="@+id/chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:format="%s"
+                android:gravity="center"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -81,12 +104,6 @@
 
     </LinearLayout>
 
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:format="%s"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"/>
 
 
 </RelativeLayout>

@@ -91,7 +91,7 @@
         <TextView
             android:id="@+id/maprunning_avgspeed_textview"
             style="@style/TextViewMapStyle"
-            android:text="Avg Speed:\n 510 km/h" />
+            android:text="Avg Speed:\n" />
 
 
     </LinearLayout>

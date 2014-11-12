@@ -17,7 +17,6 @@ public class MapRunning extends BaseMapActivity {
     TextView distance;
     TextView calories;
     TextView avgspeed;
-    Boolean isRunning = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class MapRunning extends BaseMapActivity {
         mChronometer.setBase(SystemClock.elapsedRealtime());
         mChronometer.start();
 
-
         final Button PauseRun = (Button) findViewById(R.id.maprunning_pause_textview);
         PauseRun.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,13 +40,11 @@ public class MapRunning extends BaseMapActivity {
                 if (PauseRun.getText().equals("Pause")) {
                     time_when_paused = mChronometer.getBase() - SystemClock.elapsedRealtime();
                     mChronometer.stop();
-                    isRunning = false;
                     PauseRun.setText("Start");
                     mapInfo.pauseRoute();
                 } else if (PauseRun.getText().equals("Start")) {
                     mChronometer.setBase(SystemClock.elapsedRealtime() + time_when_paused);
                     mChronometer.start();
-                    isRunning = true;
                     PauseRun.setText("Pause");
                     mapInfo.resumeRoute();
                 }
@@ -61,15 +57,15 @@ public class MapRunning extends BaseMapActivity {
             @Override
             public void onClick(View v) {
                 time_when_stopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
-                isRunning = false;
                 time_when_paused = 0;
                 mChronometer.stop();
                 mapInfo.stopRoute(-1);
             }
         });
 
-        if(isRunning) delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
         setupLocationStatsListener();
+
+
         setUpMapIfNeeded();
     }
 
@@ -77,13 +73,13 @@ public class MapRunning extends BaseMapActivity {
         locationStatsListener = new MapInformation.LocationStatsListener() {
             @Override
             public void onLocationUpdate(Location location) {
-                currspeed.setText("Speed:\n" + String.valueOf(mapInfo.getCurrentSpeed())); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
-                duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
-                distance.setText("Distance:" + String.valueOf(mapInfo.getDistance()));
-                if(false) {
-                    calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(delta_time)));
+                currspeed.setText(String.valueOf(mapInfo.getCurrentSpeed())); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
+               // duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
+                distance.setText("Distance:\n" + String.valueOf(mapInfo.getDistance()));
+                if (false){
+                    calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(mChronometer.getBase() - SystemClock.elapsedRealtime())));
                 }
-                avgspeed.setText("Avg Speed:" + String.valueOf(mapInfo.getAverageSpeed()));
+                avgspeed.setText("Avg Speed:\n" + String.valueOf(mapInfo.getAverageSpeed()));
 
             }
 

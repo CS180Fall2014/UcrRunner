@@ -2,8 +2,10 @@ package com.murraycole.ucrrunner.view;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -20,21 +22,29 @@ public class MapRunning extends BaseMapActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_running);
+
         currspeed = (TextView) findViewById(R.id.maprunning_currspeed_textview);
         duration = (TextView)findViewById(R.id.maprunning_duration_textview);
         distance = (TextView)findViewById(R.id.maprunning_dist_textview);
         calories = (TextView)findViewById(R.id.maprunning_cal_textview);
         avgspeed = (TextView)findViewById(R.id.maprunning_avgspeed_textview);
 
+        mChronometer = (Chronometer)findViewById(R.id.chronometer);
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+        mChronometer.start();
 
         final Button PauseRun = (Button) findViewById(R.id.maprunning_pause_textview);
         PauseRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (PauseRun.getText().equals("Pause")) {
+                    time_when_paused = mChronometer.getBase() - SystemClock.elapsedRealtime();
+                    mChronometer.stop();
                     PauseRun.setText("Start");
                     mapInfo.pauseRoute();
                 } else if (PauseRun.getText().equals("Start")) {
+                    mChronometer.setBase(SystemClock.elapsedRealtime() + time_when_paused);
+                    mChronometer.start();
                     PauseRun.setText("Pause");
                     mapInfo.resumeRoute();
                 }
@@ -46,6 +56,9 @@ public class MapRunning extends BaseMapActivity {
         StopRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                time_when_stopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
+                time_when_paused = 0;
+                mChronometer.stop();
                 mapInfo.stopRoute(-1);
             }
         });
@@ -63,7 +76,7 @@ public class MapRunning extends BaseMapActivity {
                 currspeed.setText("Speed:\n" + String.valueOf(mapInfo.getCurrentSpeed())); //Shouldn't this be calling Mapinfo.getCurrentSpeed?
                 duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
                 distance.setText("Distance:" + String.valueOf(mapInfo.getDistance()));
-                calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories()));
+                calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(mChronometer.getBase() - SystemClock.elapsedRealtime())));
                 avgspeed.setText("Avg Speed:" + String.valueOf(mapInfo.getAverageSpeed()));
 
             }

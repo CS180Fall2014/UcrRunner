@@ -94,7 +94,7 @@ public class MapInformation {
         Route route = new Route();
         Stats stats = new Stats();
         stats.setAverageSpeed(getAverageSpeed());
-        stats.setCaloriesBurned(getCalories());
+        stats.setCaloriesBurned(getCalories(seconds));
         stats.setDistance(getDistance());
         stats.setElevation(-1.0); // set up elevation Milestone 1
         stats.setTopSpeed(getTopSpeed());
@@ -171,8 +171,8 @@ public class MapInformation {
      *
      * @return calories
      */
-    public double getCalories() {
-        return new MapCalculation().calculateCalories();
+    public double getCalories(double elapsed_time) {
+        return new MapCalculation().calculateCalories(this,elapsed_time);
     }
 
 

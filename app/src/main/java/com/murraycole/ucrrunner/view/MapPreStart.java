@@ -3,10 +3,12 @@ package com.murraycole.ucrrunner.view;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 
 import com.murraycole.ucrrunner.R;
 
@@ -16,7 +18,7 @@ public class MapPreStart extends BaseMapActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_pre_start);
-
+        mChronometer = (Chronometer)findViewById(R.id.chronometer);
 
         setupLocationStatsListener();
         setUpMapIfNeeded();
@@ -25,7 +27,6 @@ public class MapPreStart extends BaseMapActivity {
         StartRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start_time = System.currentTimeMillis();
                 startActivity(new Intent(getBaseContext(), MapRunning.class));
             }
         });

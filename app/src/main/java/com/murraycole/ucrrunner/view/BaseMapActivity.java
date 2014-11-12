@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Chronometer;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -13,7 +14,10 @@ public abstract class BaseMapActivity extends FragmentActivity {
     GoogleMap mMap; // Might be null if Google Play services APK is not available.
     MapInformation mapInfo;
     MapInformation.LocationStatsListener locationStatsListener;
-    long start_time;
+    Chronometer mChronometer;
+    long time_when_paused = 0;
+    long time_when_stopped = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

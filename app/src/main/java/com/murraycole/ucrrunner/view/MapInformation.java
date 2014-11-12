@@ -36,6 +36,7 @@ public class MapInformation {
     private LocationStatsListener locationStatsListener;
     private String UUID = "12345:3423"; //TODO get real UUID
 
+
     /**
      * initializes the MapInformation which is dependent on the Google Map API v2
      *

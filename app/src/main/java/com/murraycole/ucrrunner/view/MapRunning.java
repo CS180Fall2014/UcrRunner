@@ -66,8 +66,6 @@ public class MapRunning extends BaseMapActivity {
                 mapInfo.stopRoute(-1);
             }
         });
-
-        if(isRunning) delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
         setupLocationStatsListener();
 
 
@@ -82,6 +80,7 @@ public class MapRunning extends BaseMapActivity {
                // duration.setText("Duration:\n"); //Timer Should be displayed somewhere else
                 distance.setText("Distance:\n" + String.valueOf(mapInfo.getDistance()));
                 if (isRunning){
+                    if(isRunning) delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
                     calories.setText("Calories:\n" + String.valueOf(mapInfo.getCalories(delta_time)));
                 }
                 avgspeed.setText("Avg Speed:\n" + String.valueOf(mapInfo.getAverageSpeed()));

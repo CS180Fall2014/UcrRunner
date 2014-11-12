@@ -20,7 +20,6 @@ public class MapCalculation {
         T = T * 2.77778e-7;
 
 
-
         if(true){
             BMR = (13.75 * Wkg) + (5 * Height) - (6.76 * age) + 66;
         }else {

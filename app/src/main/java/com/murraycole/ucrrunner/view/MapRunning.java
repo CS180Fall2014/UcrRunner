@@ -57,7 +57,7 @@ public class MapRunning extends BaseMapActivity {
             }
         });
 
-        Button StopRun = (Button)findViewById(R.id.maprunning_stop_textview);
+        final Button StopRun = (Button)findViewById(R.id.maprunning_stop_textview);
         StopRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +65,15 @@ public class MapRunning extends BaseMapActivity {
                 time_when_paused = 0;
                 isRunning = false;
                 mChronometer.stop();
+                //All buttons are gone
+                StopRun.setVisibility(View.GONE);
+                PauseRun.setVisibility(View.GONE);
                 mapInfo.stopRoute(-1);
             }
         });
 
+
         setupLocationStatsListener();
-
-
         setUpMapIfNeeded();
     }
 
@@ -90,7 +92,10 @@ public class MapRunning extends BaseMapActivity {
                     calories.setText("Calories:\n" +
                             String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))));
                 }
+                avgspeed.setText("Avg Speed:\n" + String.valueOf(mapInfo.getAverageSpeed()));
+
             }
+
         };
     }
 

@@ -52,7 +52,8 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="Login" />
+            android:text="Login"
+            android:textColor="#FFFFFF"/>
 
 
     </LinearLayout>
@@ -64,7 +65,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="24dp"
         android:background="@android:color/transparent"
-        android:text="Sign up" />
+        android:text="Sign up"
+        android:textColor="#A0FFFFFF"/>
     <Button
         android:id="@+id/button"
         android:layout_width="20dp"

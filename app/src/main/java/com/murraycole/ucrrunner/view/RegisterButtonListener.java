@@ -119,6 +119,8 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                         users.put(authData.getUid().split(":")[1], regInfo);
                         regRef.setValue(users);
                         Log.i("Pushed", "");
+
+                        Toast.makeText(regView.getContext(),"Success",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -1,100 +1,115 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MapActivity">
-
-    <fragment
-        android:id="@+id/map"
-        class="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="vertical"
-        tools:layout="@layout/activity_maps_running" />
 
     <LinearLayout
         android:id="@+id/maprunning_stats1_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/glass_textview_background">
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:background="#FFFFFF"
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Speed:"
-            android:textSize="20sp"
-             />
-        <TextView
-            android:id="@+id/maprunning_currspeed_textview"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text=""
-            android:textSize="20sp" />
-        </LinearLayout>
-
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/maprunning_duration_textview"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="Duration:"
-                android:textSize="20sp" />
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
 
-            <Chronometer
-                android:id="@+id/chronometer"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/maprunning_currspeed_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Speed (m/s)"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:format="%s"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="20sp" />
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
 
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:format="%s"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/maprunning_duration_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Duration"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/maprunning_stats1_linearlayout"
 
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/maprunning_dist_textview"
+                style="@style/TextViewMapStyle"
+                android:text="Distance:\n" />
+
+            <TextView
+                android:id="@+id/maprunning_cal_textview"
+                style="@style/TextViewMapStyle"
+                android:text="Cal:\n" />
+
+            <TextView
+                android:id="@+id/maprunning_avgspeed_textview"
+                style="@style/TextViewMapStyle"
+                android:text="Avg Speed:\n" />
+
+
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+   <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/maprunning_stats1_linearlayout"
-        android:background="@drawable/glass_textview_background"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/maprunning_dist_textview"
-            style="@style/TextViewMapStyle"
-            android:text="Distance:\n" />
-
-        <TextView
-            android:id="@+id/maprunning_cal_textview"
-            style="@style/TextViewMapStyle"
-            android:text="Cal:\n" />
-
-        <TextView
-            android:id="@+id/maprunning_avgspeed_textview"
-            style="@style/TextViewMapStyle"
-            android:text="Avg Speed:\n" />
-
-
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:scrollbars="vertical"
+        tools:layout="@layout/activity_maps_running" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,19 +120,147 @@
         <Button
             android:id="@+id/maprunning_stop_textview"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Stop" />
+            android:text="Stop"
+            android:textColor="#FFFFFF"
+            android:background="@color/blue_500"/>
 
         <Button
             android:id="@+id/maprunning_pause_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pause" />
+            android:text="Pause"
+            android:textColor="#FFFFFF"
+            android:background="@color/blue_500"/>
 
     </LinearLayout>
+</LinearLayout>
+
+
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapActivity">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="100dp"
+            tools:layout="@layout/activity_maps_running" />
+
+        <LinearLayout
+            android:id="@+id/maprunning_stats1_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/glass_textview_background">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Speed:"
+                android:textSize="20sp"
+                 />
+            <TextView
+                android:id="@+id/maprunning_currspeed_textview"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text=""
+                android:textSize="20sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <TextView
+                    android:id="@+id/maprunning_duration_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Duration:"
+                    android:textSize="20sp" />
+
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:format="%s"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/maprunning_stats1_linearlayout"
+            android:background="@drawable/glass_textview_background"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/maprunning_dist_textview"
+                style="@style/TextViewMapStyle"
+                android:text="Distance:\n" />
+
+            <TextView
+                android:id="@+id/maprunning_cal_textview"
+                style="@style/TextViewMapStyle"
+                android:text="Cal:\n" />
+
+            <TextView
+                android:id="@+id/maprunning_avgspeed_textview"
+                style="@style/TextViewMapStyle"
+                android:text="Avg Speed:\n" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/maprunning_stop_textview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Stop" />
+
+            <Button
+                android:id="@+id/maprunning_pause_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pause" />
+
+        </LinearLayout>
 
 
 
-</RelativeLayout>
+    </RelativeLayout>
+    -->

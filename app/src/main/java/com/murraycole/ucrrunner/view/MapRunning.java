@@ -83,16 +83,14 @@ public class MapRunning extends BaseMapActivity {
             public void onLocationUpdate(Location location) {
                 DecimalFormat valuesRounded = new DecimalFormat("#.##");
                 currspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getCurrentSpeed())));
-                distance.setText("Distance:\n" +
-                        String.valueOf(valuesRounded.format(mapInfo.getDistance())));
-                avgspeed.setText("Avg Speed:\n" +
-                        String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())));
+                distance.setText(
+                        String.valueOf(valuesRounded.format(mapInfo.getDistance())) + "\nDistance (m)" );
                 if (isRunning){
                     delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
-                    calories.setText("Calories:\n" +
-                            String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))));
+                    calories.setText( String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))) +
+                            "\nCalories");
                 }
-                avgspeed.setText("Avg Speed:\n" + String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())));
+                avgspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())) + "\n Avg Speed"  );
 
             }
 

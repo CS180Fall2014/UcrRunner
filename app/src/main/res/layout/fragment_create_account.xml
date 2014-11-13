@@ -11,9 +11,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:gravity="center_horizontal"
+        android:layout_weight="3"
+        android:gravity="center"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "Account"
+            android:textColor="@color/grey_300"
+            android:paddingLeft="@dimen/edittext_padding_left"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,6 +44,8 @@
             style="@style/DefaultTextInput"
             android:hint="@string/password_edittext"
             android:inputType="textPassword" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -46,6 +54,12 @@
         android:layout_weight="3"
         android:gravity="center"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "Details"
+            android:textColor="@color/grey_300"
+            android:paddingLeft="@dimen/edittext_padding_left"/>
 
 
         <EditText
@@ -62,7 +76,8 @@
         <EditText
             android:id="@+id/createaccount_weight_edittext"
             style="@style/DefaultTextInput"
-            android:hint="@string/weight_edittext" />
+            android:hint="@string/weight_edittext"
+            android:inputType="numberDecimal"/>
 
         <RadioGroup
             android:id="@+id/gender_group"
@@ -101,14 +116,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2">
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/createaccount_joinnow_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/createaccount_finish_button" />
+            android:text="@string/createaccount_finish_button"
+            android:background="@color/blue_500"
+            android:textColor="#FFFFFF"/>
 
     </LinearLayout>
 

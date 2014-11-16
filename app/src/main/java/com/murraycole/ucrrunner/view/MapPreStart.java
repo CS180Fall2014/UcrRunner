@@ -1,9 +1,11 @@
 package com.murraycole.ucrrunner.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +31,9 @@ public class MapPreStart extends BaseMapActivity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
+
+        String uid_ = this.getSharedPreferences("com.firebase.test",  Context.MODE_PRIVATE).getString("userData.uid", new String("uh oh...."));
+        Log.d("MT", "Prematstart preferences contains " + uid_);
 
         setupLocationStatsListener();
         setUpMapIfNeeded();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,11 +92,24 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             bypass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    /*
                     EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("test@yahoo.com");
                     passET.setText("test");
                     new LoginButtonListener().onClick(view);
+                    */
+                    String USERIDKEY = "com.firebase.uid";
+                    SharedPreferences prefs = getActivity().getSharedPreferences(USERIDKEY, Context.MODE_PRIVATE);
+                    Log.d("MT", "prefs instantiated.");
+                    String uuid_ = "simplelogin:420";
+                    prefs.edit().putString("uid_pref", uuid_).apply();
+                    Log.d("MT", "successfully put " +uuid_+ " at " + USERIDKEY);
+
+
+
+                    String uid = prefs.getString(USERIDKEY, new String());
+                    Log.d("MT", uid);
                 }
             });
 

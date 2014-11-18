@@ -35,6 +35,8 @@ public class MapInformation {
     private GoogleMap googleMap;
     private LocationStatsListener locationStatsListener;
     private String UUID = "12345:3423"; //TODO get real UUID
+    private Boolean isPreviouslyCalculatedRoute = false;
+    private Boolean isBookmarked = false;
 
 
     /**
@@ -76,33 +78,82 @@ public class MapInformation {
     }
 
     /**
+     * (untested)
+     * bookmarks the current route
+     * @param isBookmarked is true if the route is to be bookmarked, otherwise false
+     */
+    public void bookmarkRoute(Boolean isBookmarked) {
+        this.isBookmarked = isBookmarked;
+    }
+
+    /**
+     * (untested)
+     * displays the given route and shows all information
+     * @param route is the route to displayed on the map
+     */
+    public void displayRoute(Route route) {
+        isPreviouslyCalculatedRoute  = true;
+        locationEntireRoute = route.getLocationCurrentRoute();
+        for (List<LatLng> pts : route.getCurrentRoute()) {
+            PolylineOptions options = new PolylineOptions();
+            options.color(Color.BLUE);
+            Polyline polyline = googleMap.addPolyline(options);
+            polyline.setPoints(pts);
+            entireRoute.add(polyline);
+        }
+
+        //to display route on map
+        stopRoute((int) route.getCurrentStats().duration);
+    }
+
+    /**
+     * (untested)
+     * displays preran route so user can run route again
+     * @param route is the preran route
+     */
+    public void reRunBookmarkedRoute(Route route) {
+        //isPreviouslyCalculatedRoute  = true;
+        //locationEntireRoute = route.getLocationCurrentRoute();
+        for (List<LatLng> pts : route.getCurrentRoute()) {
+            PolylineOptions options = new PolylineOptions();
+            options.color(Color.GRAY);
+            Polyline polyline = googleMap.addPolyline(options);
+            polyline.setPoints(pts);
+        }
+    }
+
+    /**
      * stops the current route and saves to Firebase
      *
      * @param seconds is the duration of the run
      */
     public void stopRoute(int seconds) {
         isStart = isPause = false;
-        List<List<LatLng>> r = new ArrayList<List<LatLng>>();
-        for (Polyline l : entireRoute)
-            r.add(l.getPoints());
-
         //zoom map to entire route
         googleMap.setOnMyLocationChangeListener(null);
         zoomToFitRoute();
 
+        if (!isPreviouslyCalculatedRoute) {
+            List<List<LatLng>> r = new ArrayList<List<LatLng>>();
+            for (Polyline l : entireRoute)
+                r.add(l.getPoints());
 
-        //save information from route to Firebase
-        Route route = new Route();
-        Stats stats = new Stats();
-        stats.setAverageSpeed(getAverageSpeed());
-        stats.setCaloriesBurned(getCalories(seconds));
-        stats.setDistance(getDistance());
-        stats.setElevation(-1.0); // set up elevation Milestone 1
-        stats.setTopSpeed(getTopSpeed());
-        stats.setDuration(seconds);
-        route.setCurrentRoute(r);
-        route.setCurrentStats(stats);
-        FirebaseManager.saveRoute(route, UUID);
+            //save information from route to Firebase
+            Route route = new Route();
+            Stats stats = new Stats();
+            stats.setAverageSpeed(getAverageSpeed());
+            stats.setCaloriesBurned(getCalories(seconds));
+            stats.setDistance(getDistance());
+            stats.setElevation(-1.0); // set up elevation Milestone 1
+            stats.setTopSpeed(getTopSpeed());
+            stats.setDuration(seconds);
+            route.setCurrentRoute(r);
+            route.setCurrentStats(stats);
+            route.setLocationCurrentRoute(locationEntireRoute);
+            route.setId(null); //TODO: add real id
+            route.setIsBookmarked(isBookmarked);
+            FirebaseManager.saveRoute(route, UUID);
+        }
     }
 
     /**

@@ -119,7 +119,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                         regInfo.setWeight(new Double(weightET.getText().toString()));
                         regInfo.setSex(genderValue);
                         regInfo.setAge(22);
-                        regInfo.setHeight(new Double(heightTV.getText().toString()));
+                        regInfo.setHeight(parseHeight());
                         regInfo.setNickname(nickET.getText().toString());
 
                         FirebaseManager.saveUser(regInfo, uid);
@@ -165,6 +165,16 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
         });
 
     };
+
+    private Double parseHeight(){
+        String replacement;
+        String finalReplacement;
+        String preParse = heightTV.getText().toString();
+        replacement = preParse.replace("'",".");
+        finalReplacement = replacement.replace("\"","");
+
+        return new Double(finalReplacement);
+    }
 }
 
 

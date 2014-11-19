@@ -91,11 +91,12 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             bypass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
+                    /*EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("test@yahoo.com");
                     passET.setText("test");
-                    new LoginButtonListener().onClick(view);
+                    new LoginButtonListener().onClick(view);*/
+                    FirebaseManager.changeSetting(FirebaseManager.Setting.NICKNAME, "76", "badass");
                 }
             });
 

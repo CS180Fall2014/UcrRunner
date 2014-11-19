@@ -20,7 +20,7 @@ import android.app.Activity;
  */
 public class FirebaseManager {
     public static enum Setting{
-        NICKNAME, AGE, EMAIL, HEIGHT, SEX, WEIGHT, USERNAME, PASSWORD
+        NICKNAME, AGE, HEIGHT, WEIGHT, PASSWORD
     }
 
     private Firebase baseRef;
@@ -30,36 +30,32 @@ public class FirebaseManager {
         baseRef = getRef();
     }
 
-    static FirebaseError changeSetting( Setting setEnum, String uid){
+    static FirebaseError changeSetting( Setting setEnum, String uid, Object newSetting){
+        Firebase userRef;
         switch(setEnum){
-            case Setting.NICKNAME:
-
+            case NICKNAME:
+                userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/nickname");
+                userRef.setValue(newSetting);
                 break;
-            case Setting.AGE:
-
+            case AGE:
+                userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/age");
+                userRef.setValue(newSetting);
                 break;
-            case Setting.EMAIL:
-
+            case HEIGHT:
+                userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/height");
+                userRef.setValue(newSetting);
                 break;
-            case Setting.HEIGHT:
-
+            case WEIGHT:
+                userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/weight");
+                userRef.setValue(newSetting);
                 break;
-            case Setting.SEX:
-
-                break;
-            case Setting.WEIGHT:
-
-                break;
-            case Setting.USERNAME:
-
-                break;
-            case Setting.PASSWORD:
-
+            case PASSWORD:
+                    //REST API FUNCTIONALITY
                 break;
             default:
-
                 break;
         }
+        return null;
     }
 
     static User getUser(String uid){

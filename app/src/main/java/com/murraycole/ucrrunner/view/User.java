@@ -12,6 +12,8 @@ public class User {
            weight = 0.0;
 
 
+
+
     public String getSex() {
         return sex;
     }

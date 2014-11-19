@@ -163,7 +163,7 @@ public class FirebaseManager {
         Log.d("MT", "Firebaseanager::saveroute() | uid recieved: " + uid);
 
         //userRef to users/uid/
-        Firebase userRef = getRef().child("users").child(uid);
+        Firebase userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/");
 
         userRef.setValue(currUser);
 

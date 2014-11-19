@@ -22,11 +22,12 @@ import java.util.Map;
  * Created by dennisnguyen on 11/5/14.
  */
 
+
 public class RegisterButtonListener extends CreateAccountFragment implements View.OnClickListener {
     final String tag = "MT";
     EditText userET, passET, nickET, heightET, weightET;
     String genderValue;
-    Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/");
+    Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/users");
 
     private boolean validateFields(View view){
         nickET = (EditText) regView.findViewById(R.id.createaccount_nickname_edittext);
@@ -95,30 +96,31 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
         Log.d(tag, "Got view." + regView.toString());
         Log.i("LoginButtonListener", "Logging in with credentials: [" + userET.getText().toString() + ", " + passET.getText().toString() + "]");
 
+
+        //attempts to create user into firebase
         ref.createUser(userET.getText().toString(), passET.getText().toString(), new Firebase.ResultHandler() {
+            //if username and passwords are valid, store user registration info to firebase route
             @Override
             public void onSuccess() {
                 Intent intent = new Intent(regView.getContext(), LoginActivity.class);
                 regView.getContext().startActivity(intent);
 
-                //weird shit
                 ref.authWithPassword(userET.getText().toString(), passET.getText().toString(), new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
                         Log.i("Authenticate Registration Info", authData.getUid());
-                        Firebase regRef = ref.child("users");
-                        Map <String,String> regInfo = new HashMap<String, String>();
-                        regInfo.put("Nickname", nickET.getText().toString());
-                        regInfo.put("Email", userET.getText().toString());
-                        regInfo.put("Weight", weightET.getText().toString());
-                        regInfo.put("Height", heightET.getText().toString());
-                        regInfo.put("Gender", genderValue);
-                        regInfo.put("Nickname", nickET.getText().toString());
-                        //push to <fburl>/users/4/
-                        Map<String, Map<String, String>> users = new HashMap<String, Map<String, String>>();
-                        users.put(authData.getUid().split(":")[1], regInfo);
-                        regRef.setValue(users);
-                        Log.i("Pushed", "");
+                        String uid = authData.getUid().split(":")[1];
+
+                        User regInfo = new User();
+                        regInfo.setNickname(nickET.getText().toString());
+                        regInfo.setEmail(userET.getText().toString());
+                        regInfo.setWeight(new Double(weightET.getText().toString()));
+                        regInfo.setSex(genderValue);
+                        regInfo.setAge(22);
+                        regInfo.setHeight(new Double(heightET.getText().toString()));
+                        regInfo.setNickname(nickET.getText().toString());
+
+                        FirebaseManager.saveUser(regInfo, uid);
 
                         Toast.makeText(regView.getContext(),"Success",Toast.LENGTH_SHORT).show();
                     }
@@ -130,7 +132,6 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                     }
                 });
             }
-            //Dennis fap break dennis fap break!!!!!
             @Override
             public void onError(FirebaseError firebaseError) {
                 Log.i("LoginButtonListener", "User authentication failed.");

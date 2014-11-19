@@ -68,10 +68,11 @@
             android:hint="@string/age_edittext"
             android:inputType="number" />
 
-        <EditText
+        <TextView
             android:id="@+id/createaccount_height_edittext"
             style="@style/DefaultTextInput"
-            android:hint="@string/height_edittext" />
+            android:hint="@string/height_edittext"
+            android:gravity="center_vertical"/>
 
         <EditText
             android:id="@+id/createaccount_weight_edittext"

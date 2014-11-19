@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -22,17 +23,17 @@ import java.util.Map;
  * Created by dennisnguyen on 11/5/14.
  */
 
-
 public class RegisterButtonListener extends CreateAccountFragment implements View.OnClickListener {
     final String tag = "MT";
-    EditText userET, passET, nickET, heightET, weightET;
+    EditText userET, passET, nickET, weightET; // weight and age will be changed to textviewsd
+    TextView heightTV;
     String genderValue;
     Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/users");
 
     private boolean validateFields(View view){
         nickET = (EditText) regView.findViewById(R.id.createaccount_nickname_edittext);
         weightET = (EditText) regView.findViewById(R.id.createaccount_weight_edittext);
-        heightET = (EditText) regView.findViewById(R.id.createaccount_height_edittext);
+        heightTV= (TextView) regView.findViewById(R.id.createaccount_height_edittext);
 
         int validateFlag = 0;
         if(nickET.getText().toString().isEmpty() || nickET.getText().toString().matches("")){
@@ -46,7 +47,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
             weightToast.show();
             validateFlag+=1;
         }
-        if(heightET.getText().toString().isEmpty() || heightET.getText().toString().matches("")){
+        if(heightTV.getText().toString().isEmpty() || heightTV.getText().toString().matches("")){
             Toast heightToast = Toast.makeText(view.getContext(), "Missing height", Toast.LENGTH_LONG);
             heightToast.show();
             validateFlag+=1;
@@ -83,7 +84,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
         passET = (EditText) regView.findViewById(R.id.createaccount_password_edittext);
         nickET = (EditText) regView.findViewById(R.id.createaccount_nickname_edittext);
         weightET = (EditText) regView.findViewById(R.id.createaccount_weight_edittext);
-        heightET = (EditText) regView.findViewById(R.id.createaccount_height_edittext);
+        heightTV = (TextView) regView.findViewById(R.id.createaccount_height_edittext);
 
 
         if (validateFields(view) == false){
@@ -105,6 +106,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                 Intent intent = new Intent(regView.getContext(), LoginActivity.class);
                 regView.getContext().startActivity(intent);
 
+                //weird shit
                 ref.authWithPassword(userET.getText().toString(), passET.getText().toString(), new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
@@ -117,7 +119,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                         regInfo.setWeight(new Double(weightET.getText().toString()));
                         regInfo.setSex(genderValue);
                         regInfo.setAge(22);
-                        regInfo.setHeight(new Double(heightET.getText().toString()));
+                        regInfo.setHeight(new Double(heightTV.getText().toString()));
                         regInfo.setNickname(nickET.getText().toString());
 
                         FirebaseManager.saveUser(regInfo, uid);

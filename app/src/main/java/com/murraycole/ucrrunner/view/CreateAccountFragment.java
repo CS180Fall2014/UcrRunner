@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
 
@@ -49,6 +50,7 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
 
     Button join;
     View regView;
+    TextView height;
 
     // TODO: Rename and change types and number of parameters
     public static CreateAccountFragment newInstance(String param1, String param2) {
@@ -67,6 +69,7 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -75,6 +78,14 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
         // Inflate the layout for this fragment
         regView  = inflater.inflate(R.layout.fragment_create_account, container, false);
         join = (Button) regView.findViewById(R.id.createaccount_joinnow_button);
+        height = (TextView) regView.findViewById(R.id.createaccount_height_edittext);
+
+        height.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
         setupLoginOnClick(join);
         return regView;
 
@@ -127,6 +138,18 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
+    }
+
+    public void showDialog(){
+        HeightDialogFragment newFragment = HeightDialogFragment.newInstance(R.string.height_alert_dialog_title);
+        newFragment.show(getFragmentManager(),"dialog");
+    }
+    public void doPositiveClick(String text){
+        height.setText(text);
+
+    }
+    public void doNegativeClick(){
+
     }
 
 }

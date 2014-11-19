@@ -24,7 +24,9 @@
     <string name="email_edittext">Email</string>
     <string name="birthday_edittext">Birthday</string>
     <string name="createaccount_finish_button">Join Now</string>
-
+    <string name="height_alert_dialog_title">Height</string>
+    <string name="alert_dialog_ok">Ok</string>
+    <string name="alert_dialog_cancel">Cancel</string>
 
 
 

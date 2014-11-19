@@ -19,11 +19,47 @@ import android.app.Activity;
  * Created by mbrevard on 11/9/14.
  */
 public class FirebaseManager {
+    public static enum Setting{
+        NICKNAME, AGE, EMAIL, HEIGHT, SEX, WEIGHT, USERNAME, PASSWORD
+    }
+
     private Firebase baseRef;
 
 
     FirebaseManager(){
         baseRef = getRef();
+    }
+
+    static FirebaseError changeSetting( Setting setEnum, String uid){
+        switch(setEnum){
+            case Setting.NICKNAME:
+
+                break;
+            case Setting.AGE:
+
+                break;
+            case Setting.EMAIL:
+
+                break;
+            case Setting.HEIGHT:
+
+                break;
+            case Setting.SEX:
+
+                break;
+            case Setting.WEIGHT:
+
+                break;
+            case Setting.USERNAME:
+
+                break;
+            case Setting.PASSWORD:
+
+                break;
+            default:
+
+                break;
+        }
     }
 
     static User getUser(String uid){
@@ -122,7 +158,6 @@ public class FirebaseManager {
                         Log.d("MT", "..caloriesBurned: " + currentStats.getDouble("caloriesBurned"));
                         Log.d("MT", "..distance: " + currentStats.getDouble("distance"));
                         Log.d("MT", ".......................................");*/
-                        // int duration = 0; // not yet implemented in FB
                         //Stat now populated
                     }catch(Exception e){
                         Log.d("MT", e.getMessage());
@@ -174,4 +209,6 @@ public class FirebaseManager {
     static Firebase getRef(){
         return new Firebase("https://torid-inferno-2246.firebaseio.com/");
     }
+
+
 }

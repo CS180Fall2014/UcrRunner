@@ -2,14 +2,22 @@ package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.ProfileFragments.FriendsFragment;
+import com.murraycole.ucrrunner.view.ProfileFragments.MailboxFragment;
+import com.murraycole.ucrrunner.view.ProfileFragments.NewsFeedFragment;
+import com.murraycole.ucrrunner.view.ProfileFragments.PrevRouteFragment;
+import com.murraycole.ucrrunner.view.ProfileFragments.ProfileFragment;
+import com.murraycole.ucrrunner.view.ProfileFragments.ProfileSettingsFragment;
 
 public class Profile extends Activity {
 
@@ -19,7 +27,7 @@ public class Profile extends Activity {
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment()).commit();
+                    .add(R.id.container, new ProfileFragment()).commit();
 
             /*
             //Redirect from Login to MapPreStart Screen
@@ -30,6 +38,8 @@ public class Profile extends Activity {
                 //Intent mapActivity = new Intent(this, mapRunning.getClass());
             startActivity(mapActivity); */
         }
+        
+
     }
 
 
@@ -60,11 +70,5 @@ public class Profile extends Activity {
         public PlaceholderFragment() {
         }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
-            return rootView;
-        }
     }
 }

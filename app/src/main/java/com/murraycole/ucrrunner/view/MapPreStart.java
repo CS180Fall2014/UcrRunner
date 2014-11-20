@@ -25,8 +25,7 @@ public class MapPreStart extends BaseMapActivity {
         StartRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), MapRunning.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
             }
         });
 

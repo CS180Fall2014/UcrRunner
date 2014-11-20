@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.murraycole.ucrrunner.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Cole doing this
  */
 public class PrevRouteFragment extends Fragment {
 

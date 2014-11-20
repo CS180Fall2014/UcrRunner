@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.murraycole.ucrrunner.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+/* Keshav */
+
 public class FriendsFragment extends Fragment {
 
 

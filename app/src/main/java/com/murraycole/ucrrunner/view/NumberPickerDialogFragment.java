@@ -10,9 +10,7 @@ import android.widget.NumberPicker;
 
 import com.murraycole.ucrrunner.R;
 
-/**
- * Created by C on 11/19/2014.
- */
+
 public class NumberPickerDialogFragment extends DialogFragment {
 
     public static NumberPickerDialogFragment newInstance(int title, String type) {
@@ -26,6 +24,7 @@ public class NumberPickerDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         int title = getArguments().getInt("title");
         final String type = getArguments().getString("type");
         View view = getActivity().getLayoutInflater().inflate(
@@ -33,6 +32,12 @@ public class NumberPickerDialogFragment extends DialogFragment {
         final NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.generic_numberpicker);
         setupNumberPicker(numberPicker,type);
 
+        return createAlertDialog(title, type, view, numberPicker);
+
+
+    }
+
+    private Dialog createAlertDialog(int title, final String type, View view, final NumberPicker numberPicker) {
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setView(view)
@@ -53,8 +58,8 @@ public class NumberPickerDialogFragment extends DialogFragment {
                 })
                 .create();
         return dialog;
-    }
 
+    }
     private void setupNumberPicker(NumberPicker numberPicker,String type){
         switch (type){
             case "age" :

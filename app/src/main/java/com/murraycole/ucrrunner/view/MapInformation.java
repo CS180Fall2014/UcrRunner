@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.view;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 
@@ -10,6 +11,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +37,10 @@ public class MapInformation {
     private GoogleMap googleMap;
     private LocationStatsListener locationStatsListener;
     private String UUID = "12345:3423"; //TODO get real UUID
-    private Boolean isPreviouslyCalculatedRoute = false;
+   // private Boolean isPreviouslyCalculatedRoute = false;
     private Boolean isBookmarked = false;
-
+    private byte[] image = null;
+    private int duration = -1;
 
     /**
      * initializes the MapInformation which is dependent on the Google Map API v2
@@ -80,6 +83,7 @@ public class MapInformation {
     /**
      * (untested)
      * bookmarks the current route
+     *
      * @param isBookmarked is true if the route is to be bookmarked, otherwise false
      */
     public void bookmarkRoute(Boolean isBookmarked) {
@@ -88,27 +92,29 @@ public class MapInformation {
 
     /**
      * (untested)
+     * not going to be used because images will be
      * displays the given route and shows all information
+     *
      * @param route is the route to displayed on the map
      */
-    public void displayRoute(Route route) {
-        isPreviouslyCalculatedRoute  = true;
-        locationEntireRoute = route.getLocationCurrentRoute();
-        for (List<LatLng> pts : route.getCurrentRoute()) {
-            PolylineOptions options = new PolylineOptions();
-            options.color(Color.BLUE);
-            Polyline polyline = googleMap.addPolyline(options);
-            polyline.setPoints(pts);
-            entireRoute.add(polyline);
-        }
-
-        //to display route on map
-        stopRoute((int) route.getCurrentStats().duration);
-    }
+//    public void displayRoute(Route route) {
+//        isPreviouslyCalculatedRoute = true;
+//        for (List<LatLng> pts : route.getCurrentRoute()) {
+//            PolylineOptions options = new PolylineOptions();
+//            options.color(Color.BLUE);
+//            Polyline polyline = googleMap.addPolyline(options);
+//            polyline.setPoints(pts);
+//            entireRoute.add(polyline);
+//        }
+//
+//        //to display route on map
+//        stopRoute((int) route.getCurrentStats().duration);
+//    }
 
     /**
      * (untested)
      * displays preran route so user can run route again
+     *
      * @param route is the preran route
      */
     public void reRunBookmarkedRoute(Route route) {
@@ -128,32 +134,15 @@ public class MapInformation {
      * @param seconds is the duration of the run
      */
     public void stopRoute(int seconds) {
+        System.out.println("stopRoute called");
         isStart = isPause = false;
+        duration = seconds;
         //zoom map to entire route
         googleMap.setOnMyLocationChangeListener(null);
         zoomToFitRoute();
 
-        if (!isPreviouslyCalculatedRoute) {
-            List<List<LatLng>> r = new ArrayList<List<LatLng>>();
-            for (Polyline l : entireRoute)
-                r.add(l.getPoints());
-
-            //save information from route to Firebase
-            Route route = new Route();
-            Stats stats = new Stats();
-            stats.setAverageSpeed(getAverageSpeed());
-            stats.setCaloriesBurned(getCalories(seconds));
-            stats.setDistance(getDistance());
-            stats.setElevation(-1.0); // set up elevation Milestone 1
-            stats.setTopSpeed(getTopSpeed());
-            stats.setDuration(seconds);
-            route.setCurrentRoute(r);
-            route.setCurrentStats(stats);
-            route.setLocationCurrentRoute(locationEntireRoute);
-            route.setId(null); //TODO: add real id
-            route.setIsBookmarked(isBookmarked);
-            FirebaseManager.saveRoute(route, UUID);
-        }
+        takeImage();
+        //  }
     }
 
     /**
@@ -224,7 +213,7 @@ public class MapInformation {
      * @return calories
      */
     public double getCalories(double elapsed_time) {
-        return new MapCalculation().calculateCalories(this,elapsed_time);
+        return new MapCalculation().calculateCalories(this, elapsed_time);
     }
 
 
@@ -302,12 +291,53 @@ public class MapInformation {
         isPause = !isStart;
     }
 
+    GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
+
+        @Override
+        public void onSnapshotReady(Bitmap bitmap) {
+            if (bitmap == null)
+                return;
+
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            image = stream.toByteArray();
+            saveRoute();
+        }
+    };
+
+
+    private void saveRoute() {
+        List<List<LatLng>> r = new ArrayList<List<LatLng>>();
+        for (Polyline l : entireRoute)
+            r.add(l.getPoints());
+
+        //save information from route to Firebase
+        Route route = new Route();
+        Stats stats = new Stats();
+        stats.setAverageSpeed(getAverageSpeed());
+        stats.setCaloriesBurned(getCalories(duration));
+        stats.setDistance(getDistance());
+        stats.setElevation(-1.0); // set up elevation Milestone 1
+        stats.setTopSpeed(getTopSpeed());
+        stats.setDuration(duration);
+        route.setCurrentRoute(r);
+        route.setCurrentStats(stats);
+        route.setId(null); //TODO: add real id
+        route.setIsBookmarked(isBookmarked);
+        //TODO: save the image
+        FirebaseManager.saveRoute(route, UUID);
+    }
+
+    private void takeImage() {
+        System.out.println("Take Image Called");
+        googleMap.snapshot(callback);
+    }
+
     /**
      * Location listener for UI side
      */
     public interface LocationStatsListener {
         public void onLocationUpdate(Location location);
     }
-
-
 }

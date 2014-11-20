@@ -32,16 +32,6 @@ public class Route {
         this.id = id;
     }
 
-    public List<Location> getLocationCurrentRoute() {
-        return locationCurrentRoute;
-    }
-
-    public void setLocationCurrentRoute(List<Location> locationCurrentRoute) {
-        this.locationCurrentRoute = locationCurrentRoute;
-    }
-
-    private List<Location> locationCurrentRoute;
-
     public List<List<LatLng>> getCurrentRoute() {
         return currentRoute;
     }

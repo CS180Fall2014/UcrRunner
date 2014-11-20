@@ -2,7 +2,6 @@ package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,9 +18,17 @@ public class Profile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment()).commit();
+
+            /*
+            //Redirect from Login to MapPreStart Screen
                 MapPreStart mapPreStart = new MapPreStart();
                 Intent mapActivity = new Intent(this, mapPreStart.getClass());
-            startActivity(mapActivity);
+            // mike : mapRunning stuff (testing here)
+                // MapRunning mapRunning = new MapRunning();
+                //Intent mapActivity = new Intent(this, mapRunning.getClass());
+            startActivity(mapActivity); */
         }
     }
 

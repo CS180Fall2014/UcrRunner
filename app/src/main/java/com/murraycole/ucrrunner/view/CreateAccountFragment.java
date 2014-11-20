@@ -50,7 +50,7 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
 
     Button join;
     View regView;
-    TextView height;
+    TextView height,age,weight;
 
     // TODO: Rename and change types and number of parameters
     public static CreateAccountFragment newInstance(String param1, String param2) {
@@ -79,11 +79,25 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
         regView  = inflater.inflate(R.layout.fragment_create_account, container, false);
         join = (Button) regView.findViewById(R.id.createaccount_joinnow_button);
         height = (TextView) regView.findViewById(R.id.createaccount_height_edittext);
+        age = (TextView) regView.findViewById(R.id.createaccount_age_edittext);
+        weight = (TextView) regView.findViewById(R.id.createaccount_weight_edittext);
 
         height.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                showHeightDialog();
+            }
+        });
+        age.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showGenericDialog(R.string.age_alert_dialog_title, "age");
+            }
+        });
+        weight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showGenericDialog(R.string.weight_alert_dialog_title,"weight");
             }
         });
         setupLoginOnClick(join);
@@ -140,12 +154,33 @@ public class CreateAccountFragment extends Fragment implements AdapterView.OnIte
         public void onFragmentInteraction(Uri uri);
     }
 
-    public void showDialog(){
+    public void showHeightDialog(){
         HeightDialogFragment newFragment = HeightDialogFragment.newInstance(R.string.height_alert_dialog_title);
         newFragment.show(getFragmentManager(),"dialog");
     }
-    public void doPositiveClick(String text){
-        height.setText(text);
+
+    /**
+     *
+     * @param title (string id of title)
+     * @param type (age or weight)
+     */
+    public void showGenericDialog(int title,String type){
+        NumberPickerDialogFragment newFragment = NumberPickerDialogFragment.newInstance(title,type);
+        newFragment.show(getFragmentManager(),"dialog");
+    }
+
+    public void doPositiveClick(String text, String type){
+        switch(type){
+            case "height":
+                height.setText(text);
+                break;
+            case "age":
+                age.setText(text);
+               break;
+            case "weight":
+                weight.setText(text);
+                break;
+        }
 
     }
     public void doNegativeClick(){

@@ -27,7 +27,8 @@
     <string name="height_alert_dialog_title">Height</string>
     <string name="alert_dialog_ok">Ok</string>
     <string name="alert_dialog_cancel">Cancel</string>
-
+    <string name ="age_alert_dialog_title">age</string>
+    <string name ="weight_alert_dialog_title">weight</string>
 
 
 </resources>

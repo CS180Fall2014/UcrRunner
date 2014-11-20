@@ -14,12 +14,13 @@
         android:layout_weight="3"
         android:gravity="center"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "Account"
-            android:textColor="@color/grey_300"
-            android:paddingLeft="@dimen/edittext_padding_left"/>
+            android:paddingLeft="@dimen/edittext_padding_left"
+            android:text="Account"
+            android:textColor="@color/grey_300" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,31 +55,29 @@
         android:layout_weight="3"
         android:gravity="center"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "Details"
-            android:textColor="@color/grey_300"
-            android:paddingLeft="@dimen/edittext_padding_left"/>
+            android:paddingLeft="@dimen/edittext_padding_left"
+            android:text="Details"
+            android:textColor="@color/grey_300" />
 
 
-        <EditText
+        <TextView
             android:id="@+id/createaccount_age_edittext"
             style="@style/DefaultTextInput"
-            android:hint="@string/age_edittext"
-            android:inputType="number" />
+            android:hint="@string/age_edittext" />
 
         <TextView
             android:id="@+id/createaccount_height_edittext"
             style="@style/DefaultTextInput"
-            android:hint="@string/height_edittext"
-            android:gravity="center_vertical"/>
+            android:hint="@string/height_edittext" />
 
-        <EditText
+        <TextView
             android:id="@+id/createaccount_weight_edittext"
             style="@style/DefaultTextInput"
-            android:hint="@string/weight_edittext"
-            android:inputType="numberDecimal"/>
+            android:hint="@string/weight_edittext" />
 
         <RadioGroup
             android:id="@+id/gender_group"
@@ -124,9 +123,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/createaccount_finish_button"
             android:background="@color/blue_500"
-            android:textColor="#FFFFFF"/>
+            android:text="@string/createaccount_finish_button"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

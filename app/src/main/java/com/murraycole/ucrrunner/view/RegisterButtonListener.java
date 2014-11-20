@@ -25,14 +25,14 @@ import java.util.Map;
 
 public class RegisterButtonListener extends CreateAccountFragment implements View.OnClickListener {
     final String tag = "MT";
-    EditText userET, passET, nickET, weightET; // weight and age will be changed to textviewsd
-    TextView heightTV;
+    EditText userET, passET, nickET;
+    TextView heightTV,weightTV,ageTV;
     String genderValue;
     Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/users");
 
     private boolean validateFields(View view){
         nickET = (EditText) regView.findViewById(R.id.createaccount_nickname_edittext);
-        weightET = (EditText) regView.findViewById(R.id.createaccount_weight_edittext);
+        weightTV = (TextView) regView.findViewById(R.id.createaccount_weight_edittext);
         heightTV= (TextView) regView.findViewById(R.id.createaccount_height_edittext);
 
         int validateFlag = 0;
@@ -42,7 +42,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
             validateFlag+=1;
         }
 
-        if(weightET.getText().toString().isEmpty() || weightET.getText().toString().matches("")){
+        if(weightTV.getText().toString().isEmpty() || weightTV.getText().toString().matches("")){
             Toast weightToast = Toast.makeText(view.getContext(), "Missing weight", Toast.LENGTH_LONG);
             weightToast.show();
             validateFlag+=1;
@@ -83,7 +83,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
         userET = (EditText) regView.findViewById(R.id.createaccount_username_edittext);
         passET = (EditText) regView.findViewById(R.id.createaccount_password_edittext);
         nickET = (EditText) regView.findViewById(R.id.createaccount_nickname_edittext);
-        weightET = (EditText) regView.findViewById(R.id.createaccount_weight_edittext);
+        weightTV = (TextView) regView.findViewById(R.id.createaccount_weight_edittext);
         heightTV = (TextView) regView.findViewById(R.id.createaccount_height_edittext);
 
 
@@ -116,7 +116,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                         User regInfo = new User();
                         regInfo.setNickname(nickET.getText().toString());
                         regInfo.setEmail(userET.getText().toString());
-                        regInfo.setWeight(new Double(weightET.getText().toString()));
+                        regInfo.setWeight(new Double(weightTV.getText().toString()));
                         regInfo.setSex(genderValue);
                         regInfo.setAge(22);
                         regInfo.setHeight(parseHeight());

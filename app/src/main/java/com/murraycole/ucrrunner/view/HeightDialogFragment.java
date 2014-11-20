@@ -40,7 +40,7 @@ public class HeightDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.alert_dialog_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                ((CreateAccountFragment)getFragmentManager().findFragmentById(R.id.container)).doPositiveClick(getValueHeightandFeet(feet,inches));
+                                ((CreateAccountFragment)getFragmentManager().findFragmentById(R.id.container)).doPositiveClick(getValueHeightandFeet(feet,inches),"height");
                             }
                         }
                 )

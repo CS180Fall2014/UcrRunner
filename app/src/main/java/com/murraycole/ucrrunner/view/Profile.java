@@ -19,12 +19,8 @@ public class Profile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
-            //Redirect from Login to MapPreStart Screen
                 MapPreStart mapPreStart = new MapPreStart();
                 Intent mapActivity = new Intent(this, mapPreStart.getClass());
-            // mike : mapRunning stuff (testing here)
-                // MapRunning mapRunning = new MapRunning();
-                //Intent mapActivity = new Intent(this, mapRunning.getClass());
             startActivity(mapActivity);
         }
     }

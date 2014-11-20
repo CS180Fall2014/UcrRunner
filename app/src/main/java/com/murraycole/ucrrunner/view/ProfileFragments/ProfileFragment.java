@@ -1,9 +1,9 @@
 package com.murraycole.ucrrunner.view.ProfileFragments;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.container, new FriendsFragment()).commit();
+                        .replace(R.id.container, new FriendsFragment()).addToBackStack(null).commit();
 
             }
         });
@@ -64,7 +64,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.container, new ProfileSettingsFragment()).commit();
+                        .replace(R.id.container, new ProfileSettingsFragment()).addToBackStack(null).commit();
 
             }
         });
@@ -73,7 +73,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.container, new NewsFeedFragment()).commit();
+                        .replace(R.id.container, new NewsFeedFragment()).addToBackStack(null).commit();
 
             }
         });
@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.container, new PrevRouteFragment()).commit();
+                        .replace(R.id.container, new PrevRouteFragment()).addToBackStack(null).commit();
 
             }
         });
@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.container, new MailboxFragment()).commit();
+                        .replace(R.id.container, new MailboxFragment()).addToBackStack(null).commit();
 
             }
         });

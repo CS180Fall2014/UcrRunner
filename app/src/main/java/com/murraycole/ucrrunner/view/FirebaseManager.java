@@ -23,13 +23,21 @@ public class FirebaseManager {
         NICKNAME, AGE, HEIGHT, WEIGHT, PASSWORD
     }
 
-    private Firebase baseRef;
-
-
-    FirebaseManager(){
-        baseRef = getRef();
+    static ArrayList<User> getFriends( String uid ){
+        //possible just return a list of usernames?
+        return null;
     }
+    static FirebaseError addFriend(String uid, String frienduid){
+        return null;
+    }
+    static FirebaseError sendMessage( String uid, String message, String frienduid){
+        return null;
+    }
+    /*
+    static ArrayList<Post> getFeed(String uid){
+     }
 
+*/
     static FirebaseError changeSetting( Setting setEnum, String uid, Object newSetting){
         Firebase userRef;
         switch(setEnum){
@@ -180,7 +188,7 @@ public class FirebaseManager {
         }
         Log.d("MT", "FirebaseManager::saveRoute() | uid recieved: " + uid);
         //routeRef to outes/uid/
-        Firebase routesRef = getRef().child("routes").child(uid);
+        Firebase routesRef = new Firebase("https://torid-inferno-2246.firebaseio.com/").child("routes").child(uid);
 
         //set to routes/uid/<genid_currRoute>/_currRouteData
         routesRef.push().setValue(currRoute);
@@ -199,11 +207,6 @@ public class FirebaseManager {
         userRef.setValue(currUser);
 
         return null;
-    }
-
-    // use this to get baseRef in static functions.
-    static Firebase getRef(){
-        return new Firebase("https://torid-inferno-2246.firebaseio.com/");
     }
 
 

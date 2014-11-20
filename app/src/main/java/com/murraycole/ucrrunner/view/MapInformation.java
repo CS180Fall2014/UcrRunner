@@ -237,8 +237,12 @@ public class MapInformation {
             for (LatLng l : p.getPoints())
                 b.include(l);
         }
-        LatLngBounds bounds = b.build();
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
+        if (!entireRoute.isEmpty()) {
+
+            LatLngBounds bounds = b.build();
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
+        }
+
     }
 
 

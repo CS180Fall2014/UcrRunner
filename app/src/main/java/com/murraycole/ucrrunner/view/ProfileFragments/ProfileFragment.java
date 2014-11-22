@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.MapRunning;
+import com.murraycole.ucrrunner.view.SettingsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +40,7 @@ public class ProfileFragment extends Fragment {
     private void On_Button_Press(View v) {
         Button Start_Run = (Button)v.findViewById(R.id.profile_startrun_button);
         Button Friends = (Button)v.findViewById(R.id.profile_friends_button);
-        Button Settings = (Button)v.findViewById(R.id.profile_settings_button);
+        final Button Settings = (Button)v.findViewById(R.id.profile_settings_button);
         Button News_Feed = (Button)v.findViewById(R.id.profile_newsfeed_button);
         Button Previous_Routes = (Button)v.findViewById(R.id.profile_prevroutes_button);
         Button Mailbox = (Button)v.findViewById(R.id.profile_mailbox_button);
@@ -63,8 +64,7 @@ public class ProfileFragment extends Fragment {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new ProfileSettingsFragment()).addToBackStack(null).commit();
+               startActivity(new Intent(getActivity(), SettingsActivity.class));
 
             }
         });

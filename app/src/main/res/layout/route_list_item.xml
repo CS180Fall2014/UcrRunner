@@ -9,32 +9,43 @@
         android:layout_height="150dp"
         android:padding="@dimen/activity_horizontal_margin">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/route_item_date_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:fontFamily="serif-thin"
                 android:text="11/18"
                 android:textColor="#C4000000"
-                android:textSize="36dp" />
+                android:textSize="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/route_item_date_textview"
+                android:fontFamily="serif-thin"
+                android:paddingLeft="8dp"
+                android:text="2:45pm"
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/route_item_dist_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="serif-thin"
+                android:gravity="center_horizontal"
                 android:text="2.64 mi"
                 android:textColor="#C4000000"
                 android:textSize="36dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/route_item_map_imageview"
@@ -42,7 +53,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_weight="1"
-            android:background="@drawable/ic_launcher" />
+            android:background="@drawable/map" />
 
 
     </LinearLayout>

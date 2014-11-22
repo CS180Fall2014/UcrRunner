@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.dialogfragments.HeightDialogFragment;
+import com.murraycole.ucrrunner.view.dialogfragments.NumberPickerDialogFragment;
 
 /**
  * A simple {@link Fragment} subclass.

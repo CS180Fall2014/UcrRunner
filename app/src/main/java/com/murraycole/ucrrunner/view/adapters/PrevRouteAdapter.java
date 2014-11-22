@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.view.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.Route;
+import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
 
 import java.util.ArrayList;
 
@@ -17,9 +19,11 @@ import java.util.ArrayList;
  * Created by C on 11/20/2014.
  */
 public class PrevRouteAdapter extends ArrayAdapter<Route> {
+    Context mContext;
 
     public PrevRouteAdapter(Context context, ArrayList<Route> routes){
         super(context,0,routes);
+        mContext = context;
     }
 
     @Override
@@ -36,6 +40,15 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             TextView routeDate = (TextView) rowView.findViewById(R.id.route_item_date_textview);
             TextView routeDist = (TextView) rowView.findViewById(R.id.route_item_dist_textview);
             ImageView routeImg = (ImageView) rowView.findViewById(R.id.route_item_map_imageview);
+
+            routeImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RerunDialogFragment rerunDialogFragment = RerunDialogFragment.newInstance(
+                            R.string.rerun_route_dialog_title);
+                    rerunDialogFragment.show(((Activity)mContext).getFragmentManager(),"dialog");
+                }
+            });
 
 
         }

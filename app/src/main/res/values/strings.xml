@@ -30,5 +30,9 @@
     <string name ="age_alert_dialog_title">age</string>
     <string name ="weight_alert_dialog_title">weight</string>
 
+    <!-- Prev Route strings -->
+
+    <string name = "rerun_route_dialog_title">Rerun?</string>
+
 
 </resources>

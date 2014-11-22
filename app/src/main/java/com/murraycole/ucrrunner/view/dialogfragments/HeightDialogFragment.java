@@ -1,4 +1,4 @@
-package com.murraycole.ucrrunner.view;
+package com.murraycole.ucrrunner.view.dialogfragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.CreateAccountFragment;
 
 /**
  * Created by C on 11/18/2014.

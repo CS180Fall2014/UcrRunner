@@ -15,7 +15,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.Model.User;
+import com.murraycole.ucrrunner.view.DAO.User;
 
 /**
  * Created by dennisnguyen on 11/5/14.

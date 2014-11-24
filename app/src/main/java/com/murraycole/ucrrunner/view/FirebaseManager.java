@@ -8,9 +8,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.model.LatLng;
-import com.murraycole.ucrrunner.view.Model.Route;
-import com.murraycole.ucrrunner.view.Model.Stats;
-import com.murraycole.ucrrunner.view.Model.User;
+import com.murraycole.ucrrunner.view.DAO.Route;
+import com.murraycole.ucrrunner.view.DAO.Stats;
+import com.murraycole.ucrrunner.view.DAO.User;
 import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
 
 import org.json.JSONArray;
@@ -36,11 +36,15 @@ public class FirebaseManager {
     }
     //=======================
 
-    //=======================
-    static public void sendMessage( String uid, String message){
+    // Message functions ===========================================================================
+    static public void getMessages( String uid ){
+        return;
+    }
+    static public void sendMessage( String uid, String message, String frienduid ){
         return;
     }
 
+    // Friends functions ===========================================================================
     //Works (Listener update)
     static public void getFriends( String uid , ArrayUpdateListener fragUpdateListener){
         if(android.os.Build.VERSION.SDK_INT > 9){
@@ -87,8 +91,7 @@ public class FirebaseManager {
             e.printStackTrace();
         }
     }
-
-
+    //Works (appends to uid friends attr)
     static void addFriend(String uid, String friendNick){
         if(android.os.Build.VERSION.SDK_INT > 9){
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -119,14 +122,10 @@ public class FirebaseManager {
             e.printStackTrace();
         }
     }
-    static FirebaseError sendMessage( String uid, String message, String frienduid){
-        return null;
-    }
-    /*
-    static ArrayList<Post> getFeed(String uid){
-     }
 
-*/
+    // User functions ==============================================================================
+    //Works
+    // TODO make wrappers for this
     static FirebaseError changeSetting( Setting setEnum, String uid, Object newSetting){
         Firebase userRef;
         switch(setEnum){
@@ -154,7 +153,7 @@ public class FirebaseManager {
         }
         return null;
     }
-
+    // TODO needs work
     static User getUser(String uid){
         if(uid.contains(":")) {
             uid = uid.split(":")[1];
@@ -190,7 +189,44 @@ public class FirebaseManager {
 
         return returnUser;
     }
+    // Works FB register and save to regrec table
+    static FirebaseError saveUser( User currUser, String uid ){
+        if(uid.contains(":")){
+            uid = uid.split(":")[1];
+        }
+        Log.d("MT", "Firebaseanager::saveroute() | uid recieved: " + uid);
 
+        //userRef to users/uid/
+        Firebase userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/");
+        Firebase recRef = new Firebase("https://torid-inferno-2246.firebaseio.com/regrec/" + currUser.getNickname());
+
+        userRef.setValue(currUser);
+
+        recRef.setValue(new Integer(uid).intValue());
+        return null;
+    }
+    // Works
+    static int getUID(String nickname){
+        if(android.os.Build.VERSION.SDK_INT > 9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec/"+nickname+".json");
+            Log.d("MT", "getUID json: " + friendsJson);
+            if(friendsJson.matches("null")){
+                return -1;
+            }
+            return new Integer(friendsJson).intValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    // Route functions =============================================================================
     //works
     public static void getRoutes( String uid, ArrayUpdateListener fragUpdateListener){
         if(uid.contains(":")) {
@@ -269,7 +305,6 @@ public class FirebaseManager {
             }
         });
     }
-
     // Works saves to /Routes
     static FirebaseError saveRoute( Route currRoute, String uid){
         if(uid.contains(":")) {
@@ -285,45 +320,7 @@ public class FirebaseManager {
         return null;
     }
 
-    // Works FB register and save to regrec table
-    static FirebaseError saveUser( User currUser, String uid ){
-        if(uid.contains(":")){
-            uid = uid.split(":")[1];
-        }
-        Log.d("MT", "Firebaseanager::saveroute() | uid recieved: " + uid);
-
-        //userRef to users/uid/
-        Firebase userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/");
-        Firebase recRef = new Firebase("https://torid-inferno-2246.firebaseio.com/regrec/" + currUser.getNickname());
-
-        userRef.setValue(currUser);
-
-        recRef.setValue(new Integer(uid).intValue());
-        return null;
-    }
-
-    // Works
-    static int getUID(String nickname){
-        if(android.os.Build.VERSION.SDK_INT > 9){
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        try {
-            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec/"+nickname+".json");
-            Log.d("MT", "getUID json: " + friendsJson);
-            if(friendsJson.matches("null")){
-                return -1;
-            }
-            return new Integer(friendsJson).intValue();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    // HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER
+    // HELPER functions ============================================================================
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;

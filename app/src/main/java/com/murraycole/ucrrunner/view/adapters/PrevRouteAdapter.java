@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.Model.Route;
+import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
 
 import java.util.ArrayList;

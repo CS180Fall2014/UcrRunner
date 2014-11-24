@@ -1,6 +1,6 @@
 package com.murraycole.ucrrunner.view;
 
-import com.murraycole.ucrrunner.view.Model.User;
+import com.murraycole.ucrrunner.view.DAO.User;
 
 /**
  * Created by mbrevard on 11/10/14.

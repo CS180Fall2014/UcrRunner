@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.Model.User;
+import com.murraycole.ucrrunner.view.DAO.User;
 
 import java.util.ArrayList;
 

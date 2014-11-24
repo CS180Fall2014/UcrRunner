@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="?android:listPreferredItemHeightLarge"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
+
     <TextView
         android:id="@+id/message_from_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="From:"/>
+        android:text="From:" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
-        android:layout_marginBottom="8dp"/>
+        android:layout_height="1px"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#000000" />
+
+
     <TextView
         android:id="@+id/message_content_textview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is my content to be filled in, it is random msg"/>
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="This is my content to be filled in, it is random msg it will overflow this line" />
+
 
 </LinearLayout>

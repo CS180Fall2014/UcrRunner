@@ -1,6 +1,6 @@
 package com.murraycole.ucrrunner.view;
 
-import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.firebase.client.DataSnapshot;
@@ -8,27 +8,116 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.model.LatLng;
+import com.murraycole.ucrrunner.view.Model.Route;
+import com.murraycole.ucrrunner.view.Model.Stats;
+import com.murraycole.ucrrunner.view.Model.User;
+import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import android.app.Activity;
-/**
- * Created by mbrevard on 11/9/14.
- */
+
+import fbutil.firebase4j.error.FirebaseException;
+
 public class FirebaseManager {
     public static enum Setting{
         NICKNAME, AGE, HEIGHT, WEIGHT, PASSWORD
     }
+    //=======================
 
-    static ArrayList<User> getFriends( String uid ){
-        //possible just return a list of usernames?
-        return null;
+    //=======================
+    static public void sendMessage( String uid, String message){
+        return;
     }
-    static FirebaseError addFriend(String uid, String frienduid){
-        return null;
+
+    //Works (Listener update)
+    static public void getFriends( String uid , ArrayUpdateListener fragUpdateListener){
+        if(android.os.Build.VERSION.SDK_INT > 9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        final ArrayUpdateListener updateListener = fragUpdateListener;
+        //possible just return a list of usernames?
+        try {
+            fbutil.firebase4j.service.Firebase friendList =
+                new fbutil.firebase4j.service.Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/friends");
+            //String ç = friendList.get().getRawBody();
+            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
+
+            Log.d("MT", "God JSON: " + friendsJson);
+            ArrayList<String> friendUIDlist = new ArrayList(Arrays.asList(friendsJson.split(":")));
+            for(String s : friendUIDlist){
+                s = s.replace("\"", "");
+                Log.d("MT", "UID to query: " + s);
+                Firebase fbRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+s+"/");
+                Log.d("MT", "fbRef: " + fbRef.getName() + " | " + fbRef.toString());
+                fbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d("MT", "ONDATACHANGE: " + dataSnapshot.getRef().toString());
+                        Object friend = dataSnapshot.getValue(User.class);
+                        Log.d("MT", "friendListener updated: " + ((User)friend).getNickname());
+                        updateListener.update(friend);
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        Log.e("MT", "friendJSONERROR");
+
+                    }
+                });
+            }
+        } catch (FirebaseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    static void addFriend(String uid, String friendNick){
+        if(android.os.Build.VERSION.SDK_INT > 9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            int _uid;
+            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/friends.json");
+            friendsJson = friendsJson.replace("\"", "");
+            Log.d("MT", "addFriend got: " + friendsJson);
+            _uid = getUID(friendNick);
+            if(_uid == -1){
+                Log.d("MT" , "Did not add " + friendNick + " because he is not recorded in the system.");
+                return;
+            }
+            if(friendsJson.matches("null")){
+                friendsJson = new Integer(_uid).toString();
+            } else {
+                friendsJson += ":" + new Integer(_uid).toString();
+            }
+
+            Log.d("MT", "addFriend is setting: " +friendsJson);
+            Firebase friendRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/friends");
+            friendRef.setValue(friendsJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     static FirebaseError sendMessage( String uid, String message, String frienduid){
         return null;
@@ -102,14 +191,14 @@ public class FirebaseManager {
         return returnUser;
     }
 
-    static ArrayList<Route> getRoutes( String uid ){
+    public static void getRoutes( String uid, ArrayUpdateListener fragUpdateListener){
         if(uid.contains(":")) {
             uid = uid.split(":")[1];
         }
         Log.d("MT", "firebaseManager::getRoutes() got uid: " + uid);
         //reference to the user[uid]'s directory for their routes.
         Firebase userRoutesRef = new Firebase("https://torid-inferno-2246.firebaseio.com/routes/"+uid+"/");
-        final ArrayList<Route> returnRouteList = new ArrayList<Route>();
+        final ArrayUpdateListener updateListener = fragUpdateListener;
         // this Listener will execute one time to populate DataSnapshot in the VEL::OnDataChange method.
         userRoutesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -168,7 +257,7 @@ public class FirebaseManager {
                     }
                     readRoute.setCurrentRoute(currRoute);
                     readRoute.setCurrentStats(currStats);
-                    returnRouteList.add(readRoute);
+                    updateListener.update(readRoute);
                 }
                 //routes list is populated.
             }
@@ -178,10 +267,9 @@ public class FirebaseManager {
                 //do error somehow.
             }
         });
-
-        return returnRouteList;
     }
 
+    // Works saves to /Routes
     static FirebaseError saveRoute( Route currRoute, String uid){
         if(uid.contains(":")) {
             uid = uid.split(":")[1];
@@ -195,6 +283,8 @@ public class FirebaseManager {
 
         return null;
     }
+
+    // Works FB register and save to regrec table
     static FirebaseError saveUser( User currUser, String uid ){
         if(uid.contains(":")){
             uid = uid.split(":")[1];
@@ -203,11 +293,53 @@ public class FirebaseManager {
 
         //userRef to users/uid/
         Firebase userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/"+uid+"/");
+        Firebase recRef = new Firebase("https://torid-inferno-2246.firebaseio.com/regrec/" + currUser.getNickname());
 
         userRef.setValue(currUser);
 
+        recRef.setValue(new Integer(uid).intValue());
         return null;
     }
 
+    // Works
+    static int getUID(String nickname){
+        if(android.os.Build.VERSION.SDK_INT > 9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec/"+nickname+".json");
+            Log.d("MT", "getUID json: " + friendsJson);
+            if(friendsJson.matches("null")){
+                return -1;
+            }
+            return new Integer(friendsJson).intValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
+    // HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER HELPER
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+    private static String readJsonFromUrl(String url) throws IOException, JSONException {
+        InputStream is = new URL(url).openStream();
+        try {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            String jsonText = readAll(rd);
+            Log.d("MT", "readJsonFromURL:" + jsonText);
+            return jsonText;
+        } finally {
+            is.close();
+        }
+    }
 }

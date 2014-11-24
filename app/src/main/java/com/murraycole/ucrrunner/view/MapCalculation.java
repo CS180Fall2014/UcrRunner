@@ -1,5 +1,7 @@
 package com.murraycole.ucrrunner.view;
 
+import com.murraycole.ucrrunner.view.Model.User;
+
 /**
  * Created by mbrevard on 11/10/14.
  */

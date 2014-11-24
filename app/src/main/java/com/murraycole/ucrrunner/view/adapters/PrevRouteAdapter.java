@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.Route;
+import com.murraycole.ucrrunner.view.Model.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
 
 import java.util.ArrayList;
@@ -20,10 +20,12 @@ import java.util.ArrayList;
  */
 public class PrevRouteAdapter extends ArrayAdapter<Route> {
     Context mContext;
+    ArrayList<Route> routes;
 
     public PrevRouteAdapter(Context context, ArrayList<Route> routes){
         super(context,0,routes);
         mContext = context;
+        this.routes = routes;
     }
 
     @Override
@@ -41,12 +43,19 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             TextView routeDist = (TextView) rowView.findViewById(R.id.route_item_dist_textview);
             ImageView routeImg = (ImageView) rowView.findViewById(R.id.route_item_map_imageview);
 
+
+            //
+
+            routeDist.setText(new Double(routes.get(position).getCurrentStats().getDistance()).toString());
+
+
+
             routeImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     RerunDialogFragment rerunDialogFragment = RerunDialogFragment.newInstance(
                             R.string.rerun_route_dialog_title);
-                    rerunDialogFragment.show(((Activity)mContext).getFragmentManager(),"dialog");
+                    rerunDialogFragment.show(((Activity) mContext).getFragmentManager(), "dialog");
                 }
             });
 

@@ -93,9 +93,12 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                 public void onClick(View view) {
                     EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
-                    userET.setText("test@yahoo.com");
-                    passET.setText("test");
-                    new LoginButtonListener().onClick(view);
+                    userET.setText("n@n.com");
+                    passET.setText("n");
+                    FirebaseManager.addFriend("88", "byte");
+                    FirebaseManager.addFriend("88", "d");
+                    FirebaseManager.addFriend("88", "SETTINGTEST");
+                    //new LoginButtonListener().onClick(view);
                 }
             });
 

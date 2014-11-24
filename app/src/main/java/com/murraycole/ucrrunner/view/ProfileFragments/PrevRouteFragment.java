@@ -6,21 +6,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.Route;
+import com.murraycole.ucrrunner.view.FirebaseManager;
+import com.murraycole.ucrrunner.view.Model.Route;
 import com.murraycole.ucrrunner.view.adapters.PrevRouteAdapter;
+import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
 
 import java.util.ArrayList;
 
 /**
  * Cole doing this
  */
-public class PrevRouteFragment extends Fragment {
-
+public class PrevRouteFragment extends Fragment implements ArrayUpdateListener{
+    ArrayList<Route> routes;
     PrevRouteAdapter mAdapter;
+
     public PrevRouteFragment() {
         // Required empty public constructor
     }
@@ -30,12 +32,11 @@ public class PrevRouteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_prev_route, container, false);
-        ArrayList<Route> routes = spoofData();
-        mAdapter = new PrevRouteAdapter(getActivity(),routes);
+        routes = new ArrayList<Route>();
+        mAdapter = new PrevRouteAdapter(getActivity(), routes);
         ListView listView = (ListView) rootview.findViewById(R.id.prev_route_listview);
         listView.setAdapter(mAdapter);
-
-
+        FirebaseManager.getRoutes("3423", this);
         return rootview;
     }
 
@@ -47,4 +48,10 @@ public class PrevRouteFragment extends Fragment {
     }
 
 
+    @Override
+    public void update(Object o) {
+        routes.add((Route) o);
+        mAdapter.notifyDataSetChanged();
+
+    }
 }

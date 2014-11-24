@@ -15,9 +15,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.murraycole.ucrrunner.R;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.murraycole.ucrrunner.view.Model.User;
 
 /**
  * Created by dennisnguyen on 11/5/14.

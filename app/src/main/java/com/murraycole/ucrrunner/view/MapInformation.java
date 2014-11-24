@@ -10,6 +10,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.murraycole.ucrrunner.view.Model.Route;
+import com.murraycole.ucrrunner.view.Model.Stats;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;

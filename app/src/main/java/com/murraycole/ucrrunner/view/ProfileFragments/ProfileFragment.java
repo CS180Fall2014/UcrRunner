@@ -12,11 +12,12 @@ import android.widget.Button;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.MapRunning;
 import com.murraycole.ucrrunner.view.SettingsActivity;
+import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment{
 
 
     public ProfileFragment() {

@@ -27,12 +27,12 @@ public class MapRunning extends BaseMapActivity {
         setContentView(R.layout.activity_maps_running);
 
         currspeed = (TextView) findViewById(R.id.maprunning_currspeed_textview);
-        duration = (TextView)findViewById(R.id.maprunning_duration_textview);
-        distance = (TextView)findViewById(R.id.maprunning_dist_textview);
-        calories = (TextView)findViewById(R.id.maprunning_cal_textview);
-        avgspeed = (TextView)findViewById(R.id.maprunning_avgspeed_textview);
+        duration = (TextView) findViewById(R.id.maprunning_duration_textview);
+        distance = (TextView) findViewById(R.id.maprunning_dist_textview);
+        calories = (TextView) findViewById(R.id.maprunning_cal_textview);
+        avgspeed = (TextView) findViewById(R.id.maprunning_avgspeed_textview);
 
-        mChronometer = (Chronometer)findViewById(R.id.chronometer);
+        mChronometer = (Chronometer) findViewById(R.id.chronometer);
         mChronometer.setBase(SystemClock.elapsedRealtime());
         mChronometer.start();
 
@@ -57,14 +57,16 @@ public class MapRunning extends BaseMapActivity {
             }
         });
 
-        final Button StopRun = (Button)findViewById(R.id.maprunning_stop_textview);
+        final Button StopRun = (Button) findViewById(R.id.maprunning_stop_textview);
         StopRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DecimalFormat valuesRounded = new DecimalFormat("#.##");
                 time_when_stopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
                 time_when_paused = 0;
                 isRunning = false;
                 mChronometer.stop();
+                currspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getTopSpeed())));
                 //All buttons are gone
                 StopRun.setVisibility(View.GONE);
                 PauseRun.setVisibility(View.GONE);
@@ -84,13 +86,13 @@ public class MapRunning extends BaseMapActivity {
                 DecimalFormat valuesRounded = new DecimalFormat("#.##");
                 currspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getCurrentSpeed())));
                 distance.setText(
-                        String.valueOf(valuesRounded.format(mapInfo.getDistance())) + "\nDistance (m)" );
-                if (isRunning){
+                        String.valueOf(valuesRounded.format(mapInfo.getDistance())) + "\nDistance (m)");
+                if (isRunning) {
                     delta_time = SystemClock.elapsedRealtime() - mChronometer.getBase();
-                    calories.setText( String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))) +
+                    calories.setText(String.valueOf(valuesRounded.format(mapInfo.getCalories(delta_time))) +
                             "\nCalories");
                 }
-                avgspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())) + "\n Avg Speed"  );
+                avgspeed.setText(String.valueOf(valuesRounded.format(mapInfo.getAverageSpeed())) + "\n Avg Speed");
 
             }
 

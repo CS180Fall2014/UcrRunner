@@ -35,4 +35,7 @@
     <string name="rerun_route_dialog_title">Rerun?</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
+    <!-- Message Dialog strings -->
+    <string name="message_dialog_title">New Message:</string>
+
 </resources>

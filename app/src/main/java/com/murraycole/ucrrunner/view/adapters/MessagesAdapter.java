@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.view.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.dialogfragments.MessageDialogFragment;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,14 @@ public class MessagesAdapter extends ArrayAdapter {
             fromField.setText("Mark Wilson");
             content.setText("This is my message, and I'm exclaiming it to the world! Hear me roar" +
                     "and triumph");
+
+            content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MessageDialogFragment mdf = MessageDialogFragment.newInstance(R.string.message_dialog_title);
+                    mdf.show(((Activity) getContext()).getFragmentManager(), "messageDialog");
+                }
+            });
 
         }
         return view;

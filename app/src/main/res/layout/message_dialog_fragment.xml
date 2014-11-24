@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/message_dialog_recipient_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/message_dialog_to_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="To:"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textColor="@color/grey_300" />
+
+        <EditText
+            android:id="@+id/message_dialog_recipient_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/message_dialog_to_textview"
+            android:hint="John Doe"
+            android:textAppearance="?android:textAppearanceLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/message_dialog_recipient_ll">
+
+        <EditText
+            android:id="@+id/message_dialog_content_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message_dialog_recipient_ll"
+            android:hint="Compose Message"
+            android:textAppearance="?android:textAppearanceLarge" />
+    </LinearLayout>
+
+</RelativeLayout>

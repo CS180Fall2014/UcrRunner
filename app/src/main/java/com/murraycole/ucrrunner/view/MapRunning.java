@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.ProfileFragments.NewsFeedFragment;
 
 import java.text.DecimalFormat;
 
@@ -69,6 +70,9 @@ public class MapRunning extends BaseMapActivity {
                 StopRun.setVisibility(View.GONE);
                 PauseRun.setVisibility(View.GONE);
                 mapInfo.stopRoute(-1);
+                //Change View to the Post Run Scene
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new Post_Run_Fragment()).addToBackStack(null).commit();
             }
         });
 

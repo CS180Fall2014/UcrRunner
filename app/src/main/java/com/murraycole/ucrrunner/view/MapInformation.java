@@ -141,7 +141,8 @@ public class MapInformation {
         googleMap.setOnMyLocationChangeListener(null);
         zoomToFitRoute();
 
-        takeImage();
+        //takeImage();
+        saveRoute();
         //  }
     }
 

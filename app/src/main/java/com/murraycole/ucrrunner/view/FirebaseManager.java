@@ -191,6 +191,7 @@ public class FirebaseManager {
         return returnUser;
     }
 
+    //works
     public static void getRoutes( String uid, ArrayUpdateListener fragUpdateListener){
         if(uid.contains(":")) {
             uid = uid.split(":")[1];

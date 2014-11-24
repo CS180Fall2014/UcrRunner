@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.FirebaseManager;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.adapters.PrevRouteAdapter;
 import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;

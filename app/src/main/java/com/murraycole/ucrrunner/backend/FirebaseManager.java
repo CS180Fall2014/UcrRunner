@@ -1,4 +1,4 @@
-package com.murraycole.ucrrunner.view;
+package com.murraycole.ucrrunner.backend;
 
 import android.os.StrictMode;
 import android.util.Log;

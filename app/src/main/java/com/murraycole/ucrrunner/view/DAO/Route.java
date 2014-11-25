@@ -12,6 +12,9 @@ public class Route {
     private Stats currentStats;
     private Boolean isBookmarked;
     private String id;
+    private byte[] image;
+    private String date;
+    private String title;
 
 
     public Boolean getIsBookmarked() {
@@ -44,5 +47,30 @@ public class Route {
 
     public void setCurrentStats(Stats currentStats) {
         this.currentStats = currentStats;
+    }
+
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

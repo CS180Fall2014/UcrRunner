@@ -190,7 +190,7 @@ public class FirebaseManager {
         return returnUser;
     }
     // Works FB register and save to regrec table
-    static FirebaseError saveUser( User currUser, String uid ){
+    public static FirebaseError saveUser(User currUser, String uid){
         if(uid.contains(":")){
             uid = uid.split(":")[1];
         }
@@ -241,7 +241,7 @@ public class FirebaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //iterating through every unique Push ID for every user.
-                for (DataSnapshot route : dataSnapshot.getChildren()){
+                for (DataSnapshot route : dataSnapshot.getChildren()) {
                     /*Route r = route.getValue(Route.class);
                     Log.d("MT", r.getCurrentRoute().get(0).get(0) + " means SUCCESS ON ROUTE");
                     Log.d("MT", r.getCurrentStats().getAverageSpeed() + " means SUCCESS ON STATS! FUCK ME");
@@ -255,21 +255,25 @@ public class FirebaseManager {
                     List<List<LatLng>> currRoute = new ArrayList<List<LatLng>>();
                     Stats currStats = new Stats();
 
+                    String date = null;
+                    String title = null;
+                    byte[] image = null;
+
                     try {//populate a Route object
                         //Populating currRoute
                         JSONObject routeJSON = new JSONObject(jsonData);
                         JSONArray routesArray = routeJSON.getJSONArray("currentRoute");
-                        for(int i = 0; i < routesArray.length(); ++i){ //iterate each subroute
+                        for (int i = 0; i < routesArray.length(); ++i) { //iterate each subroute
                             JSONArray subRoute = routesArray.getJSONArray(i);
 
                             //Log.d("MT", "i: " + (i+1) + "/"+routesArrayJ.length());
                             currRoute.add(new ArrayList<LatLng>());
-                            for(int j = 0; j < subRoute.length(); ++j){ //iterate each coord in subroute
+                            for (int j = 0; j < subRoute.length(); ++j) { //iterate each coord in subroute
                                 //Log.d("MT", "..j: " + (j+1) + "/"+subRoute.length());
                                 JSONObject coord = subRoute.getJSONObject(j);
                                 double lat = coord.getDouble("latitude");
                                 double lon = coord.getDouble("longitude");
-                                currRoute.get(currRoute.size()-1).add(new LatLng(lat,lon));
+                                currRoute.get(currRoute.size() - 1).add(new LatLng(lat, lon));
                                 //Log.d("MT", "....Coord: " + lat + " , " + lon);
                             }
                         }
@@ -282,6 +286,12 @@ public class FirebaseManager {
                         currStats.setCaloriesBurned(currentStats.getDouble("caloriesBurned"));
                         currStats.setDistance(currentStats.getDouble("distance"));
 
+
+                        title = new JSONObject(jsonData).get("title").toString();
+                        date = new JSONObject(jsonData).get("date").toString();
+                        image = new JSONObject(jsonData).get("image").toString().getBytes();
+
+
                         /*Log.d("MT", "Populated Stat.");
                         Log.d("MT", "..averageSpeed: " + currentStats.getDouble("averageSpeed"));
                         Log.d("MT", "..topSpeed: " + currentStats.getDouble("topSpeed"));
@@ -289,11 +299,14 @@ public class FirebaseManager {
                         Log.d("MT", "..distance: " + currentStats.getDouble("distance"));
                         Log.d("MT", ".......................................");*/
                         //Stat now populated
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         Log.d("MT", e.getMessage());
                     }
                     readRoute.setCurrentRoute(currRoute);
                     readRoute.setCurrentStats(currStats);
+                    readRoute.setDate(date);
+                    readRoute.setTitle(title);
+                    readRoute.setImage(image);
                     updateListener.update(readRoute);
                 }
                 //routes list is populated.
@@ -306,17 +319,18 @@ public class FirebaseManager {
         });
     }
     // Works saves to /Routes
-    static FirebaseError saveRoute( Route currRoute, String uid){
+    public static FirebaseError saveRoute(Route currRoute, String uid){
         if(uid.contains(":")) {
             uid = uid.split(":")[1];
         }
         Log.d("MT", "FirebaseManager::saveRoute() | uid recieved: " + uid);
         //routeRef to outes/uid/
         Firebase routesRef = new Firebase("https://torid-inferno-2246.firebaseio.com/").child("routes").child(uid);
+        Firebase routeIdRef = routesRef.push();
 
         //set to routes/uid/<genid_currRoute>/_currRouteData
-        routesRef.push().setValue(currRoute);
-
+        routeIdRef.setValue(currRoute);
+        Log.d("DN", "routeID" + routeIdRef.getName());
         return null;
     }
 
@@ -340,4 +354,5 @@ public class FirebaseManager {
             is.close();
         }
     }
+
 }

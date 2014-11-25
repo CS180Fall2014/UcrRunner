@@ -44,6 +44,11 @@ public class IndividualMessageFragment extends Fragment {
         messageBody = getArguments().getString("body");
 
         View view = inflater.inflate(R.layout.fragment_individual_message, container, false);
+        fromTextView = (TextView) view.findViewById(R.id.indv_msg_sender_textview);
+        bodyTextView = (TextView) view.findViewById(R.id.indv_msg_content_textview);
+
+        fromTextView.setText(messageSender);
+        bodyTextView.setText(messageBody);
         return view;
 
 

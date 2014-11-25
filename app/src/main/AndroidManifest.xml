@@ -60,6 +60,10 @@
             android:name="com.murraycole.ucrrunner.view.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name="com.murraycole.ucrrunner.view.PostRunActivity"
+            android:label="@string/title_activity_post_run" >
+        </activity>
     </application>
 
 </manifest>

@@ -37,5 +37,6 @@
 
     <!-- Message Dialog strings -->
     <string name="message_dialog_title">New Message:</string>
+    <string name="title_activity_post_run">PostRunActivity</string>
 
 </resources>

@@ -17,6 +17,7 @@ import com.murraycole.ucrrunner.view.DAO.Stats;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,11 +41,11 @@ public class MapInformation {
     // initializations
     private GoogleMap googleMap;
     private LocationStatsListener locationStatsListener;
-    private String UUID = "12345:3423"; //TODO get real UUID
-   // private Boolean isPreviouslyCalculatedRoute = false;
     private Boolean isBookmarked = false;
     private byte[] image = null;
     private int duration = -1;
+
+    private String UID = "12345:56";
 
     /**
      * initializes the MapInformation which is dependent on the Google Map API v2
@@ -123,8 +124,6 @@ public class MapInformation {
      * @param route is the preran route
      */
     public void reRunBookmarkedRoute(Route route) {
-        //isPreviouslyCalculatedRoute  = true;
-        //locationEntireRoute = route.getLocationCurrentRoute();
         for (List<LatLng> pts : route.getCurrentRoute()) {
             PolylineOptions options = new PolylineOptions();
             options.color(Color.GRAY);
@@ -139,7 +138,6 @@ public class MapInformation {
      * @param seconds is the duration of the run
      */
     public void stopRoute(int seconds) {
-        System.out.println("stopRoute called");
         isStart = isPause = false;
         duration = seconds;
         //zoom map to entire route
@@ -147,7 +145,16 @@ public class MapInformation {
         zoomToFitRoute();
 
         takeImage();
-        //  }
+    }
+    public void stopRoute(int seconds, String UID) {
+        isStart = isPause = false;
+        this.UID = UID;
+        duration = seconds;
+        //zoom map to entire route
+        googleMap.setOnMyLocationChangeListener(null);
+        zoomToFitRoute();
+
+        takeImage();
     }
 
     /**
@@ -182,14 +189,13 @@ public class MapInformation {
      * @return top speed in meters per hour
      */
     public double getTopSpeed() {
-        double topSpeed = 0.0;
+        double s = -1.0;
         for (Location l : locationEntireRoute)
-            if (l.getSpeed() > topSpeed)
-                topSpeed = l.getSpeed();
+            if (l.getSpeed() > s)
+                s = l.getSpeed();
 
-        return topSpeed;
+        return s;
     }
-
 
     /**
      * gets the distance
@@ -312,6 +318,17 @@ public class MapInformation {
     };
 
 
+    private Boolean isValidImage() {
+        if (image == null)
+            return false;
+
+        for (byte b : image) {
+            if (b != 0)
+                return true;
+        }
+        return false;
+    }
+
     private void saveRoute() {
         List<List<LatLng>> r = new ArrayList<List<LatLng>>();
         for (Polyline l : entireRoute)
@@ -328,16 +345,19 @@ public class MapInformation {
         stats.setDuration(duration);
         route.setCurrentRoute(r);
         route.setCurrentStats(stats);
-        route.setId(null); //TODO: add real id
         route.setIsBookmarked(isBookmarked);
-
-        //TODO: save the image
-        FirebaseManager.saveRoute(route, UUID);
+        if (isValidImage()) {
+            route.setImage(image);
+        }
+        else {
+            route.setImage(null);
+        }
+        route.setDate(new Date().toString()); //TODO: ask what format they want for date
+        FirebaseManager.saveRoute(route, UID);
     }
 
 
     private void takeImage() {
-        System.out.println("Take Image Called");
         googleMap.snapshot(callback);
     }
 

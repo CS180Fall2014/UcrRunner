@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,35 +6,70 @@
     android:padding="@dimen/activity_horizontal_margin"
     tools:context="com.murraycole.ucrrunner.view.ProfileFragments.MessageFragments.IndividualMessageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="8dp"
-            android:text="From:" />
-
-        <TextView
-            android:id="@+id/indv_msg_sender_textview"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="8dp"
+                android:text="From:" />
+
+            <TextView
+                android:id="@+id/indv_msg_sender_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="8dp"
+            android:background="#1e000000" />
+
+        <TextView
+            android:id="@+id/indv_msg_content_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginBottom="8dp"
-        android:background="#1e000000" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/indv_msg_reply_button"
+        android:layout_marginBottom="8dp">
 
-    <TextView
-        android:id="@+id/indv_msg_content_textview"
+        <EditText
+            android:id="@+id/indv_msg_reply_content_edittext"
+            style="@style/DefaultTextInput"
+            android:hint="Compose Message"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/indv_msg_reply_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/blue_500"
+        android:text="Reply"
+        android:textColor="#FFFFFF" />
+</RelativeLayout>

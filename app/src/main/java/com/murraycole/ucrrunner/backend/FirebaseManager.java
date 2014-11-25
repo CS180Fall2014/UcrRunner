@@ -177,7 +177,16 @@ public class FirebaseManager {
 
     // User functions ==============================================================================
     //Works
-    // TODO make wrappers for this
+    /*
+    static FirebaseError changeSetting(Setting setEnum, String uid, Object newSetting)
+    Parameters:
+    [setEnum : Setting] - Setting enum defined for the setting to be changed.
+    [uid : String] - uid for the current user.
+    [newSetting : Object] - Generic class parameter to set any type of data as a new setting
+
+    changeSetting returns a FirebaseError if there is a problem changing a setting on the database.
+    It sets the generic object class to the FIREBASEURL_* reference specified by the setEnum parameter.
+     */
     static FirebaseError changeSetting(Setting setEnum, String uid, Object newSetting) {
         Firebase userRef;
         switch (setEnum) {
@@ -206,8 +215,17 @@ public class FirebaseManager {
         return null;
     }
 
-    // TODO needs work
-    static User getUser(String uid, ManTransportListener fragTransportListener) {
+    //Works
+    /*
+    static User getUser(String uid, final ManTransportListener fragTransportListener)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [fragTransportListener : ManTransportListener] - Listener for notifying activities of Firebase callbacks.
+
+     getUser returns a User object by adding a listener to a Firebase reference to the FIREBASEURL_USERS path for the current user.
+     The listener will issue a call back to the Android activity to update when data is received.
+     */
+    static User getUser(String uid, final ManTransportListener fragTransportListener) {
         if (uid.contains(":")) {
             uid = uid.split(":")[1];
         }
@@ -230,19 +248,26 @@ public class FirebaseManager {
                 returnUser.setSex(tempUser.getSex());
                 returnUser.setWeight(tempUser.getWeight());
                 Log.d("MT", returnUser.getNickname() + " INSTANTIATED.");
-
-
+                fragTransportListener.update(returnUser);
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                Log.e("MT", "Something went wrong with getting a User.");
             }
         });
 
         return returnUser;
     }
 
+    /*
+    public static String getNickname(String uid)
+    Parameters:
+    [uid : String] - uid for the current user.
+
+     getNickname returns the String representation of the nickname for the current User specified by uid.
+     It is read instantaneously by opening an httpconnection and capturing the json data.
+     */
     public static String getNickname(String uid) {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -262,6 +287,17 @@ public class FirebaseManager {
     }
 
     // Works FB register and save to regrec table
+    /*
+    public static FirebaseError saveUser(User currUser, String uid)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [currUser : User] - the User DAO representation of the current User.
+
+    saveUser returns a FirebaseError object in the case that there is an error with saving User data.
+    A Firebase reference to FIREBASEURL_USERS for the current user specified by uid is created and used
+    to save the currentUser object to the database.
+    Note: it also stores a < nickname, uid > pair in the regrec Firebase reference to use as a hashmap.
+     */
     public static FirebaseError saveUser(User currUser, String uid) {
         if (uid.contains(":")) {
             uid = uid.split(":")[1];
@@ -279,6 +315,14 @@ public class FirebaseManager {
     }
 
     // Works
+    /*
+    static int getUID(String nickname)
+    Parameters:
+    [nickname : String] - nickname for a user.
+
+    getUID returns the int representation of the uid for any user specified by nickname.
+     It is read instantaneously by opening an httpconnection and capturing the json data.
+     */
     static int getUID(String nickname) {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -301,6 +345,16 @@ public class FirebaseManager {
 
     // Route functions =============================================================================
     //works
+    /*
+    public static void getRoutes(String uid, ArrayUpdateListener fragUpdateListener)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [fragUpdateListener : ArrayUpdateListener] - Listener for notifying activities of Firebase callbacks.
+
+    getRoutes returns route objects by adding a listener to a Firebase reference to the FIREBASEURL_ROUTES path for the current user.
+    The listener will issue a call back to the Android activity to update when data is received.
+
+     */
     public static void getRoutes(String uid, ArrayUpdateListener fragUpdateListener) {
         if (uid.contains(":")) {
             uid = uid.split(":")[1];
@@ -388,6 +442,7 @@ public class FirebaseManager {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 //do error somehow.
+                Log.e("MT", "There was an error retrieving routes for some reason.");
             }
         });
     }
@@ -423,7 +478,6 @@ public class FirebaseManager {
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             String jsonText = readAll(rd);
-            Log.d("MT", "readJsonFromURL:" + jsonText);
             return jsonText;
         } finally {
             is.close();

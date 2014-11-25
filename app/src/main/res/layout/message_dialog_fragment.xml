@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:gravity="center_horizontal">
 
     <LinearLayout
@@ -16,8 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="To:"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@color/grey_300" />
+            android:textAppearance="?android:textAppearanceSmall" />
 
         <EditText
             android:id="@+id/message_dialog_recipient_edittext"
@@ -36,9 +36,10 @@
         <EditText
             android:id="@+id/message_dialog_content_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/message_dialog_recipient_ll"
             android:hint="Compose Message"
+            android:lines="4"
             android:textAppearance="?android:textAppearanceLarge" />
     </LinearLayout>
 

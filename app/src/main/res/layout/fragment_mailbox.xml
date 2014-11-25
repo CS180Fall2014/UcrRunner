@@ -1,12 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.murraycole.ucrrunner.view.ProfileFragments.MessageFragments.MailboxFragment">
 
 
 <TextView
+    android:id="@+id/mailbox_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -16,6 +19,17 @@
     <ListView
         android:id="@+id/message_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/mailbox_title" />
 
-</LinearLayout>
+    <at.markushi.ui.CircleButton
+        android:id="@+id/message_compose_new_button"
+        android:layout_width="72dip"
+        android:layout_height="72dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_create_white_48dp"
+        app:cb_color="@color/blue_500"
+        app:cb_pressedRingWidth="8dip" />
+
+</RelativeLayout>

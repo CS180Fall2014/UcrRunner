@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Message;
-import com.murraycole.ucrrunner.view.dialogfragments.MessageDialogFragment;
 import com.murraycole.ucrrunner.view.ProfileFragments.MessageFragments.IndividualMessageFragment;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class MessagesAdapter extends ArrayAdapter {
             fromField.setText(fromNickname);
             content.setText(mailbox.get(position).getMessage());
 
-            content.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     IndividualMessageFragment msgFrag = IndividualMessageFragment.
@@ -49,6 +48,7 @@ public class MessagesAdapter extends ArrayAdapter {
                             .replace(R.id.container, msgFrag).addToBackStack(null).commit();
                 }
             });
+
 
         }
         return view;

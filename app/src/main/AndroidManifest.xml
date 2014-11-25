@@ -32,8 +32,8 @@
         <activity
             android:name="com.murraycole.ucrrunner.view.Profile"
             android:label="@string/title_activity_profile"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name="com.murraycole.ucrrunner.view.MapRunning"
             android:label="@string/title_activity_maps"
@@ -59,6 +59,10 @@
         <activity
             android:name="com.murraycole.ucrrunner.view.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.murraycole.ucrrunner.view.PostRunActivity"
+            android:label="@string/title_activity_post_run" >
         </activity>
     </application>
 

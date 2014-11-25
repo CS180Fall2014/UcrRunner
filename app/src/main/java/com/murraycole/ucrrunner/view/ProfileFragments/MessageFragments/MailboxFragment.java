@@ -1,4 +1,4 @@
-package com.murraycole.ucrrunner.view.ProfileFragments;
+package com.murraycole.ucrrunner.view.ProfileFragments.MessageFragments;
 
 
 import android.app.Fragment;

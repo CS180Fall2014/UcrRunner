@@ -335,12 +335,6 @@ public class MapInformation {
         FirebaseManager.saveRoute(route, UUID);
     }
 
-    private String getUID(){
-        SharedPreferences fbPrefs = context.getSharedPreferences("FBPREFS", 0);
-        return fbPrefs.getString("userData.uid", "");
-    }
-
-
 
     private void takeImage() {
         System.out.println("Take Image Called");

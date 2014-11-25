@@ -21,5 +21,6 @@ public class SettingsManager {
     }
     public static boolean changePassword(String uid, String oldPassword, String newPassword){
         //TODO for dennis to fill out.
+        return true;
     }
 }

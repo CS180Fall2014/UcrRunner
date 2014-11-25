@@ -13,6 +13,7 @@ import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.DAO.Stats;
 import com.murraycole.ucrrunner.view.DAO.User;
 import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
+import com.murraycole.ucrrunner.view.interfaces.ManTransportListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -206,7 +207,7 @@ public class FirebaseManager {
     }
 
     // TODO needs work
-    static User getUser(String uid) {
+    static User getUser(String uid, ManTransportListener fragTransportListener) {
         if (uid.contains(":")) {
             uid = uid.split(":")[1];
         }

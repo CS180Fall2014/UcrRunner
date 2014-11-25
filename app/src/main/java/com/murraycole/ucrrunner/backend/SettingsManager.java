@@ -19,7 +19,7 @@ public class SettingsManager {
     public static void changeWeight(String uid, double weight){
         FirebaseManager.changeSetting(FirebaseManager.Setting.WEIGHT, uid, weight);
     }
-    public static void changePassword(String uid, String password){
+    public static boolean changePassword(String uid, String oldPassword, String newPassword){
         //TODO for dennis to fill out.
     }
 }

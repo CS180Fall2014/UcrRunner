@@ -2,22 +2,12 @@ package com.murraycole.ucrrunner.view;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.ProfileFragments.FriendsFragment;
-import com.murraycole.ucrrunner.view.ProfileFragments.MailboxFragment;
-import com.murraycole.ucrrunner.view.ProfileFragments.NewsFeedFragment;
-import com.murraycole.ucrrunner.view.ProfileFragments.PrevRouteFragment;
 import com.murraycole.ucrrunner.view.ProfileFragments.ProfileFragment;
-import com.murraycole.ucrrunner.view.ProfileFragments.ProfileSettingsFragment;
 
 public class Profile extends Activity {
 
@@ -38,7 +28,7 @@ public class Profile extends Activity {
                 //Intent mapActivity = new Intent(this, mapRunning.getClass());
             startActivity(mapActivity); */
         }
-        
+
 
     }
 

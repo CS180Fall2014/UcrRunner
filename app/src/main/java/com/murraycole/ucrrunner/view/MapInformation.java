@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.view;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -58,6 +59,7 @@ public class MapInformation {
 
         //options.color() match in app color
     }
+
 
     /**
      * starts the route that is going to be displayed on the Google Map
@@ -328,9 +330,17 @@ public class MapInformation {
         route.setCurrentStats(stats);
         route.setId(null); //TODO: add real id
         route.setIsBookmarked(isBookmarked);
+
         //TODO: save the image
         FirebaseManager.saveRoute(route, UUID);
     }
+
+    private String getUID(){
+        SharedPreferences fbPrefs = context.getSharedPreferences("FBPREFS", 0);
+        return fbPrefs.getString("userData.uid", "");
+    }
+
+
 
     private void takeImage() {
         System.out.println("Take Image Called");

@@ -41,13 +41,10 @@ public class LoginButtonListener extends LoginActivity.LoginFragment implements 
                 //add auth data to SharedPreferences
                 SharedPreferences fbPrefs = mView.getContext().getSharedPreferences("FBPREFS", 0);
                 SharedPreferences.Editor fbPrefEditor = fbPrefs.edit();
-                fbPrefEditor.putString("userData.uid", userET.getText().toString());
-                fbPrefEditor.putString("userData.username", userET.getText().toString());
+                fbPrefEditor.putString("userData.uid", authData.getUid());
                 //preferably also do a getUser and then populate those fields.
 
                 Intent intent = new Intent(mView.getContext(), Profile.class);
-                intent.putExtra("userData.username", userET.getText().toString());
-                intent.putExtra("userData.uid", authData.getUid());
                 mView.getContext().startActivity(intent);
                 ((Activity) mView.getContext()).overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
             }

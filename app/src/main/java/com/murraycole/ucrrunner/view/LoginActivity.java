@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.google.android.gms.maps.model.LatLng;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.view.DAO.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +97,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("n@n.com");
                     passET.setText("n");
+
                     new LoginButtonListener().onClick(view);
                 }
             });

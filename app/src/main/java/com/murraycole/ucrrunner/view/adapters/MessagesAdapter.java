@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.view.DAO.Message;
 import com.murraycole.ucrrunner.view.dialogfragments.MessageDialogFragment;
 
 import java.util.ArrayList;
@@ -17,8 +19,10 @@ import java.util.ArrayList;
  * Created by C on 11/22/2014.
  */
 public class MessagesAdapter extends ArrayAdapter {
+    ArrayList<Message> mailbox;
     public MessagesAdapter(Context context, ArrayList resource) {
         super(context,0, resource);
+        mailbox = resource;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -30,9 +34,10 @@ public class MessagesAdapter extends ArrayAdapter {
             TextView fromField = (TextView) view.findViewById(R.id.message_from_textview);
             TextView content = (TextView) view.findViewById(R.id.message_content_textview);
 
-            fromField.setText("Mark Wilson");
-            content.setText("This is my message, and I'm exclaiming it to the world! Hear me roar" +
-                    "and triumph");
+            String fromNickname = FirebaseManager.getNickname(new Integer(mailbox.get(position).getFrom()).toString());
+
+            fromField.setText(fromNickname);
+            content.setText(mailbox.get(position).getMessage());
 
             content.setOnClickListener(new View.OnClickListener() {
                 @Override

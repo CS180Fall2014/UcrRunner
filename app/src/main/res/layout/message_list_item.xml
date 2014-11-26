@@ -25,6 +25,7 @@
             android:text="This is my content to be filled in, it is random msg it will overflow this line" />
 
         <TextView
+            android:id="@+id/message_timestamp_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="11:26pm" />

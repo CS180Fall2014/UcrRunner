@@ -9,6 +9,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.murraycole.ucrrunner.view.DAO.Message;
+import com.murraycole.ucrrunner.view.DAO.Post;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.DAO.Stats;
 import com.murraycole.ucrrunner.view.DAO.User;
@@ -51,8 +52,110 @@ public class FirebaseManager {
     private static final String FIREBASEURL_MESSAGES = "https://torid-inferno-2246.firebaseio.com/messages/";
     private static final String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
     private static final String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
+    private static final String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
 
+    // NewsFeed functions ==========================================================================
+    public static void getPostsForFriends(String uid, final ArrayUpdateListener fragUpdateListener){
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        String friendsJson = null;
+        try {
+            friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Firebase postRef = new Firebase(FIREBASEURL_POSTS + uid);
+
+        ArrayList<String> friendUIDList = new ArrayList(Arrays.asList(friendsJson.split(":")));
+        for(String frienduid : friendUIDList){
+            postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot data : dataSnapshot.getChildren()){
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+        }
+/*
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    Post currPost = dataSnapshot.getValue(Post.class);
+                    fragUpdateListener.update(currPost);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.e("MT", "Something went wrong getting a posts for " + uid);
+            }
+        });*/
+    }
+    public static void getPostsForSingleUser(String uid, final ArrayUpdateListener fragUpdateListener){
+        Firebase postRef = new Firebase(FIREBASEURL_POSTS + uid);
+
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    Post currPost = dataSnapshot.getValue(Post.class);
+                    fragUpdateListener.update(currPost);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.e("MT", "Something went wrong getting a posts for " + uid);
+            }
+        });
+    }
+    /*
+    public static void savePost(String uid, Post newPost)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [newPost : Post] - Post object to be saved to the database
+
+    A Firebase reference to FIREBASEURL_POSTS for the current user specified by uid is created and used
+    to save the newPost object to the database.
+    Note: postID does not need to be set before passing the post object in. DO NOT SET IT TO NULL.
+     */
+    public static void savePost(String uid, Post newPost){
+        if (uid.contains(":")) {
+            uid = uid.split(":")[1];
+        }
+        Log.d("MT", "FirebaseManager::savePost() | uid recieved: " + uid);
+        Firebase postRef = new Firebase(FIREBASEURL_POSTS).child(uid);
+        Firebase postIdRef = postRef.push();
+
+        if(!newPost.getAuthorUID().matches(uid)){
+            newPost.setAuthorUID(uid);
+        }
+
+        newPost.setPostID(postIdRef.getName());
+
+        postIdRef.setValue(newPost);
+    }
     // Message functions ===========================================================================
+        /*
+    static public void getMessages(String uid, ArrayUpdateListener fragUpdateListener)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [fragTransportListener : ArrayUpdateListener] - Listener for notifying activities of Firebase callbacks.
+
+    getMessages returns Message objects by adding a listener to a Firebase reference to FIREBASEURL_MESSAGES path for current user.
+    The listener will issue a call back to the Android activity via the updateListener.update() call to update when data is received.
+     */
     static public void getMessages(String uid, ArrayUpdateListener fragUpdateListener) {
         Firebase mailboxRef = new Firebase(FIREBASEURL_MESSAGES + uid);
         final ArrayUpdateListener updateListener = fragUpdateListener;
@@ -82,6 +185,16 @@ public class FirebaseManager {
         return;
     }
 
+    /*
+    static public void sendMessage(String uid, String frienduid, String message)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [frienduid : String] - uid for the reciever of the message
+    [message : String] - String representation of the message to be sent
+
+    sendMessage sends a Message to the user specified by frienduid.
+    A Message object is created and set to the firebase reference to FIREBASEURL_MESSAGES for the frienduid user.
+     */
     static public void sendMessage(String uid, String frienduid, String message) {
         Firebase toMailboxRef = new Firebase(FIREBASEURL_MESSAGES + frienduid);
         java.util.Date date = new java.util.Date();
@@ -223,7 +336,7 @@ public class FirebaseManager {
     [fragTransportListener : ManTransportListener] - Listener for notifying activities of Firebase callbacks.
 
      getUser returns a User object by adding a listener to a Firebase reference to the FIREBASEURL_USERS path for the current user.
-     The listener will issue a call back to the Android activity to update when data is received.
+     The listener will issue a call back to the Android activity to update via the updateListener.update() call when data is received.
      */
     static User getUser(String uid, final ManTransportListener fragTransportListener) {
         if (uid.contains(":")) {
@@ -302,7 +415,7 @@ public class FirebaseManager {
         if (uid.contains(":")) {
             uid = uid.split(":")[1];
         }
-        Log.d("MT", "Firebaseanager::saveroute() | uid recieved: " + uid);
+        Log.d("MT", "Firebaseanager::saveUser() | uid recieved: " + uid);
 
         //userRef to users/uid/
         Firebase userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/");
@@ -352,7 +465,7 @@ public class FirebaseManager {
     [fragUpdateListener : ArrayUpdateListener] - Listener for notifying activities of Firebase callbacks.
 
     getRoutes returns route objects by adding a listener to a Firebase reference to the FIREBASEURL_ROUTES path for the current user.
-    The listener will issue a call back to the Android activity to update when data is received.
+    The listener will issue a call back to the Android activity via the updateListener.update() call to update when data is received.
 
      */
     public static void getRoutes(String uid, ArrayUpdateListener fragUpdateListener) {
@@ -464,6 +577,7 @@ public class FirebaseManager {
     }
 
     // HELPER functions ============================================================================
+    /* Ya'll don't need to worry about this stuff. They are helper functions to read in json. */
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;

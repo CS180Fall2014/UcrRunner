@@ -6,14 +6,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 
 /**
  * Created by dennisnguyen on 11/5/14.
@@ -39,10 +42,14 @@ public class LoginButtonListener extends LoginActivity.LoginFragment implements 
             public void onAuthenticated(AuthData authData) {
                 Log.i("LoginButtonListener", "Authentication successful. " + authData.getUid() + " | " + authData.getProvider());
                 //add auth data to SharedPreferences
-                SharedPreferences fbPrefs = mView.getContext().getSharedPreferences("FBPREFS", 0);
-                SharedPreferences.Editor fbPrefEditor = fbPrefs.edit();
-                fbPrefEditor.putString("userData.uid", authData.getUid());
-                //preferably also do a getUser and then populate those fields.
+                //SharedPreferences fbPrefs = mView.getContext().getSharedPreferences("FBPREFS", 0);
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mView.getContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                String uid = authData.getUid().split(":")[1].trim();
+                editor.putString("userData.uid", uid);
+                editor.commit();
+
 
                 Intent intent = new Intent(mView.getContext(), Profile.class);
                 mView.getContext().startActivity(intent);

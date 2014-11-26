@@ -3,6 +3,7 @@ package com.murraycole.ucrrunner.backend;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -631,8 +632,8 @@ public class FirebaseManager {
     }
 
     public static String getCurrUID(Context context){
-        SharedPreferences fbPrefs = (context).getSharedPreferences("FBPREFS", 0);
-        return fbPrefs.getString("userData.uid", "");
+        SharedPreferences fbPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return fbPrefs.getString("userData.uid", null);
     }
 
 

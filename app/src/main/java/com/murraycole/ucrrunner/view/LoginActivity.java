@@ -97,7 +97,6 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("n@n.com");
                     passET.setText("n");
-
                     new LoginButtonListener().onClick(view);
                 }
             });

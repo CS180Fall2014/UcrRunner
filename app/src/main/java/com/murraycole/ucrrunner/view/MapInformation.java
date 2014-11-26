@@ -350,9 +350,9 @@ public class MapInformation {
             route.setImage(image);
         }
         else {
-            route.setImage(null);
+            route.setImage(new byte[0]);
         }
-        route.setDate(new Date().toString()); //TODO: ask what format they want for date
+        route.setDate(String.valueOf(new Date().getTime()));
         FirebaseManager.saveRoute(route, UID);
     }
 

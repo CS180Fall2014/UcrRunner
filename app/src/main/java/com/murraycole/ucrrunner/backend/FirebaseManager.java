@@ -119,7 +119,6 @@ public class FirebaseManager {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.e("MT", "Something went wrong getting a posts for " + uid);
             }
         });
     }
@@ -423,7 +422,7 @@ public class FirebaseManager {
                     // password changed
                     Log.d("DN", "Email change success");
 
-                    Toast.makeText((context), "Success", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText((context), "Success", Toast.LENGTH_SHORT).show();
                     //add toast to success?
                 }
                 @Override

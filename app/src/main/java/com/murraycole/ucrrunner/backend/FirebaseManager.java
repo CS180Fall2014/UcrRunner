@@ -399,6 +399,45 @@ public class FirebaseManager {
         return null;
     }
 
+
+    public static void changePassword(String uid, String oldPassword, String newPassword){
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String userEmail = readJsonFromUrl(FIREBASEURL_USERS + uid + "/email.json");
+
+            Log.d("DN", "User email:" + userEmail);
+            Firebase ref = new Firebase(FIREBASEURL);
+            userEmail = userEmail.replace("\"","");
+
+            Log.d("DN", "striped email:" + userEmail);
+
+            ref.changePassword(userEmail, oldPassword, newPassword, new Firebase.ResultHandler() {
+                @Override
+                public void onSuccess() {
+                    // password changed
+                    Log.d("DN", "Email change success");
+                    //add toast to success?
+                }
+                @Override
+                public void onError(FirebaseError firebaseError) {
+                    // error encountered
+                    Log.d("DN", "Email change failed" + firebaseError.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
     // Works FB register and save to regrec table
     /*
     public static FirebaseError saveUser(User currUser, String uid)
@@ -575,6 +614,11 @@ public class FirebaseManager {
         Log.d("DN", "routeID" + routeIdRef.getName());
         return null;
     }
+
+
+
+
+
 
     // HELPER functions ============================================================================
     /* Ya'll don't need to worry about this stuff. They are helper functions to read in json. */

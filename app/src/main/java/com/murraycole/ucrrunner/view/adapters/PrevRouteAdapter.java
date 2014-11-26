@@ -13,6 +13,7 @@ import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -45,8 +46,10 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
 
             //
+            DecimalFormat valuesRounded = new DecimalFormat("#.##");
 
-            routeDist.setText(new Double(routes.get(position).getCurrentStats().getDistance()).toString());
+
+            routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
 
 
 

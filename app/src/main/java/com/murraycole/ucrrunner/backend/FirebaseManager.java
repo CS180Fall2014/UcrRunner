@@ -207,8 +207,8 @@ public class FirebaseManager {
         java.util.Date date = new java.util.Date();
 
         Message msg = new Message();
-        msg.setTo(Integer.valueOf(uid));
-        msg.setFrom(Integer.valueOf(frienduid));
+        msg.setTo(Integer.valueOf(frienduid));
+        msg.setFrom(Integer.valueOf(uid));
         msg.setMessage(message);
         msg.setTimestamp(new Timestamp(date.getTime()).toString());
 

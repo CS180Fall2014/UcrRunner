@@ -76,7 +76,7 @@ public class MessageDialogFragment extends DialogFragment {
 
     private void sendMessageToFirebase (String recipent, String message){
         String UID = String.valueOf(FirebaseManager.getUID(recipent));
-        String myUID = SharedPrefUtils.getUID(getActivity());
+        String myUID = SharedPrefUtils.getCurrUID(getActivity());
         Log.d(LOG_TAG, "UID is:" + UID);
         Log.d(LOG_TAG, "MyUID is: " + myUID);
 

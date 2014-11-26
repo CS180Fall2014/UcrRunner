@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Message;
 import com.murraycole.ucrrunner.view.adapters.MessagesAdapter;
@@ -44,7 +45,7 @@ public class MailboxFragment extends Fragment implements ArrayUpdateListener{
 
         mAdapter = new MessagesAdapter(getActivity(),mailbox);
         // async updates messages using ArrayUpdateListner.update
-        FirebaseManager.getMessages("89",this);
+        FirebaseManager.getMessages(SharedPrefUtils.getCurrUID(getActivity()),this);
         ListView listView = (ListView) rootView.findViewById(R.id.message_listview);
         composeNewButton = (CircleButton) rootView.findViewById(R.id.message_compose_new_button);
         setupComposeNewOnClick(composeNewButton);

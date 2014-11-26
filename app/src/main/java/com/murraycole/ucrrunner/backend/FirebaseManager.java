@@ -620,7 +620,7 @@ public class FirebaseManager {
         return null;
     }
 
-    private String getUID(Context context){
+    public static String getCurrUID(Context context){
         SharedPreferences fbPrefs = (context).getSharedPreferences("FBPREFS", 0);
         return fbPrefs.getString("userData.uid", "");
     }

@@ -1,7 +1,10 @@
 package com.murraycole.ucrrunner.backend;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -419,6 +422,8 @@ public class FirebaseManager {
                 public void onSuccess() {
                     // password changed
                     Log.d("DN", "Email change success");
+
+                    Toast.makeText((context), "Success", Toast.LENGTH_SHORT).show();
                     //add toast to success?
                 }
                 @Override
@@ -615,7 +620,10 @@ public class FirebaseManager {
         return null;
     }
 
-
+    private String getUID(Context context){
+        SharedPreferences fbPrefs = (context).getSharedPreferences("FBPREFS", 0);
+        return fbPrefs.getString("userData.uid", "");
+    }
 
 
 

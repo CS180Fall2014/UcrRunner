@@ -1,6 +1,7 @@
 package com.murraycole.ucrrunner.view.ProfileFragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,9 @@ public class ProfileSettingsFragment extends Fragment  {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile_settings, container, false);
     }
+
+
+
 
 
 }

@@ -71,6 +71,10 @@ public class FirebaseManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if(friendsJson.matches("null")){
+            // null on friendsJson means user specified by uid has no friends.
+            return;
+        }
         Firebase postRef = new Firebase(FIREBASEURL_POSTS + uid);
 
         ArrayList<String> friendUIDList = new ArrayList(Arrays.asList(friendsJson.split(":")));
@@ -224,8 +228,14 @@ public class FirebaseManager {
             fbutil.firebase4j.service.Firebase friendList =
                     new fbutil.firebase4j.service.Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends");
             //String ç = friendList.get().getRawBody();
-            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
 
+            String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
+            if(friendsJson.matches("null")){
+                // since friendsJson is a delmited list of their friends, if it returns null they have no friends
+                // this prevents us from using null as a uid. [which results in a crash]
+                Log.d("MT", "User has no friends.");
+                return;
+            }
             Log.d("MT", "God JSON: " + friendsJson);
             ArrayList<String> friendUIDlist = new ArrayList(Arrays.asList(friendsJson.split(":")));
             for (String s : friendUIDlist) {
@@ -496,6 +506,7 @@ public class FirebaseManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return -1;
     }
 

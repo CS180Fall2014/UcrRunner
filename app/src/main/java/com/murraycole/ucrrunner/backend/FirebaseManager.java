@@ -206,8 +206,8 @@ public class FirebaseManager {
         java.util.Date date = new java.util.Date();
 
         Message msg = new Message();
-        msg.setTo(new Integer(uid).intValue());
-        msg.setFrom(new Integer(frienduid).intValue());
+        msg.setTo(Integer.valueOf(uid));
+        msg.setFrom(Integer.valueOf(frienduid));
         msg.setMessage(message);
         msg.setTimestamp(new Timestamp(date.getTime()).toString());
 
@@ -489,7 +489,7 @@ public class FirebaseManager {
     getUID returns the int representation of the uid for any user specified by nickname.
      It is read instantaneously by opening an httpconnection and capturing the json data.
      */
-    static int getUID(String nickname) {
+    public static int getUID(String nickname) {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);

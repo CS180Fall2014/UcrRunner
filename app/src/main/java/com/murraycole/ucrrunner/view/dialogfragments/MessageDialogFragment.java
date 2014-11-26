@@ -5,16 +5,20 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 
 /**
  * Created by User on 11/23/14.
  */
 public class MessageDialogFragment extends DialogFragment {
+    public static String LOG_TAG = MessageDialogFragment.class.getSimpleName();
     public static MessageDialogFragment newInstance(int title) {
         Bundle args = new Bundle();
         args.putInt("title", title);
@@ -41,7 +45,7 @@ public class MessageDialogFragment extends DialogFragment {
                         //sendMsg To wherever
                         String recipient = recipientET.getText().toString();
                         String msg = msgContentET.getText().toString();
-
+                        sendMessageToFirebase(recipient,msg);
                         Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
                         // sendMsg(recipient,msg);
                     }
@@ -56,5 +60,15 @@ public class MessageDialogFragment extends DialogFragment {
 
         return alertDialog;
 
+    }
+
+    private void sendMessageToFirebase (String recipent, String message){
+        String UID = String.valueOf(FirebaseManager.getUID(recipent));
+        String myUID = SharedPrefUtils.getUID(getActivity());
+        Log.d(LOG_TAG, "UID is:" + UID);
+        Log.d(LOG_TAG, "MyUID is: " + myUID);
+
+
+        FirebaseManager.sendMessage(myUID,UID,message);
     }
 }

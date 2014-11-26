@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:gravity="center_horizontal">
+    >
 
     <LinearLayout
         android:id="@+id/message_dialog_recipient_ll"
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/message_dialog_to_textview"
-            android:hint="John Doe"
+            android:hint="Nickname"
             android:textAppearance="?android:textAppearanceLarge" />
     </LinearLayout>
 
@@ -36,10 +36,11 @@
         <EditText
             android:id="@+id/message_dialog_content_edittext"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/message_dialog_recipient_ll"
             android:hint="Compose Message"
-            android:lines="4"
+            android:lines="1"
+            android:maxLines="4"
             android:textAppearance="?android:textAppearanceLarge" />
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.backend;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.murraycole.ucrrunner.view.DAO.Message;
@@ -480,6 +482,44 @@ public class FirebaseManager {
         return null;
     }
 
+    /*
+    public static boolean checkAvailableNick(String nickname)
+    Parameters:
+    nickname - nickname for current User
+
+    checkAvailableNick returns a boolean value if nickname is currently taken in regrec table
+    --true nickname is taken
+    --false nickname is not taken
+     */
+   public static boolean checkAvailableNick(String nickname){
+       if (android.os.Build.VERSION.SDK_INT > 9) {
+           StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+           StrictMode.setThreadPolicy(policy);
+       }
+       Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/regrec/");
+       try {
+           String userEmail = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec.json");
+           Log.d("DN", "read available nick" +  userEmail.toString());
+
+           JSONObject nickNameJSON = new JSONObject(userEmail.toString());
+           nickname.replace("\"", "");
+           nickname.trim();
+
+           return nickNameJSON.getInt(nickname) != -1;
+           //-1 = not taken
+           //!= -1 taken
+
+       } catch (IOException e) {
+           e.printStackTrace();
+       } catch (JSONException e) {
+           e.printStackTrace();
+       }
+       return false;
+   }
+
+
+
+
     // Works
     /*
     static int getUID(String nickname)
@@ -635,6 +675,7 @@ public class FirebaseManager {
         SharedPreferences fbPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         return fbPrefs.getString("userData.uid", null);
     }
+
 
 
 

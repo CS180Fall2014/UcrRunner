@@ -40,6 +40,12 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
             nickToast.show();
             validateFlag+=1;
         }
+       ///checking if nickname is taken
+        if (FirebaseManager.checkAvailableNick(nickET.getText().toString())) {
+            Toast nickToast = Toast.makeText(view.getContext(), "Nickname " + nickET.getText().toString() + " is taken.", Toast.LENGTH_LONG);
+            nickToast.show();
+            validateFlag+=1;
+        }
 
         if(weightTV.getText().toString().isEmpty() || weightTV.getText().toString().matches("")){
             Toast weightToast = Toast.makeText(view.getContext(), "Missing weight", Toast.LENGTH_LONG);
@@ -121,8 +127,8 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                         regInfo.setHeight(parseHeight());
                         regInfo.setNickname(nickET.getText().toString());
 
-                        FirebaseManager.saveUser(regInfo, uid);
 
+                        FirebaseManager.saveUser(regInfo, uid);
                         Toast.makeText(regView.getContext(),"Success",Toast.LENGTH_SHORT).show();
                     }
 

@@ -64,7 +64,7 @@ public class FirebaseManager {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        String friendsJson = null;
+        String friendsJson = "";
         try {
             friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
         } catch (IOException e) {
@@ -72,7 +72,8 @@ public class FirebaseManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if(friendsJson.matches("null")){
+        friendsJson = friendsJson.replace("\"", "");
+        if(friendsJson.matches("null") || friendsJson.matches("")){
             // null on friendsJson means user specified by uid has no friends.
             return;
         }
@@ -226,18 +227,18 @@ public class FirebaseManager {
         final ArrayUpdateListener updateListener = fragUpdateListener;
         //possible just return a list of usernames?
         try {
-            fbutil.firebase4j.service.Firebase friendList =
-                    new fbutil.firebase4j.service.Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends");
-            //String ç = friendList.get().getRawBody();
-
             String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
-            if(friendsJson.matches("null")){
+            friendsJson = friendsJson.replace("\"", "");
+            Log.d("MT", "Got JSON: [" + friendsJson+"]");
+            Log.d("MT", "Json stats: " + friendsJson.length());
+            Log.d("MT", "Json stats: " + ( (friendsJson.compareTo("") == 0) ? "compare to \"\" is true": "compare to \"\" is false"));
+
+            if(friendsJson.matches("null") || friendsJson.matches("")){
                 // since friendsJson is a delmited list of their friends, if it returns null they have no friends
                 // this prevents us from using null as a uid. [which results in a crash]
                 Log.d("MT", "User has no friends.");
                 return;
             }
-            Log.d("MT", "God JSON: " + friendsJson);
             ArrayList<String> friendUIDlist = new ArrayList(Arrays.asList(friendsJson.split(":")));
             for (String s : friendUIDlist) {
                 s = s.replace("\"", "");
@@ -260,8 +261,6 @@ public class FirebaseManager {
                     }
                 });
             }
-        } catch (FirebaseException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -285,7 +284,7 @@ public class FirebaseManager {
                 Log.d("MT", "Did not add " + friendNick + " because he is not recorded in the system.");
                 return;
             }
-            if (friendsJson.matches("null")) {
+            if (friendsJson.matches("null") || friendsJson.matches("")) {
                 friendsJson = new Integer(_uid).toString();
             } else {
                 friendsJson += ":" + new Integer(_uid).toString();
@@ -497,8 +496,9 @@ public class FirebaseManager {
         }
         try {
             String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec/" + nickname + ".json");
+            friendsJson = friendsJson.replace("\"", "");
             Log.d("MT", "getUID json: " + friendsJson);
-            if (friendsJson.matches("null")) {
+            if (friendsJson.matches("null") || friendsJson.matches("")) {
                 return -1;
             }
             return new Integer(friendsJson).intValue();

@@ -19,21 +19,23 @@ import java.util.ArrayList;
  */
 public class FriendsAdapter extends ArrayAdapter {
     ArrayList<User> friends;
+
     public FriendsAdapter(Context context, ArrayList resource) {
         super(context, 0, resource);
         friends = resource;
 
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if (view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.friend_list_item,parent,false);
+            view = inflater.inflate(R.layout.list_item_friend, parent, false);
 
             ImageView profileIcon = (ImageView) view.findViewById(R.id.friend_profile_icon);
-            TextView  contactName = (TextView) view.findViewById(R.id.friend_contact_name);
+            TextView contactName = (TextView) view.findViewById(R.id.friend_contact_name);
             Log.d("MT", "FriendAdapter:: " + friends.get(position).getNickname());
             contactName.setText(friends.get(position).getNickname());
         }

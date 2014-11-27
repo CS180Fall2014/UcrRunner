@@ -1,26 +1,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.murraycole.ucrrunner.view.ProfileFragments.FriendsFragment">
+    tools:context="com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.FriendsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/friends_title_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:gravity="center_horizontal"
         android:text="Friends"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:layout_marginBottom="8dp"/>
+        android:textAppearance="?android:textAppearanceLarge" />
 
     <ListView
         android:id="@+id/friends_listview"
-        android:layout_below="@+id/friends_title_textview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/friends_title_textview" />
+
     <at.markushi.ui.CircleButton
         android:id="@+id/friends_newfriend_button"
         android:layout_width="72dip"

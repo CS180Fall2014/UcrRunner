@@ -16,7 +16,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.activities.activities.Login.LoginActivity;
-import com.murraycole.ucrrunner.view.activities.activities.Profile.Profile;
+import com.murraycole.ucrrunner.view.activities.activities.NavDrawer.ProfileNavDrawer;
 
 /**
  * Created by dennisnguyen on 11/5/14.
@@ -51,7 +51,7 @@ public class LoginButtonListener extends LoginActivity.LoginFragment implements 
                 editor.commit();
 
 
-                Intent intent = new Intent(mView.getContext(), Profile.class);
+                Intent intent = new Intent(mView.getContext(), ProfileNavDrawer.class);
                 mView.getContext().startActivity(intent);
                 ((Activity) mView.getContext()).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }

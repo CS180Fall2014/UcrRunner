@@ -24,4 +24,24 @@ public class SettingsManager {
     public static void changePassword(String uid, String oldPassword, String newPassword, View v){
         FirebaseManager.changePassword(uid, oldPassword, newPassword, v);
     }
+
+    //TOOD implement userRunCount and imeplement these methods
+    public static double updateUserAvgSpeed(String uid, double newSpeed){
+        return 0.0;
+    }
+    public static  double updateUserTopSpeed(String uid, double newSpeed){
+        return 0.0;
+    }
+    public static double updateUserTotalCal(String uid, double newTotalCal){
+        return 0.0;
+    }
+   /* public static int updateUserRunCount(String uid, int newValue){
+
+    }*/
+    public static double updateUserTotalDist(String uid, double newDistance){
+        return 0.0;
+    }
+    public static double updateUserTotalDuration(String uid, double newDuration){
+        return 0.0;
+    }
 }

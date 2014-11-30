@@ -8,8 +8,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
 
         <ImageView
@@ -21,32 +23,57 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="8dp">
 
             <TextView
                 android:id="@+id/profile_username_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Username"
-                android:textAppearance="?android:textAppearanceLarge" />
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="martinTing"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_person_outline_grey600_18dp"
+                android:drawablePadding="8dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                />
 
             <TextView
                 android:id="@+id/profile_age_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Age"
-                android:textAppearance="?android:textAppearanceLarge" />
-
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="22"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_cake_grey600_18dp"
+                android:drawablePadding="8dp"
+                android:textAppearance="?android:textAppearanceSmall" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Username"
-                android:textAppearance="?android:textAppearanceLarge" />
+                android:drawableLeft="@drawable/ic_straighten_grey600_18dp"
+                android:gravity="center"
+                android:text="5'10"
+                android:textAppearance="?android:textAppearanceSmall" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="160"
+                android:drawableLeft="@drawable/ic_weight_grey600"
+                android:gravity="center"
+                android:textAppearance="?android:textAppearanceSmall" />
+
+
+        </LinearLayout>
+
 
         </LinearLayout>
 
@@ -54,17 +81,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@drawable/vertical_divider"
-        android:showDividers="middle">
+        android:showDividers="middle"
+        android:dividerPadding="16dp"
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp">
+           >
 
             <TextView
                 android:id="@+id/profile_miles_value_tv"
@@ -87,11 +117,11 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp">
+            >
 
             <TextView
                 android:id="@+id/profile_avg_speed_value_tv"
@@ -114,11 +144,11 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -139,6 +169,10 @@
 
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"></LinearLayout>
 
 
 </LinearLayout>

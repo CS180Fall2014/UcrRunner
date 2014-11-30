@@ -82,9 +82,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             register = (TextView) mView.findViewById(R.id.login_register_button);
             login = (Button) mView.findViewById(R.id.login_login_button);
 
-            /* THIS IS FOR DEBUGGGING *?
-
-             */
+            /* THIS IS FOR DEBUGGGING 8===D;~~``':,. */
             Button bypass = (Button) mView.findViewById(R.id.button);
             bypass.setOnClickListener(new View.OnClickListener() {
                 @Override

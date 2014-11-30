@@ -1,12 +1,10 @@
 package com.murraycole.ucrrunner.backend;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.model.LatLng;
 import com.murraycole.ucrrunner.view.DAO.Message;
@@ -39,11 +36,7 @@ import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import fbutil.firebase4j.error.FirebaseException;
 
 /* Categories
  * Message functions
@@ -81,9 +74,45 @@ public class FirebaseManager {
         return null;
     }
  */
-    // NewsFeed functions =========================================================================co
-
+    // NewsFeed functions =========================================================================
     //test
+    public static ArrayList<String> getLikes(Post obj){
+        ArrayList<String> likesList = new ArrayList<>();
+        for(String like : obj.getLikes().split(":")){
+            likesList.add(like);
+        }
+        return likesList;
+    }
+    //test
+    public static ArrayList<String> getLikes(String postAuthorId, String postId)
+    {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        String likeJson = "";
+        try {
+            likeJson = readJsonFromUrl(FIREBASEURL_POSTS+postAuthorId+"/"+postId+"/likes.json");
+            likeJson = likeJson.replace("\"", "");
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String> likesList = new ArrayList<>();
+        for(String like : likeJson.split(":")){
+            likesList.add(like);
+        }
+        return likesList;
+    }
+    //test
+    public static ArrayList<Pair<String,String>> getComments(Post obj){
+        ArrayList<Pair<String,String>> commentList = new ArrayList<Pair<String, String>>();
+        for(String comment : obj.getComment().split(":")){
+            Pair<String, String> cPair = Pair.create(comment.split("-")[0], comment.split("-")[1]);
+            Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">");
+            commentList.add(cPair);
+        }
+        return commentList;
+    }
     // TODO NOTHING TODO READ THE NOTE!
     /** NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
         The uid that should be passed into this should be the uid of the post
@@ -98,9 +127,7 @@ public class FirebaseManager {
         try {
             commentJson = readJsonFromUrl(FIREBASEURL_POSTS+postAuthorUid+"/"+postId+"/comment.json");
             commentJson = commentJson.replace("\"", "");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         ArrayList<Pair<String,String>> commentList = new ArrayList<Pair<String, String>>();
@@ -187,43 +214,12 @@ public class FirebaseManager {
             // null on friendsJson means user specified by uid has no friends.
             return;
         }
-        Firebase postRef = new Firebase(FIREBASEURL_POSTS);
 
         ArrayList<String> friendUIDList = new ArrayList(Arrays.asList(friendsJson.split(":")));
         for(String frienduid : friendUIDList){
-            Firebase friendPostList = postRef.child(frienduid);
-
-            friendPostList.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        Post newPost = data.getValue(Post.class);
-                        Log.d("MT", "getPostForFriends recieved post ID: " + newPost.getPostID());
-                        fragUpdateListener.update(newPost);
-                    }
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-                    Log.d("MT", "Soemthing went wrong in getPostForFriends");
-                }
-            });
+            // TODO Martin did something clever. See if this works.
+            getPostsForSingleUser(frienduid, fragUpdateListener);
         }
-/*
-        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data : dataSnapshot.getChildren()){
-                    Post currPost = dataSnapshot.getValue(Post.class);
-                    fragUpdateListener.update(currPost);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.e("MT", "Something went wrong getting a posts for " + uid);
-            }
-        });*/
     }
     //works
      public static void getPostsForSingleUser(String uid, final ArrayUpdateListener fragUpdateListener){
@@ -411,9 +407,9 @@ public class FirebaseManager {
                 return false;
             }
             if (friendsJson.matches("null") || friendsJson.matches("")) {
-                friendsJson = new Integer(_uid).toString();
+                friendsJson = Integer.toString(_uid);
             } else {
-                friendsJson += ":" + new Integer(_uid).toString();
+                friendsJson += ":" + Integer.toString(_uid);
             }
 
             Log.d("MT", "addFriend is setting: " + friendsJson);
@@ -649,22 +645,21 @@ public class FirebaseManager {
        Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/regrec/");
        try {
            String userEmail = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec.json");
+           userEmail = userEmail.replace("\"", "");
+           nickname = nickname.replace("\"", "");
+           Log.d("DN", "read available nick" + userEmail);
 
-           nickname.replace("\"", "");
-           Log.d("DN", "read available nick" +  userEmail.toString());
-
-           JSONObject nickNameJSON = new JSONObject(userEmail.toString());
-           nickname.trim();
+           JSONObject nickNameJSON = new JSONObject(userEmail);
+           nickname = nickname.trim();
 
            return nickNameJSON.getInt(nickname) != -1;
            //== -1  not taken
            //!= -1 taken
 
-       } catch (IOException e) {
-           e.printStackTrace();
-       } catch (JSONException e) {
+       } catch (IOException | JSONException e) {
            e.printStackTrace();
        }
+
        return false;
    }
 
@@ -692,10 +687,8 @@ public class FirebaseManager {
             if (friendsJson.matches("null") || friendsJson.matches("")) {
                 return -1;
             }
-            return new Integer(friendsJson).intValue();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+            return Integer.valueOf(friendsJson);
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -738,7 +731,7 @@ public class FirebaseManager {
 
                     //objects to populate
                     Route readRoute = new Route();
-                    List<List<LatLng>> currRoute = new ArrayList<List<LatLng>>();
+                    List<List<LatLng>> currRoute = new ArrayList<>();
                     Stats currStats = new Stats();
 
                     String date = null;
@@ -842,8 +835,7 @@ public class FirebaseManager {
         InputStream is = new URL(url).openStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            return jsonText;
+            return readAll(rd);
         } finally {
             is.close();
         }

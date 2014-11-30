@@ -388,7 +388,7 @@ public class FirebaseManager {
     }
 
     //Works (appends to uid friends attr)
-    static void addFriend(String uid, String friendNick) {
+    static public void addFriend(String uid, String friendNick) {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);

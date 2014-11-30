@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.activities.activities.PostRun.PostRunActivity;
 
@@ -78,7 +79,8 @@ public class MapRunning extends BaseMapActivity {
                 //All buttons are gone
                 StopRun.setVisibility(View.GONE);
                 PauseRun.setVisibility(View.GONE);
-                mapInfo.stopRoute(-1);
+                String uid = FirebaseManager.getCurrUID(v.getContext());
+                mapInfo.stopRoute(-1, uid);
                 //Prompt the user to enter a title
                 Initiate_PopupWindow();
 

@@ -70,7 +70,7 @@ public class MapInformation {
         }
     };
     private int duration = -1;
-    private String UID = "12345:56";
+    private String UID;
 
     /**
      * initializes the MapInformation which is dependent on the Google Map API v2

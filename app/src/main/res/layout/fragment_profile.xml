@@ -3,59 +3,142 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:padding="@dimen/activity_horizontal_margin"
     tools:context="com.murraycole.ucrrunner.view.Profile$PlaceholderFragment">
 
-
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Friends"
-        android:id="@+id/profile_friends_button"
-        />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:id="@+id/profile_settings_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="News Feed"
-        android:id="@+id/profile_newsfeed_button"
-        android:layout_alignBaseline="@+id/profile_friends_button"
-        android:layout_alignBottom="@+id/profile_friends_button"
-        android:layout_centerHorizontal="true" />
+        <ImageView
+            android:id="@+id/profile_icon_iv"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_launcher" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Previous Routes"
-        android:id="@+id/profile_prevroutes_button"
-        android:layout_above="@+id/profile_mailbox_button"
-        android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mailbox"
-        android:id="@+id/profile_mailbox_button"
-        android:layout_above="@+id/profile_startrun_button"
-        android:layout_alignLeft="@+id/profile_settings_button"
-        android:layout_alignStart="@+id/profile_settings_button" />
+            <TextView
+                android:id="@+id/profile_username_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Username"
+                android:textAppearance="?android:textAppearanceLarge" />
 
-    <Button
-        android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/profile_age_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Age"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Username"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Run"
-        android:id="@+id/profile_startrun_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/profile_settings_button"
-        android:layout_alignEnd="@+id/profile_settings_button" />
+        android:divider="@drawable/vertical_divider"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/profile_miles_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16.23"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/blue_500" />
+
+            <TextView
+                android:id="@+id/profile_miles_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Miles"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/black_54" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/profile_avg_speed_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="23.53"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/blue_500" />
+
+            <TextView
+                android:id="@+id/profile_avg_speed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Avg Speed"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/black_54" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="240"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/blue_500"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cal"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/black_54"
+                 />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -31,13 +31,13 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         //buttons here
-        On_Button_Press(rootView);
+      //  On_Button_Press(rootView);
 
 
         return rootView;
     }
 
-
+/*
     private void On_Button_Press(View v) {
         Button Start_Run = (Button) v.findViewById(R.id.profile_startrun_button);
         Button Friends = (Button) v.findViewById(R.id.profile_friends_button);
@@ -99,5 +99,5 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
+   */
 }

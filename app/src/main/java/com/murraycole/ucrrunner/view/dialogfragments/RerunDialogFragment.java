@@ -9,6 +9,7 @@ import android.preference.DialogPreference;
 import android.widget.Toast;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.PrevRouteFragment;
 
 /**
  * Created by C on 11/22/2014.
@@ -32,6 +33,7 @@ public class RerunDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(),"Rerun",Toast.LENGTH_SHORT).show();
+
                     }
                 })
                 .setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {

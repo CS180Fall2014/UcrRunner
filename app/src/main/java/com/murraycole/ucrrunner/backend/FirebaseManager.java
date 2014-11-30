@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -59,8 +60,104 @@ public class FirebaseManager {
     private static final String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
     private static final String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
     private static final String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
+/*
+    public static FirebaseError saveRoute(Route currRoute, String uid) {
+        if (uid.contains(":")) {
+            uid = uid.split(":")[1];
+        }
+        Log.d("MT", "FirebaseManager::saveRoute() | uid recieved: " + uid);
+        //routeRef to outes/uid/
+        Firebase routesRef = new Firebase("https://torid-inferno-2246.firebaseio.com/").child("routes").child(uid);
+        Firebase routeIdRef = routesRef.push();
 
-    // NewsFeed functions ==========================================================================
+        //set to routes/uid/<genid_currRoute>/_currRouteData
+        routeIdRef.setValue(currRoute);
+        Log.d("DN", "routeID" + routeIdRef.getName());
+        return null;
+    }
+ */
+    // NewsFeed functions =========================================================================co
+
+    //test
+    // TODO NOTHING TODO READ THE NOTE!
+    /** NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+        The uid that should be passed into this should be the uid of the post
+        that is to be commented on..
+     **/
+    public static ArrayList<Pair<String, String>> getComments(String postAuthorUid, String postId){
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        String commentJson = "";
+        try {
+            commentJson = readJsonFromUrl(FIREBASEURL_POSTS+postAuthorUid+"/"+postId+"/comment.json");
+            commentJson = commentJson.replace("\"", "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ArrayList<Pair<String,String>> commentList = new ArrayList<Pair<String, String>>();
+        for(String comment : commentJson.split(":")){
+            Pair<String, String> cPair = Pair.create(comment.split("-")[0], comment.split("-")[1]);
+            Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">");
+            commentList.add(cPair);
+        }
+        return commentList;
+    }
+    //TODO
+    public static void addLike(String uid, String postId)
+    {
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        String commentJson = "";
+        try {
+            commentJson = readJsonFromUrl(FIREBASEURL_POSTS+uid+"/"+postId+"/comment.json");
+            commentJson = commentJson.replace("\"", "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if( commentJson == null || commentJson.matches("") || commentJson.matches("null")){
+            commentJson = uid;
+        }else{
+            commentJson += ":" + uid;
+        }
+
+        //TODO add set call
+    }
+    //test
+    public static void addComment(String uid, String postId, String comment){
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        String commentJson = "";
+        try {
+            commentJson = readJsonFromUrl(FIREBASEURL_POSTS+uid+"/"+postId+"/comment.json");
+            commentJson = commentJson.replace("\"", "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //DONE
+        //DONE implement a way to  get commment author nickname for display
+        // DONE motherfucker do I look like a bitch to you?
+        // DONE use uid. only uid makes sense in this because only currentUSer comments on something.
+        if( commentJson == null || commentJson.matches("") || commentJson.matches("null")){
+            commentJson = uid + "-" + comment;
+        }else{
+            commentJson += ":" + uid + "-" + comment;
+        }
+        //TODO add set call
+    }
+    //test
     public static void getPostsForFriends(String uid, final ArrayUpdateListener fragUpdateListener){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -79,21 +176,25 @@ public class FirebaseManager {
             // null on friendsJson means user specified by uid has no friends.
             return;
         }
-        Firebase postRef = new Firebase(FIREBASEURL_POSTS + uid);
+        Firebase postRef = new Firebase(FIREBASEURL_POSTS);
 
         ArrayList<String> friendUIDList = new ArrayList(Arrays.asList(friendsJson.split(":")));
         for(String frienduid : friendUIDList){
-            postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            Firebase friendPostList = postRef.child(frienduid);
+
+            friendPostList.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for(DataSnapshot data : dataSnapshot.getChildren()){
-
+                        Post newPost = data.getValue(Post.class);
+                        Log.d("MT", "getPostForFriends recieved post ID: " + newPost.getPostID());
+                        fragUpdateListener.update(newPost);
                     }
                 }
 
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
-
+                    Log.d("MT", "Soemthing went wrong in getPostForFriends");
                 }
             });
         }
@@ -113,23 +214,34 @@ public class FirebaseManager {
             }
         });*/
     }
-    public static void getPostsForSingleUser(String uid, final ArrayUpdateListener fragUpdateListener){
+    //works
+     public static void getPostsForSingleUser(String uid, final ArrayUpdateListener fragUpdateListener){
         Firebase postRef = new Firebase(FIREBASEURL_POSTS + uid);
-
+        Log.d("MT", "getPOsts for " + uid);
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("MT", "ONDATACHANGE");
+                Log.d("MT", dataSnapshot.getName());
+                Log.d("MT", dataSnapshot.getRef().toString());
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    Post currPost = dataSnapshot.getValue(Post.class);
+                    Log.d("MT", "In For loop");
+                    Log.d("MT", data.getName());
+                    Log.d("MT", data.getRef().toString());
+                    Log.d("MT", data.toString());
+                    Post currPost = data.getValue(Post.class);
+                    Log.d("MT", "Update");
                     fragUpdateListener.update(currPost);
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                Log.e("MT", "Something went wrong getting posts for single user");
             }
         });
     }
+    //works
     /*
     public static void savePost(String uid, Post newPost)
     Parameters:
@@ -148,10 +260,14 @@ public class FirebaseManager {
         Firebase postRef = new Firebase(FIREBASEURL_POSTS).child(uid);
         Firebase postIdRef = postRef.push();
 
+        // check for uid. The prefered string to be passed in should match the same string in
+        // shared preferences which is where the information for this arguement should always
+        // be retrieved from.
         if(!newPost.getAuthorUID().matches(uid)){
             newPost.setAuthorUID(uid);
         }
 
+        // set postId
         newPost.setPostID(postIdRef.getName());
 
         postIdRef.setValue(newPost);
@@ -231,10 +347,7 @@ public class FirebaseManager {
         try {
             String friendsJson = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends.json");
             friendsJson = friendsJson.replace("\"", "");
-            Log.d("MT", "Got JSON: [" + friendsJson+"]");
-            Log.d("MT", "Json stats: " + friendsJson.length());
-            Log.d("MT", "Json stats: " + ( (friendsJson.compareTo("") == 0) ? "compare to \"\" is true": "compare to \"\" is false"));
-
+            Log.d("MT", "Got JSON: [" + friendsJson + "]");
             if(friendsJson.matches("null") || friendsJson.matches("")){
                 // since friendsJson is a delmited list of their friends, if it returns null they have no friends
                 // this prevents us from using null as a uid. [which results in a crash]
@@ -421,10 +534,10 @@ public class FirebaseManager {
         }
         try {
             String userEmail = readJsonFromUrl(FIREBASEURL_USERS + uid + "/email.json");
+            userEmail = userEmail.replace("\"","");
 
             Log.d("DN", "User email:" + userEmail);
             Firebase ref = new Firebase(FIREBASEURL);
-            userEmail = userEmail.replace("\"","");
 
             Log.d("DN", "striped email:" + userEmail);
 
@@ -499,10 +612,11 @@ public class FirebaseManager {
        Firebase ref = new Firebase("https://torid-inferno-2246.firebaseio.com/regrec/");
        try {
            String userEmail = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/regrec.json");
+
+           nickname.replace("\"", "");
            Log.d("DN", "read available nick" +  userEmail.toString());
 
            JSONObject nickNameJSON = new JSONObject(userEmail.toString());
-           nickname.replace("\"", "");
            nickname.trim();
 
            return nickNameJSON.getInt(nickname) != -1;

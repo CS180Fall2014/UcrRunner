@@ -4,14 +4,31 @@ package com.murraycole.ucrrunner.view.DAO;
  * Created by Martin on 11/23/14.
  */
 public class Post {
-    int uid = 0;
+    int uid = -1;
     String description = new String();
     String authorNickname = new String();
     String authorUID = new String();
-    String routeID = new String();
-    String postID = new String();
+    String routeID = new String();  // get this from the list route object
+    String postID = new String();  // Don't bother setting this.
+    String comment = new String(); //Don't bother setting this.
+    String likes = new String();   // Don't bother setting this.
     byte[] image;
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
     public String getAuthorUID() {
         return authorUID;
     }

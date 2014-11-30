@@ -92,6 +92,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
         nickET = (EditText) regView.findViewById(R.id.createaccount_nickname_edittext);
         weightTV = (TextView) regView.findViewById(R.id.createaccount_weight_edittext);
         heightTV = (TextView) regView.findViewById(R.id.createaccount_height_edittext);
+        ageTV = (TextView) regView.findViewById(R.id.createaccount_age_edittext);
 
 
         if (validateFields(view) == false) {
@@ -125,7 +126,7 @@ public class RegisterButtonListener extends CreateAccountFragment implements Vie
                         regInfo.setEmail(userET.getText().toString());
                         regInfo.setWeight(new Double(weightTV.getText().toString()));
                         regInfo.setSex(genderValue);
-                        regInfo.setAge(22);
+                        regInfo.setAge(Integer.parseInt(ageTV.getText().toString()));
                         regInfo.setHeight(parseHeight());
                         regInfo.setNickname(nickET.getText().toString());
 

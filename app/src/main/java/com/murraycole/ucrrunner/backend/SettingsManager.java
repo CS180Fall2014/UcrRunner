@@ -25,7 +25,7 @@ public class SettingsManager {
         FirebaseManager.changePassword(uid, oldPassword, newPassword, v);
     }
 
-    //TOOD implement userRunCount and imeplement these methods
+    //TOOD implement userRunCount and implement these methods
     public static double updateUserAvgSpeed(String uid, double newSpeed){
         return 0.0;
     }

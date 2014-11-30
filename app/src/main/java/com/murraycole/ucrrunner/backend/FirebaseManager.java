@@ -75,15 +75,18 @@ public class FirebaseManager {
     }
  */
     // NewsFeed functions =========================================================================
-    //test
+    //Should be working. Use and I will respond to bugs.
     public static ArrayList<String> getLikes(Post obj){
         ArrayList<String> likesList = new ArrayList<>();
+        Log.d("MT", "getLikes(Post) is going to list the likes.");
         for(String like : obj.getLikes().split(":")){
+            Log.d("MT", like);
             likesList.add(like);
         }
         return likesList;
     }
     //test
+    /*                  MAY BE UNECESARY MAY BE UNECESARY MAY BE UNECESARY MAY BE UNECESARY MAY BE UNECESARY
     public static ArrayList<String> getLikes(String postAuthorId, String postId)
     {
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -98,12 +101,14 @@ public class FirebaseManager {
             e.printStackTrace();
         }
         ArrayList<String> likesList = new ArrayList<>();
+        Log.d("MT", "getLikes(postAuthorId, postId) is going to list the likes.");
         for(String like : likeJson.split(":")){
+            Log.d("MT", like);
             likesList.add(like);
         }
         return likesList;
-    }
-    //test
+    }*/
+    // Should be working.  use and I will respond to bugs.
     public static ArrayList<Pair<String,String>> getComments(Post obj){
         ArrayList<Pair<String,String>> commentList = new ArrayList<Pair<String, String>>();
         for(String comment : obj.getComment().split(":")){
@@ -118,6 +123,7 @@ public class FirebaseManager {
         The uid that should be passed into this should be the uid of the post
         that is to be commented on..
      **/
+    /*         MAY BE UNECESARY MAY BE UNECESARY MAY BE UNECESARY MAY BE UNECESARY MAY BE UNECESARY
     public static ArrayList<Pair<String, String>> getComments(String postAuthorUid, String postId){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -137,7 +143,7 @@ public class FirebaseManager {
             commentList.add(cPair);
         }
         return commentList;
-    }
+    }*/
 
     //Works
     public static void addLike(String uid, String postAuthorId, String postId)
@@ -195,7 +201,7 @@ public class FirebaseManager {
         commentRef.setValue(commentJson);
         Log.d("MT", "Set value: [" + commentJson + "]");
     }
-    //test
+    // Works
     public static void getPostsForFriends(String uid, final ArrayUpdateListener fragUpdateListener){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -212,6 +218,7 @@ public class FirebaseManager {
         friendsJson = friendsJson.replace("\"", "");
         if(friendsJson.matches("null") || friendsJson.matches("")){
             // null on friendsJson means user specified by uid has no friends.
+            Log.d("MT", "There were no friends.");
             return;
         }
 
@@ -312,7 +319,7 @@ public class FirebaseManager {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.e("FirebaseManager::getMessages()", "Something went wrong retrieving messages");
+                Log.e("MT", "Something went wrong retrieving messages");
             }
         });
         return;

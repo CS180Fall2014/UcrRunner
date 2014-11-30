@@ -388,7 +388,7 @@ public class FirebaseManager {
     }
 
     //Works (appends to uid friends attr)
-    static public void addFriend(String uid, String friendNick) {
+    static public boolean addFriend(String uid, String friendNick) {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -401,7 +401,7 @@ public class FirebaseManager {
             _uid = getUID(friendNick);
             if (_uid == -1) {
                 Log.d("MT", "Did not add " + friendNick + " because he is not recorded in the system.");
-                return;
+                return false;
             }
             if (friendsJson.matches("null") || friendsJson.matches("")) {
                 friendsJson = new Integer(_uid).toString();
@@ -412,11 +412,14 @@ public class FirebaseManager {
             Log.d("MT", "addFriend is setting: " + friendsJson);
             Firebase friendRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/friends");
             friendRef.setValue(friendsJson);
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return false;
     }
 
     // User functions ==============================================================================

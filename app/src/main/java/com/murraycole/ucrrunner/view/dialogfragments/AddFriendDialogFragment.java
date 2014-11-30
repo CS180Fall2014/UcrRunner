@@ -46,8 +46,11 @@ public class AddFriendDialogFragment extends DialogFragment {
                         //sendMsg To wherever
                         String recipient = recipientET.getText().toString();
                         String msg = msgContentET.getText().toString();
-                        addFriendToFirebase(recipient, msg);
-                        Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
+                        if (addFriendToFirebase(recipient, msg)){
+                            Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getActivity(),"Failed",Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
                 .setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
@@ -62,13 +65,14 @@ public class AddFriendDialogFragment extends DialogFragment {
 
     }
 
-    private void addFriendToFirebase(String recipient, String message) {
+    private boolean addFriendToFirebase(String recipient, String message) {
         String UID = String.valueOf(FirebaseManager.getUID(recipient));
         String myUID = SharedPrefUtils.getCurrUID(getActivity());
         Log.d(LOG_TAG, "UID is:" + UID);
         Log.d(LOG_TAG, "MyUID is: " + myUID);
 
 
-        FirebaseManager.addFriend(myUID, recipient);
+        return FirebaseManager.addFriend(myUID, recipient);
+        //if this returns false throw error message that it failed
     }
 }

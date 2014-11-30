@@ -37,6 +37,7 @@
 
     <!-- Message Dialog strings -->
     <string name="message_dialog_title">New Message:</string>
+    <string name="add_friend_dialog_title">Add Friend:</string>
     <string name="title_activity_post_run">PostRunActivity</string>
     <string name="title_activity_profile_nav_drawer">UCRRunner</string>
     <string name="title_section_profile">Home</string>

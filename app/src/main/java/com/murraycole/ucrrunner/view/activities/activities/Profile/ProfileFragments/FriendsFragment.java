@@ -17,6 +17,7 @@ import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.User;
 import com.murraycole.ucrrunner.view.adapters.FriendsAdapter;
+import com.murraycole.ucrrunner.view.dialogfragments.AddFriendDialogFragment;
 import com.murraycole.ucrrunner.view.dialogfragments.MessageDialogFragment;
 import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
 
@@ -90,7 +91,10 @@ public class FriendsFragment extends Fragment implements ArrayUpdateListener {
             @Override
             public void onClick(View v) {
                 //call dialogFragment to sendFriendRequest
-                Toast.makeText(getActivity(), "FriendDialogFragment", Toast.LENGTH_LONG).show();
+                AddFriendDialogFragment addFriendDialogFragment =
+                        AddFriendDialogFragment.newInstance(R.string.add_friend_dialog_title);
+                addFriendDialogFragment.show(getFragmentManager(),"dialog");
+                //Toast.makeText(getActivity(), "FriendDialogFragment", Toast.LENGTH_LONG).show();
             }
         });
     }

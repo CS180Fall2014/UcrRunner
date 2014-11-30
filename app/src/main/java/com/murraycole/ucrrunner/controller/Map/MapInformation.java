@@ -1,6 +1,7 @@
 package com.murraycole.ucrrunner.controller.Map;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 
@@ -180,6 +181,58 @@ public class MapInformation {
         zoomToFitRoute();
 
         takeImage();
+    }
+
+    /**
+     * (untested)
+     * converts byte array to bitmap
+     * @param array
+     * @return the bitmap of the byte[] array, or null
+     */
+    public Bitmap byteArrayToBitmap(byte[] array) {
+        return BitmapFactory.decodeByteArray(array, 0, array.length);
+    }
+
+    /**
+     * (untested)
+     * calculates the total information for a list of routes
+     * @param routes is the list of routes that the user has ran
+     * @return the stats of the total information
+     */
+    public Stats calculateTotalInformation(List<Route> routes) {
+        Stats stats = new Stats();
+
+        //total duration
+        int duration = 0;
+        //total distance
+        double distance = 0.0;
+        //total calories burned
+        double caloriesBurned = 0.0;
+        //average top speed
+        double topSpeed = 0.0;
+        //average average speed
+        double averageSpeed = 0.0;
+
+        Stats current;
+        for (Route route : routes) {
+            current = route.getCurrentStats();
+            duration += current.getDuration(); //getDuration should be an int (not a double)
+            distance += current.getDistance();
+            topSpeed += current.getTopSpeed();
+            averageSpeed += current.getAverageSpeed();
+            caloriesBurned += current.getCaloriesBurned();
+        }
+
+        //make them averages
+        topSpeed /= routes.size();
+        averageSpeed /= routes.size();
+
+        stats.setDuration(duration);
+        stats.setDistance(distance);
+        stats.setCaloriesBurned(caloriesBurned);
+        stats.setTopSpeed(topSpeed);
+        stats.setAverageSpeed(averageSpeed);
+        return stats;
     }
 
     /**

@@ -49,7 +49,7 @@ public class AddFriendDialogFragment extends DialogFragment {
                         if (addFriendToFirebase(recipient, msg)){
                             Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
                         }else{
-                            Toast.makeText(getActivity(),"Failed",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(),"Invalid User",Toast.LENGTH_LONG).show();
                         }
                     }
                 })

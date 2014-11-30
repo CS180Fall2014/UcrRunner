@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.adapters.PrevRouteAdapter;
@@ -36,7 +37,7 @@ public class PrevRouteFragment extends Fragment implements ArrayUpdateListener {
         mAdapter = new PrevRouteAdapter(getActivity(), routes);
         ListView listView = (ListView) rootview.findViewById(R.id.prev_route_listview);
         listView.setAdapter(mAdapter);
-        FirebaseManager.getRoutes("3423", this);
+        FirebaseManager.getRoutes(SharedPrefUtils.getCurrUID(getActivity()), this);
         return rootview;
     }
 

@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.util.Pair;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;

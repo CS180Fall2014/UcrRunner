@@ -2,6 +2,10 @@ package com.murraycole.ucrrunner.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -44,12 +50,22 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             TextView routeDist = (TextView) rowView.findViewById(R.id.route_item_dist_textview);
             ImageView routeImg = (ImageView) rowView.findViewById(R.id.route_item_map_imageview);
 
+            byte[] routeImgBytes = route.getImage();
+            /* RouteImgBytes is currently returning null
+               When it starts to work, uncomment the below
+               //TODO
+             */
+           // Bitmap routeImgBitmap = MapInformation.byteArrayToBitmap(routeImgBytes);
+          //  routeImg.setImageBitmap(routeImgBitmap);
+
+
 
             //
             DecimalFormat valuesRounded = new DecimalFormat("#.##");
 
 
             routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
+
 
 
             routeImg.setOnClickListener(new View.OnClickListener() {

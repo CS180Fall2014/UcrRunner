@@ -189,7 +189,7 @@ public class MapInformation {
      * @param array
      * @return the bitmap of the byte[] array, or null
      */
-    public Bitmap byteArrayToBitmap(byte[] array) {
+    public static Bitmap byteArrayToBitmap(byte[] array) {
         return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
 

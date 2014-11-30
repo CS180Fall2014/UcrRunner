@@ -20,6 +20,7 @@ import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragme
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.PrevRouteFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileFragment;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileSettingsFragment;
 import com.murraycole.ucrrunner.view.activities.activities.SettingsActivity;
 
 public class ProfileNavDrawer extends Activity
@@ -96,8 +97,9 @@ public class ProfileNavDrawer extends Activity
             startActivity(intent);
         }
         if (position == SETTINGS_SECTION) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, new ProfileSettingsFragment())
+                    .commit();
 
         }
 

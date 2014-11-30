@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.murraycole.ucrrunner.R;
 
@@ -36,4 +37,5 @@ public class SettingsActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

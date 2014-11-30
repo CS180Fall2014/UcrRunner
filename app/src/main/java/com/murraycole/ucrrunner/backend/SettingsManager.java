@@ -1,5 +1,7 @@
 package com.murraycole.ucrrunner.backend;
 
+import android.view.View;
+
 import fbutil.firebase4j.service.Firebase;
 
 /**
@@ -19,7 +21,7 @@ public class SettingsManager {
     public static void changeWeight(String uid, double weight){
         FirebaseManager.changeSetting(FirebaseManager.Setting.WEIGHT, uid, weight);
     }
-    public static void changePassword(String uid, String oldPassword, String newPassword){
-        FirebaseManager.changePassword(uid, oldPassword, newPassword);
+    public static void changePassword(String uid, String oldPassword, String newPassword, View v){
+        FirebaseManager.changePassword(uid, oldPassword, newPassword, v);
     }
 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -36,7 +37,9 @@ import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fbutil.firebase4j.error.FirebaseException;
 
@@ -59,6 +62,7 @@ public class FirebaseManager {
     private static final String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
     private static final String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
     private static final String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
+    private static final String FIREBASEURL_NICKNAMES = "https://torid-inferno-2246.firebaseio.com/regrec/";
 
     // NewsFeed functions ==========================================================================
     public static void getPostsForFriends(String uid, final ArrayUpdateListener fragUpdateListener){
@@ -318,8 +322,28 @@ public class FirebaseManager {
         Firebase userRef;
         switch (setEnum) {
             case NICKNAME:
-                userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/nickname");
-                userRef.setValue(newSetting);
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+                try {
+                    userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/nickname");
+                    //get current nickname
+                    String oldNickName = readJsonFromUrl(userRef.toString()+ ".json");
+                    oldNickName = oldNickName.replace("\"","");
+                    Firebase nickRef = new Firebase(FIREBASEURL_NICKNAMES).child(oldNickName);
+                    //remove nickname from regrec namename
+                    nickRef.removeValue();
+                    int stripUID = Integer.parseInt(uid.replace("\"", ""));
+                    nickRef = new Firebase(FIREBASEURL_NICKNAMES).child(newSetting.toString());
+                    nickRef.setValue(stripUID);
+                    //save user nickname to user's userroute
+                    userRef.setValue(newSetting);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             case AGE:
                 userRef = new Firebase("https://torid-inferno-2246.firebaseio.com/users/" + uid + "/age");
@@ -414,7 +438,7 @@ public class FirebaseManager {
     }
 
 
-    public static void changePassword(String uid, String oldPassword, String newPassword){
+    public static FirebaseError changePassword(String uid, String oldPassword, String newPassword, View v){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -422,9 +446,11 @@ public class FirebaseManager {
         try {
             String userEmail = readJsonFromUrl(FIREBASEURL_USERS + uid + "/email.json");
 
+
             Log.d("DN", "User email:" + userEmail);
             Firebase ref = new Firebase(FIREBASEURL);
             userEmail = userEmail.replace("\"","");
+            final View passwordView = v;
 
             Log.d("DN", "striped email:" + userEmail);
 
@@ -433,14 +459,13 @@ public class FirebaseManager {
                 public void onSuccess() {
                     // password changed
                     Log.d("DN", "Email change success");
-
-                   // Toast.makeText((context), "Success", Toast.LENGTH_SHORT).show();
-                    //add toast to success?
+                    Toast.makeText(passwordView.getContext(), "Password Change Success!" , Toast.LENGTH_SHORT).show();
                 }
                 @Override
                 public void onError(FirebaseError firebaseError) {
                     // error encountered
                     Log.d("DN", "Email change failed" + firebaseError.getMessage());
+                    Toast.makeText(passwordView.getContext(), firebaseError.getMessage() , Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
@@ -448,6 +473,7 @@ public class FirebaseManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 
@@ -506,7 +532,7 @@ public class FirebaseManager {
            nickname.trim();
 
            return nickNameJSON.getInt(nickname) != -1;
-           //-1 = not taken
+           //== -1  not taken
            //!= -1 taken
 
        } catch (IOException e) {

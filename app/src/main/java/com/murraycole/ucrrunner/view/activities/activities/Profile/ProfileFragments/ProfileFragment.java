@@ -65,7 +65,8 @@ public class ProfileFragment extends Fragment {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new ProfileSettingsFragment()).addToBackStack(null).commit();
 
             }
         });

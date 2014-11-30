@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.listeners.LoginButtonListener;
 
 public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
@@ -91,7 +93,9 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("n@n.com");
                     passET.setText("n");
-                    new LoginButtonListener().onClick(view);
+                    // new LoginButtonListener().onClick(view);
+                    FirebaseManager.addLike("94", "93", "-JbxW0lzsoVYIeGXqUzS");
+                    Log.d("MT", "Comment added.");
                 }
             });
 

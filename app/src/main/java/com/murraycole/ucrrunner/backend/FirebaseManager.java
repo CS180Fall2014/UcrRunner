@@ -111,55 +111,62 @@ public class FirebaseManager {
         }
         return commentList;
     }
-    //TODO
-    public static void addLike(String uid, String postId)
+
+    //Works
+    public static void addLike(String uid, String postAuthorId, String postId)
     {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        String commentJson = "";
+        String likeJson = "";
         try {
-            commentJson = readJsonFromUrl(FIREBASEURL_POSTS+uid+"/"+postId+"/comment.json");
-            commentJson = commentJson.replace("\"", "");
+            likeJson = readJsonFromUrl(FIREBASEURL_POSTS+postAuthorId+"/"+postId+"/likes.json");
+            likeJson = likeJson.replace("\"", "");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if( commentJson == null || commentJson.matches("") || commentJson.matches("null")){
-            commentJson = uid;
+        if( likeJson == null || likeJson.matches("") || likeJson.matches("null")){
+            likeJson = getNickname(uid);
         }else{
-            commentJson += ":" + uid;
+            likeJson += ":" + getNickname(uid);
         }
 
-        //TODO add set call
+        Firebase likeRef = new Firebase(FIREBASEURL_POSTS+postAuthorId + "/"+postId+"/likes");
+        likeRef.setValue(likeJson);
     }
-    //test
-    public static void addComment(String uid, String postId, String comment){
+    
+    // Works
+    // TODO NOTHING TODO READ THE NOTE
+    public static void addComment(String uid, String postAuthorUid, String postId, String comment){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
         String commentJson = "";
         try {
-            commentJson = readJsonFromUrl(FIREBASEURL_POSTS+uid+"/"+postId+"/comment.json");
+            commentJson = readJsonFromUrl(FIREBASEURL_POSTS+postAuthorUid+"/"+postId+"/comment.json");
             commentJson = commentJson.replace("\"", "");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.d("MT", "addComments got json: " + commentJson);
         //DONE
         //DONE implement a way to  get commment author nickname for display
         // DONE motherfucker do I look like a bitch to you?
         // DONE use uid. only uid makes sense in this because only currentUSer comments on something.
         if( commentJson == null || commentJson.matches("") || commentJson.matches("null")){
-            commentJson = uid + "-" + comment;
+            commentJson = getNickname(uid) + "-" + comment;
         }else{
-            commentJson += ":" + uid + "-" + comment;
+            commentJson += ":" + getNickname(uid) + "-" + comment;
         }
-        //TODO add set call
+        Firebase commentRef = new Firebase(FIREBASEURL_POSTS+postAuthorUid+"/"+postId+"/comment");
+        commentRef.setValue(commentJson);
+        Log.d("MT", "Set value: [" + commentJson + "]");
     }
     //test
     public static void getPostsForFriends(String uid, final ArrayUpdateListener fragUpdateListener){
@@ -819,10 +826,6 @@ public class FirebaseManager {
         SharedPreferences fbPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         return fbPrefs.getString("userData.uid", null);
     }
-
-
-
-
 
     // HELPER functions ============================================================================
     /* Ya'll don't need to worry about this stuff. They are helper functions to read in json. */

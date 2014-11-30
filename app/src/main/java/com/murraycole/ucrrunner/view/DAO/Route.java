@@ -16,7 +16,6 @@ public class Route {
     private String date;
     private String title;
 
-
     public Boolean getIsBookmarked() {
         return isBookmarked;
     }
@@ -48,7 +47,6 @@ public class Route {
     public void setCurrentStats(Stats currentStats) {
         this.currentStats = currentStats;
     }
-
 
     public byte[] getImage() {
         return image;

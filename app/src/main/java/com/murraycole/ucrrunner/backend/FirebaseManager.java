@@ -137,7 +137,7 @@ public class FirebaseManager {
         Firebase likeRef = new Firebase(FIREBASEURL_POSTS+postAuthorId + "/"+postId+"/likes");
         likeRef.setValue(likeJson);
     }
-    
+
     // Works
     // TODO NOTHING TODO READ THE NOTE
     public static void addComment(String uid, String postAuthorUid, String postId, String comment){

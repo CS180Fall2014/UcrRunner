@@ -93,9 +93,7 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("n@n.com");
                     passET.setText("n");
-                    // new LoginButtonListener().onClick(view);
-                    FirebaseManager.addLike("94", "93", "-JbxW0lzsoVYIeGXqUzS");
-                    Log.d("MT", "Comment added.");
+                    new LoginButtonListener().onClick(view);
                 }
             });
 

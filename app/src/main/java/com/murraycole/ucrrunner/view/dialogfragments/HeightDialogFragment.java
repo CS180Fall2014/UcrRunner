@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
+
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.CreateAccountFragment;
+import com.murraycole.ucrrunner.view.activities.activities.Login.CreateAccountFragment;
 
 /**
  * Created by C on 11/18/2014.
@@ -29,7 +30,7 @@ public class HeightDialogFragment extends DialogFragment {
 
         //Get layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.height_dialog_fragment, null);
+        View view = inflater.inflate(R.layout.dialog_height_fragment, null);
         final NumberPicker feet = (NumberPicker) view.findViewById(R.id.numberPicker);
         final NumberPicker inches = (NumberPicker) view.findViewById(R.id.numberPicker2);
         setFeetMinMaxValue(feet);
@@ -41,14 +42,14 @@ public class HeightDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.alert_dialog_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                ((CreateAccountFragment)getFragmentManager().findFragmentById(R.id.container)).doPositiveClick(getValueHeightandFeet(feet,inches),"height");
+                                ((CreateAccountFragment) getFragmentManager().findFragmentById(R.id.container)).doPositiveClick(getValueHeightandFeet(feet, inches), "height");
                             }
                         }
                 )
                 .setNegativeButton(R.string.alert_dialog_cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                CreateAccountFragment.newInstance(null,null).doNegativeClick();
+                                CreateAccountFragment.newInstance(null, null).doNegativeClick();
 
                             }
                         }
@@ -59,21 +60,22 @@ public class HeightDialogFragment extends DialogFragment {
 
     }
 
-    private void setFeetMinMaxValue(NumberPicker numberPicker){
+    private void setFeetMinMaxValue(NumberPicker numberPicker) {
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(7);
         numberPicker.setValue(5);
     }
-    private void setInchesMinMaxValue (NumberPicker numberPicker){
+
+    private void setInchesMinMaxValue(NumberPicker numberPicker) {
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(11);
         numberPicker.setValue(7);
     }
 
-    private String getValueHeightandFeet(NumberPicker feet, NumberPicker inches){
+    private String getValueHeightandFeet(NumberPicker feet, NumberPicker inches) {
         String output;
 
-        output = feet.getValue() + "'" + inches.getValue() + "\"" ;
+        output = feet.getValue() + "'" + inches.getValue() + "\"";
         return output;
 
     }

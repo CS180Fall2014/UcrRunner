@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.CreateAccountFragment;
+import com.murraycole.ucrrunner.view.activities.activities.Login.CreateAccountFragment;
 
 
 public class NumberPickerDialogFragment extends DialogFragment {
@@ -29,9 +29,9 @@ public class NumberPickerDialogFragment extends DialogFragment {
         int title = getArguments().getInt("title");
         final String type = getArguments().getString("type");
         View view = getActivity().getLayoutInflater().inflate(
-                R.layout.numberpicker_dialog_fragment, null);
+                R.layout.dialog_numberpicker_fragment, null);
         final NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.generic_numberpicker);
-        setupNumberPicker(numberPicker,type);
+        setupNumberPicker(numberPicker, type);
 
         return createAlertDialog(title, type, view, numberPicker);
 
@@ -47,7 +47,7 @@ public class NumberPickerDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         ((CreateAccountFragment) getFragmentManager().
                                 findFragmentById(R.id.container))
-                                .doPositiveClick(String.valueOf(numberPicker.getValue()),type);
+                                .doPositiveClick(String.valueOf(numberPicker.getValue()), type);
                     }
                 })
                 .setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
@@ -61,15 +61,16 @@ public class NumberPickerDialogFragment extends DialogFragment {
         return dialog;
 
     }
-    private void setupNumberPicker(NumberPicker numberPicker,String type){
-        switch (type){
-            case "age" :
+
+    private void setupNumberPicker(NumberPicker numberPicker, String type) {
+        switch (type) {
+            case "age":
                 numberPicker.setMinValue(0);
                 numberPicker.setMaxValue(120);
                 numberPicker.setValue(25); // average age of smartphone user
                 break;
 
-            case "weight" :
+            case "weight":
                 numberPicker.setMinValue(25);
                 numberPicker.setMaxValue(300);
                 numberPicker.setValue(150);
@@ -79,8 +80,6 @@ public class NumberPickerDialogFragment extends DialogFragment {
 
         }
     }
-
-
 
 
 }

@@ -13,8 +13,6 @@ import com.murraycole.ucrrunner.view.DAO.Message;
 
 import java.util.ArrayList;
 
-import fbutil.firebase4j.service.Firebase;
-
 /**
  * Created by C on 11/22/2014.
  */
@@ -32,7 +30,7 @@ public class MessagesAdapter extends ArrayAdapter {
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.message_list_item, parent, false);
+            view = layoutInflater.inflate(R.layout.list_item_message, parent, false);
             final TextView fromField = (TextView) view.findViewById(R.id.message_from_textview);
             final TextView content = (TextView) view.findViewById(R.id.message_content_textview);
             final TextView timestamp = (TextView) view.findViewById(R.id.message_timestamp_textview);

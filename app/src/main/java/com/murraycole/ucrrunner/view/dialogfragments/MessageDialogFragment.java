@@ -19,6 +19,7 @@ import com.murraycole.ucrrunner.backend.FirebaseManager;
  */
 public class MessageDialogFragment extends DialogFragment {
     public static String LOG_TAG = MessageDialogFragment.class.getSimpleName();
+
     public static MessageDialogFragment newInstance(int title) {
         Bundle args = new Bundle();
         args.putInt("title", title);
@@ -26,23 +27,25 @@ public class MessageDialogFragment extends DialogFragment {
         messageDialogFragment.setArguments(args);
         return messageDialogFragment;
     }
+
     public static MessageDialogFragment newInstance(int title, String toNickname) {
         Bundle args = new Bundle();
         args.putInt("title", title);
-        args.putString("recipent",toNickname);
+        args.putString("recipent", toNickname);
         MessageDialogFragment messageDialogFragment = new MessageDialogFragment();
         messageDialogFragment.setArguments(args);
         return messageDialogFragment;
     }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         int title = getArguments().getInt("title");
-        String recipent = getArguments().getString("recipent","-1");
-        View view = getActivity().getLayoutInflater().inflate(R.layout.message_dialog_fragment, null);
+        String recipent = getArguments().getString("recipent", "-1");
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_message_fragment, null);
         final EditText recipientET = (EditText) view.findViewById(R.id.message_dialog_recipient_edittext);
         final EditText msgContentET = (EditText) view.findViewById(R.id.message_dialog_content_edittext);
 
-        if (!recipent.equals("-1")){
+        if (!recipent.equals("-1")) {
             recipientET.setText(recipent);
         }
 
@@ -57,7 +60,7 @@ public class MessageDialogFragment extends DialogFragment {
                         //sendMsg To wherever
                         String recipient = recipientET.getText().toString();
                         String msg = msgContentET.getText().toString();
-                        sendMessageToFirebase(recipient,msg);
+                        sendMessageToFirebase(recipient, msg);
                         Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
                         // sendMsg(recipient,msg);
                     }
@@ -74,13 +77,13 @@ public class MessageDialogFragment extends DialogFragment {
 
     }
 
-    private void sendMessageToFirebase (String recipent, String message){
+    private void sendMessageToFirebase(String recipent, String message) {
         String UID = String.valueOf(FirebaseManager.getUID(recipent));
         String myUID = SharedPrefUtils.getCurrUID(getActivity());
         Log.d(LOG_TAG, "UID is:" + UID);
         Log.d(LOG_TAG, "MyUID is: " + myUID);
 
 
-        FirebaseManager.sendMessage(myUID,UID,message);
+        FirebaseManager.sendMessage(myUID, UID, message);
     }
 }

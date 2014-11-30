@@ -23,22 +23,22 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
     Context mContext;
     ArrayList<Route> routes;
 
-    public PrevRouteAdapter(Context context, ArrayList<Route> routes){
-        super(context,0,routes);
+    public PrevRouteAdapter(Context context, ArrayList<Route> routes) {
+        super(context, 0, routes);
         mContext = context;
         this.routes = routes;
     }
 
     @Override
-    public View getView (int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         //get route
         Route route = getItem(position);
         View rowView = convertView;
 
         //check if existing view is being reused, otherwise inflate
-        if (rowView == null){
-            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.route_list_item,parent,false);
+        if (rowView == null) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.list_item_route, parent, false);
 
             TextView routeDate = (TextView) rowView.findViewById(R.id.route_item_date_textview);
             TextView routeDist = (TextView) rowView.findViewById(R.id.route_item_dist_textview);
@@ -50,7 +50,6 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
 
             routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
-
 
 
             routeImg.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,6 @@
 package com.murraycole.ucrrunner.view.adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +19,16 @@ import java.util.ArrayList;
  */
 public class NewsfeedAdapter extends ArrayAdapter {
     public NewsfeedAdapter(Context context, ArrayList resource) {
-        super(context,0, resource);
+        super(context, 0, resource);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if (view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.newsfeed_list_item,parent,false);
+            view = inflater.inflate(R.layout.list_item_newsfeed, parent, false);
 
             Button likeButton = (Button) view.findViewById(R.id.newsfeed_like_button);
             Button commentButton = (Button) view.findViewById(R.id.newsfeed_comment_button);
@@ -44,22 +43,22 @@ public class NewsfeedAdapter extends ArrayAdapter {
         return view;
     }
 
-    private void setupLikeOnClickListener(Button button){
+    private void setupLikeOnClickListener(Button button) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Incomplete",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Incomplete", Toast.LENGTH_SHORT).show();
 
             }
         });
 
     }
 
-    private void setupCommentOnClickListener(Button button){
+    private void setupCommentOnClickListener(Button button) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Incomplete",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Incomplete", Toast.LENGTH_SHORT).show();
             }
         });
     }

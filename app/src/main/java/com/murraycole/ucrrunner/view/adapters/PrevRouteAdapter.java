@@ -65,6 +65,10 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
 
             routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
+            String dateFromRoute = routes.get(position).getDate();
+            /* This is returning null */
+            Log.d("PrevRouteAdapter", "Date from route: " + dateFromRoute);
+            routeDate.setText(dateFromRoute);
 
 
 

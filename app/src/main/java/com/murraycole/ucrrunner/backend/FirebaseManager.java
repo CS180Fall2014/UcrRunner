@@ -777,6 +777,7 @@ public class FirebaseManager {
 
                     String date = "";
                     //StrinI//g title = "";
+                    String id = "";
 
                     try {//populate a Route object
                         //Populating currRoute
@@ -800,6 +801,10 @@ public class FirebaseManager {
 
                         //Populate a stat
                         JSONObject currentStats = routeJSON.getJSONObject("currentStats");
+                        
+                        id = routeJSON.getJSONObject("id").toString();
+                        Log.d("MT", "Receive ID: "+ id);
+
 
                         currStats.setAverageSpeed(currentStats.getDouble("averageSpeed"));
                         currStats.setTopSpeed(currentStats.getDouble("topSpeed"));
@@ -822,6 +827,8 @@ public class FirebaseManager {
                     }
                     readRoute.setCurrentRoute(currRoute);
                     readRoute.setCurrentStats(currStats);
+                    readRoute.setId(id);
+
                     updateListener.update(readRoute);
                 }
                 //routes list is populated.
@@ -846,7 +853,7 @@ public class FirebaseManager {
         Firebase routeIdRef = routesRef.push();
 
         //set to routes/uid/<genid_currRoute>/_currRouteData
-        currRoute.getCurrentStats().setImageRef(routeIdRef.getName());
+        currRoute.setId(routeIdRef.getName());
         routeIdRef.setValue(currRoute);
         Log.d("DN", "routeID" + routeIdRef.getName());
         return routeIdRef.getName();

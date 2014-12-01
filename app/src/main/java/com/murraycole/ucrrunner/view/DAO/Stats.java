@@ -8,7 +8,7 @@ public class Stats {
     double topSpeed = 0.0;
     double caloriesBurned = 0.0;
     double distance = 0.0;
-    double duration = 0;
+    double duration = 0.0;
     double elevation = 0.0;
     String date = new String();
 

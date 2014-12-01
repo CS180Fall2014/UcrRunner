@@ -29,15 +29,6 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
     public NewsFeedFragment() {
         // Required empty public constructor
     }
-/*
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        newsFeed.clear();
-        FirebaseManager.getPostsForFriends(SharedPrefUtils.getCurrUID(getActivity()), this);
-    }
-*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

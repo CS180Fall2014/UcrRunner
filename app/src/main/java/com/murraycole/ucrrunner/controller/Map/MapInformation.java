@@ -60,20 +60,6 @@ public class MapInformation {
     private LocationStatsListener locationStatsListener;
     private Boolean isBookmarked = false;
     private byte[] image = null;
-    GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
-
-        @Override
-        public void onSnapshotReady(Bitmap bitmap) {
-            if (bitmap == null)
-                return;
-
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            image = stream.toByteArray();
-            saveRoute();
-        }
-    };
     private int duration = -1;
     private String UID;
     private Route reRunRoute;
@@ -433,4 +419,19 @@ public class MapInformation {
     public interface LocationStatsListener {
         public void onLocationUpdate(Location location);
     }
+
+    GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
+
+        @Override
+        public void onSnapshotReady(Bitmap bitmap) {
+            if (bitmap == null)
+                return;
+
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
+            image = stream.toByteArray();
+            saveRoute();
+        }
+    };
 }

@@ -429,7 +429,7 @@ public class MapInformation {
 
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
             image = stream.toByteArray();
             saveRoute();
         }

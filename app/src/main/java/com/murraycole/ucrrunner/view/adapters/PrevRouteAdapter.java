@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.backend.SettingsManager;
 import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
@@ -50,7 +52,6 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             TextView routeDist = (TextView) rowView.findViewById(R.id.route_item_dist_textview);
             ImageView routeImg = (ImageView) rowView.findViewById(R.id.route_item_map_imageview);
 
-            byte[] routeImgBytes = route.getImage();
             /* RouteImgBytes is currently returning null
                When it starts to work, uncomment the below
                //TODO
@@ -58,19 +59,13 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
            // Bitmap routeImgBitmap = MapInformation.byteArrayToBitmap(routeImgBytes);
           //  routeImg.setImageBitmap(routeImgBitmap);
 
-
-
-            //
             DecimalFormat valuesRounded = new DecimalFormat("#.##");
 
 
             routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
-            String dateFromRoute = routes.get(position).getDate();
+            String dateFromRoute = routes.get(position).getCurrentStats().getDate();
             /* This is returning null */
-            Log.d("PrevRouteAdapter", "Date from route: " + dateFromRoute);
             routeDate.setText(dateFromRoute);
-
-
 
             routeImg.setOnClickListener(new View.OnClickListener() {
                 @Override

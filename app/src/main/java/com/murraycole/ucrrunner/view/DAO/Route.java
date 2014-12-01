@@ -10,19 +10,11 @@ import java.util.List;
 public class Route {
     private List<List<LatLng>> currentRoute;
     private Stats currentStats;
-    private Boolean isBookmarked;
     private String id;
-    private byte[] image;
-    private String date;
-    private String title;
+    //private byte[] image;
+    //private String date = new String();
+    //private String title;
 
-    public Boolean getIsBookmarked() {
-        return isBookmarked;
-    }
-
-    public void setIsBookmarked(Boolean isBookmarked) {
-        this.isBookmarked = isBookmarked;
-    }
 
     public String getId() {
         return id;
@@ -47,7 +39,17 @@ public class Route {
     public void setCurrentStats(Stats currentStats) {
         this.currentStats = currentStats;
     }
+/*
+    public byte[] getImage() {
+        return image;
+    }
 
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+    */
+
+    /*
     public byte[] getImage() {
         return image;
     }
@@ -56,14 +58,9 @@ public class Route {
         this.image = image;
     }
 
-    public String getDate() {
-        return date;
-    }
+*/
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
+    /*
     public String getTitle() {
         return title;
     }
@@ -71,4 +68,5 @@ public class Route {
     public void setTitle(String title) {
         this.title = title;
     }
+    */
 }

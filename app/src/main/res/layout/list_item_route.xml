@@ -21,7 +21,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:fontFamily="serif-thin"
-                android:text="11/18"
                 android:textColor="#C4000000"
                 android:textSize="24dp" />
 
@@ -31,7 +30,6 @@
                 android:layout_toRightOf="@+id/route_item_date_textview"
                 android:fontFamily="serif-thin"
                 android:paddingLeft="8dp"
-                android:text="2:45pm"
                 android:textSize="24dp" />
 
             <TextView
@@ -41,7 +39,6 @@
                 android:layout_alignParentBottom="true"
                 android:fontFamily="serif-thin"
                 android:gravity="center_horizontal"
-                android:text="2.64 mi"
                 android:textColor="#C4000000"
                 android:textSize="36dp" />
 

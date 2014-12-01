@@ -10,6 +10,8 @@ public class Stats {
     double distance = 0.0;
     double duration = 0;
     double elevation = 0.0;
+    String date = new String();
+    String imageRef = new String();
 
     public double getAverageSpeed() {
         return averageSpeed;
@@ -57,5 +59,19 @@ public class Stats {
 
     public void setElevation(double elevation) {
         this.elevation = elevation;
+    }
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getImageRef(){
+        return imageRef;
+    }
+    public void setImageRef(String imageRef){
+        this.imageRef=imageRef;
     }
 }

@@ -16,6 +16,9 @@ import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.DAO.Stats;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -388,16 +391,18 @@ public class MapInformation {
         stats.setElevation(-1.0); // set up elevation Milestone 1
         stats.setTopSpeed(getTopSpeed());
         stats.setDuration(duration);
+        //had to parse date differently, had issues with firebase returning something like yyyy-mm-dd mm:ss etc...
+        java.util.Date date = new java.util.Date();
+        String formatedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        stats.setDate(formatedDate);
+
         route.setCurrentRoute(r);
         route.setCurrentStats(stats);
-        route.setIsBookmarked(isBookmarked);
+        String title = FirebaseManager.saveRoute(route, UID);
+        //save image byte to different table on firebase
         if (isValidImage()) {
-            route.setImage(image);
-        } else {
-            route.setImage(new byte[0]);
-        }
-        route.setDate(String.valueOf(new Date().getTime()));
-        FirebaseManager.saveRoute(route, UID);
+             FirebaseManager.saveImage(UID, image, title);
+         }
     }
 
 

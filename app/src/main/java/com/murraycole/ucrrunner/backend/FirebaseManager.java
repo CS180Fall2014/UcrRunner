@@ -606,6 +606,11 @@ public class FirebaseManager {
         return null;
     }
 
+    public static FirebaseError saveImage(String uid, byte[] image, String title){
+        Firebase imageRef = new Firebase("https://torid-inferno-2246.firebaseio.com/images/" + uid + "/"+ title +"/");
+        imageRef.setValue(image);
+        return null;
+    }
 
 
 
@@ -705,6 +710,30 @@ public class FirebaseManager {
         return -1;
     }
 
+       //not complete
+    public static String getImage(String uid, String title){
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String formatUid = uid.replace("\"", "");
+            String formatTitle = title.replace("\"", "");
+            Log.d("jdfkljdflkdjflkj", formatTitle);
+            String imageRef = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/images/" + formatUid + "/" + formatTitle + ".json");
+            imageRef = imageRef.replace("\"", "");
+            return imageRef.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+
     // Route functions =============================================================================
     //works
     /*
@@ -744,9 +773,8 @@ public class FirebaseManager {
                     List<List<LatLng>> currRoute = new ArrayList<>();
                     Stats currStats = new Stats();
 
-                    String date = null;
-                    String title = null;
-                    byte[] image = null;
+                    String date = "";
+                    //StrinI//g title = "";
 
                     try {//populate a Route object
                         //Populating currRoute
@@ -763,39 +791,35 @@ public class FirebaseManager {
                                 double lat = coord.getDouble("latitude");
                                 double lon = coord.getDouble("longitude");
                                 currRoute.get(currRoute.size() - 1).add(new LatLng(lat, lon));
-                                //Log.d("MT", "....Coord: " + lat + " , " + lon);
+                                Log.d("MT", "....Coord: " + lat + " , " + lon);
                             }
                         }
                         //currRoute is now populated
 
                         //Populate a stat
                         JSONObject currentStats = routeJSON.getJSONObject("currentStats");
+
                         currStats.setAverageSpeed(currentStats.getDouble("averageSpeed"));
                         currStats.setTopSpeed(currentStats.getDouble("topSpeed"));
                         currStats.setCaloriesBurned(currentStats.getDouble("caloriesBurned"));
                         currStats.setDistance(currentStats.getDouble("distance"));
+                        currStats.setDate(currentStats.getString("date"));
 
 
-                        title = new JSONObject(jsonData).get("title").toString();
-                        date = new JSONObject(jsonData).get("date").toString();
-                        image = new JSONObject(jsonData).get("image").toString().getBytes();
-
-
-                        /*Log.d("MT", "Populated Stat.");
+                        //title = new JSONObject(jsonData).get("title").toString();
+                        /*
+                        Log.d("MT", "Populated Stat.");
                         Log.d("MT", "..averageSpeed: " + currentStats.getDouble("averageSpeed"));
                         Log.d("MT", "..topSpeed: " + currentStats.getDouble("topSpeed"));
                         Log.d("MT", "..caloriesBurned: " + currentStats.getDouble("caloriesBurned"));
                         Log.d("MT", "..distance: " + currentStats.getDouble("distance"));
-                        Log.d("MT", ".......................................");*/
-                        //Stat now populated
+                        Log.d("MT", ".......................................");
+                        */
                     } catch (Exception e) {
                         Log.d("MT", e.getMessage());
                     }
                     readRoute.setCurrentRoute(currRoute);
                     readRoute.setCurrentStats(currStats);
-                    readRoute.setDate(date);
-                    readRoute.setTitle(title);
-                    readRoute.setImage(image);
                     updateListener.update(readRoute);
                 }
                 //routes list is populated.
@@ -810,7 +834,7 @@ public class FirebaseManager {
     }
 
     // Works saves to /Routes
-    public static FirebaseError saveRoute(Route currRoute, String uid) {
+    public static String saveRoute(Route currRoute, String uid) {
         if (uid.contains(":")) {
             uid = uid.split(":")[1];
         }
@@ -820,9 +844,11 @@ public class FirebaseManager {
         Firebase routeIdRef = routesRef.push();
 
         //set to routes/uid/<genid_currRoute>/_currRouteData
+        currRoute.getCurrentStats().setImageRef(routeIdRef.getName());
         routeIdRef.setValue(currRoute);
         Log.d("DN", "routeID" + routeIdRef.getName());
-        return null;
+        return routeIdRef.getName();
+        //return null;
     }
 
     public static String getCurrUID(Context context){

@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.backend.SettingsManager;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.DAO.Stats;
 
@@ -75,6 +76,8 @@ public class MapInformation {
     };
     private int duration = -1;
     private String UID;
+    private Route reRunRoute;
+
 
     /**
      * initializes the MapInformation which is dependent on the Google Map API v2
@@ -143,6 +146,10 @@ public class MapInformation {
      */
     public void bookmarkRoute(Boolean isBookmarked) {
         this.isBookmarked = isBookmarked;
+    }
+
+    public void setReRunRoute(Route route) {
+        reRunBookmarkedRoute(route);
     }
 
     /**
@@ -407,8 +414,14 @@ public class MapInformation {
         if (isValidImage()) {
              FirebaseManager.saveImage(UID, image, title);
          }
-    }
 
+        //update user information
+        SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed());
+        SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
+        SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
+        SettingsManager.updateUserTotalDist(UID, stats.getDistance());
+        SettingsManager.updateUserTotalDuration(UID, stats.getDuration());
+    }
 
     private void takeImage() {
         googleMap.snapshot(callback);

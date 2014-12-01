@@ -21,7 +21,6 @@ import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragme
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.PrevRouteFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileSettingsFragment;
-import com.murraycole.ucrrunner.view.activities.activities.SettingsActivity;
 
 public class ProfileNavDrawer extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -161,7 +160,10 @@ public class ProfileNavDrawer extends Activity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            //startActivity(new Intent(this, SettingsActivity.class));
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new ProfileSettingsFragment())
+                    .commit();
         }
 
         return super.onOptionsItemSelected(item);

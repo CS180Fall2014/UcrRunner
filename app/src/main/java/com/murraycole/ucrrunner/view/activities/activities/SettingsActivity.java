@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileSettingsFragment;
 
 public class SettingsActivity extends Activity {
 
@@ -14,6 +14,9 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new ProfileSettingsFragment())
+                .commit();
     }
 
 

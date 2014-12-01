@@ -84,6 +84,10 @@ public class ProfileSettingsFragment extends Fragment {
                 changePassword(readUID, oldpasswordET.getText().toString(), newpasswordET.getText().toString(), v);
                 changeWeight(readUID, weightET.getText().toString());
                 changeHeight(readUID, heightET.getText().toString());
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new ProfileFragment())
+                        .commit();
             }
         });
     }

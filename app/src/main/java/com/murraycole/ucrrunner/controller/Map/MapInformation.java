@@ -413,8 +413,8 @@ public class MapInformation {
         stats.setTopSpeed(getTopSpeed());
         stats.setDuration(duration);
         java.util.Date date = new java.util.Date();
-        String formatedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        stats.setDate(formatedDate);
+        /*String formatedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        */stats.setDate(new Timestamp(date.getTime()).toString().replace(":", "|").replace(" ", "?"));
 
         route.setCurrentRoute(r);
         route.setCurrentStats(stats);

@@ -64,7 +64,9 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             /* This is returning null */
             routeDate.setText(dateFromRoute);
 
-            String title = routes.get(position).getCurrentStats().getImageRef();
+            String title = routes.get(position).getId();
+
+            Log.d("MT", "PrevRouteAdapter got title (routeId) : " + title);
 
             String imageArr = FirebaseManager.getImage(title);
 
@@ -74,9 +76,9 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
 
             //routeImg.setImageBitmap(image);
-            Bitmap b = MapInformation.stringToBitmap(formatedArr);
+            /**Bitmap b = MapInformation.stringToBitmap(formatedArr);
             routeImg.setImageBitmap(b);
-
+**/
             routeImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

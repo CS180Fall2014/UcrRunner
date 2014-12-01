@@ -785,6 +785,7 @@ public class FirebaseManager {
                     try {//populate a Route object
                         //Populating currRoute
                         JSONObject routeJSON = new JSONObject(jsonData);
+                        Log.d("MT", "The routeJson: " + routeJSON);
                         JSONArray routesArray = routeJSON.getJSONArray("currentRoute");
                         for (int i = 0; i < routesArray.length(); ++i) { //iterate each subroute
                             JSONArray subRoute = routesArray.getJSONArray(i);
@@ -805,7 +806,7 @@ public class FirebaseManager {
                         //Populate a stat
                         JSONObject currentStats = routeJSON.getJSONObject("currentStats");
                         
-                        id = routeJSON.getJSONObject("id").toString();
+                        id = routeJSON.getString("id");
                         Log.d("MT", "Receive ID: "+ id);
 
 
@@ -813,7 +814,7 @@ public class FirebaseManager {
                         currStats.setTopSpeed(currentStats.getDouble("topSpeed"));
                         currStats.setCaloriesBurned(currentStats.getDouble("caloriesBurned"));
                         currStats.setDistance(currentStats.getDouble("distance"));
-                        currStats.setDate(currentStats.getString("date"));
+                        currStats.setDate(currentStats.getString("date").replace("|", ":").replace("?", " "));
 
 
                         //title = new JSONObject(jsonData).get("title").toString();

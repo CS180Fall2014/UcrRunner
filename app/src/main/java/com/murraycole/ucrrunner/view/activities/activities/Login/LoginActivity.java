@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.backend.SettingsManager;
 import com.murraycole.ucrrunner.view.listeners.LoginButtonListener;
 
 public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {
@@ -87,11 +88,16 @@ public class LoginActivity extends Activity implements CreateAccountFragment.OnF
             bypass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
+                    /*EditText userET = (EditText) mView.findViewById(R.id.login_username_edittext),
                             passET = (EditText) mView.findViewById(R.id.login_password_edittext);
                     userET.setText("n@n.com");
                     passET.setText("n");
-                    new LoginButtonListener().onClick(view);
+                    new LoginButtonListener().onClick(view);*/
+                    SettingsManager.updateUserAvgSpeed("105", 1);
+                    SettingsManager.updateUserTopSpeed("105", 1);
+                    SettingsManager.updateUserTotalCal("105", 1);
+                    SettingsManager.updateUserTotalDist("105", 1);
+                    SettingsManager.updateUserTotalDuration("105", 1);
                 }
             });
 

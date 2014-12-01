@@ -2,6 +2,7 @@ package com.murraycole.ucrrunner.view.activities.activities.PostRun;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments.NewsFeedFragment;
+import com.murraycole.ucrrunner.view.activities.activities.NavDrawer.ProfileNavDrawer;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileFragment;
 
 /**
@@ -39,8 +40,10 @@ public class PostRunFragment extends Fragment {
         Post_Run.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new NewsFeedFragment()).addToBackStack(null).commit();
+                        .replace(R.id.container, new NewsFeedFragment()).addToBackStack(null).commit(); */
+                startActivity(new Intent(getActivity(), ProfileNavDrawer.class));
 
             }
         });

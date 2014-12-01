@@ -714,16 +714,15 @@ public class FirebaseManager {
     }
 
        //not complete
-    public static String getImage(String uid, String title){
+    public static String getImage(String title){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
         try {
-            String formatUid = uid.replace("\"", "");
             String formatTitle = title.replace("\"", "");
-            Log.d("jdfkljdflkdjflkj", formatTitle);
-            String imageRef = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/images/" + formatUid + "/" + formatTitle + ".json");
+            Log.d("MT", formatTitle);
+            String imageRef = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/images/" + formatTitle + ".json");
             imageRef = imageRef.replace("\"", "");
             return imageRef.toString();
         } catch (IOException e) {

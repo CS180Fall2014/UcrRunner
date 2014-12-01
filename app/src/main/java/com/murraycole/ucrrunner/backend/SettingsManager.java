@@ -46,7 +46,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("0")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("0") || jsonData.matches("null")){
                 jsonData = new String(Double.valueOf(newSpeed).toString());
                 Log.d("MT", "updateUserAvgSpeed got empty avg speed. new: " + jsonData);
             }else{
@@ -75,7 +75,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")){
                 jsonData = new String(Double.valueOf(newSpeed).toString());
                 Log.d("MT", "updateUserTopSpeed got empty avg speed. new: " + jsonData);
             }else{
@@ -105,7 +105,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")){
                 jsonData = new String(Double.valueOf(newTotalCal).toString());
                 Log.d("MT", "updateUserTotalCal got empty avg speed. new: " + jsonData);
             }else{
@@ -135,7 +135,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")){
+            if(jsonData == null || jsonData.matches("null") || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")){
                 jsonData = new String(Double.valueOf(newDistance).toString());
                 Log.d("MT", "updateUserTotalDist got empty avg speed. new: " + jsonData);
             }else{
@@ -164,7 +164,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0") || jsonData.matches("null")){
                 jsonData = new String(Double.valueOf(newDuration).toString());
                 Log.d("MT", "updateUserTotalDuration got empty avg speed. new: " + jsonData);
             }else{

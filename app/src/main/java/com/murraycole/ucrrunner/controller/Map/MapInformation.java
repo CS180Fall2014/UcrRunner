@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -204,8 +205,17 @@ public class MapInformation {
     }
 
     public static Bitmap stringToBitmap(String value) {
-        byte[] imageAsBytes = Base64.decode(value, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+        byte[] bytes = new byte[0];
+        try {
+            bytes = value.getBytes("UTF-8");
+            String string = new String(bytes, "UTF-8");
+            Log.d("GREPSEARCH: ", string);
+            byte[] imageAsBytes = Base64.decode(string, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
      /**
@@ -495,8 +505,9 @@ public class MapInformation {
             bitmap.recycle();
             byte[] byteArray = bYtE.toByteArray();
             imageFileName = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            //storeImage(stringToBitmap(imageFileName));
-            //System.out.println("Image File Name: " + imageFileName);
+            //System.out.println;
+            storeImage(stringToBitmap(imageFileName));
+            System.out.println("Image File Name: " + imageFileName);
 //            System.out.println("Compressed Image & Reconfigured Size: " + image.length + " Contents: " + image.toString());
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //            //System.out.println("BITMAP: " + bitmap.getByteCount());

@@ -1,6 +1,7 @@
 package com.murraycole.ucrrunner.view.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +24,18 @@ public class CommentAdapter extends ArrayAdapter {
 
     public CommentAdapter(Context context, ArrayList<Pair<String,String>> resource) {
         super(context, 0, resource);
-        comments = resource;
+        comments = new ArrayList<>();
+        comments.addAll(resource);
+        for (Pair <String,String> comment : comments){
+            Log.d("CommentAdapter", comment.first + " " + comment.second);
+        }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if (view == null) {
+        //if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.list_item_comment, parent, false);
             final TextView userName = (TextView)view.findViewById(R.id.comment_name_textView);
@@ -39,12 +44,15 @@ public class CommentAdapter extends ArrayAdapter {
 
             String name = comments.get(position).first;
             String comment = comments.get(position).second;
+            Log.d("commentAdapter",name + " : " + comment + " : " + position);
 
             userName.setText(name);
             userComment.setText(comment);
 
-        }
+        //}
         return view;
 
     }
+
+
 }

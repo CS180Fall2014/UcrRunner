@@ -2,6 +2,8 @@ package com.murraycole.ucrrunner.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
 
@@ -54,10 +58,24 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             DecimalFormat valuesRounded = new DecimalFormat("#.##");
 
 
+
             routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
             String dateFromRoute = routes.get(position).getCurrentStats().getDate();
             /* This is returning null */
             routeDate.setText(dateFromRoute);
+
+            String title = routes.get(position).getCurrentStats().getImageRef();
+
+            String imageArr = FirebaseManager.getImage(title);
+
+            int firstOccurance = imageArr.indexOf(':');
+            String formatedArr = imageArr.substring(firstOccurance+1, imageArr.length()-1);
+            Log.d("Received Image ", formatedArr);
+
+
+            //routeImg.setImageBitmap(image);
+            Bitmap b = MapInformation.stringToBitmap(formatedArr);
+            routeImg.setImageBitmap(b);
 
             routeImg.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -175,7 +175,7 @@ public class FirebaseManager {
 
     // Works
     // TODO NOTHING TODO READ THE NOTE
-    public static void addComment(String uid, String postAuthorUid, String postId, String comment){
+    public static boolean addComment(String uid, String postAuthorUid, String postId, String comment){
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -186,8 +186,10 @@ public class FirebaseManager {
             commentJson = commentJson.replace("\"", "");
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
         Log.d("MT", "addComments got json: " + commentJson);
         //DONE
@@ -202,6 +204,7 @@ public class FirebaseManager {
         Firebase commentRef = new Firebase(FIREBASEURL_POSTS+postAuthorUid+"/"+postId+"/comment");
         commentRef.setValue(commentJson);
         Log.d("MT", "Set value: [" + commentJson + "]");
+        return true;
     }
     // Works
     public static void getPostsForFriends(String uid, final ArrayUpdateListener fragUpdateListener){

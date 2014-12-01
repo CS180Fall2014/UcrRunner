@@ -1,6 +1,7 @@
 package com.murraycole.ucrrunner.view.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
  */
 public class NewsfeedAdapter extends ArrayAdapter {
     ArrayList <Post> newsPosts;
+
     public NewsfeedAdapter(Context context, ArrayList resource) {
         super(context, 0, resource);
         newsPosts = resource;
@@ -67,6 +69,7 @@ public class NewsfeedAdapter extends ArrayAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Create an intent
                 Toast.makeText(getContext(), "Incomplete", Toast.LENGTH_SHORT).show();
             }
         });

@@ -15,7 +15,9 @@ public class PostRunActivity extends Activity {
         setContentView(R.layout.activity_post_run);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, new PostRunFragment()).commit();
+                    .replace(R.id.container, new PostRunFragment())
+                    .addToBackStack(null)
+                    .commit();
 
         }
     }

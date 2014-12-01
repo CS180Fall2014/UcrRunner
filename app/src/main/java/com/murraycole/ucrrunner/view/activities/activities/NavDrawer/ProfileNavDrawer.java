@@ -66,21 +66,25 @@ public class ProfileNavDrawer extends Activity
         if (position == PROFILE_SECTION) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new ProfileFragment())
+                    .addToBackStack(null)
                     .commit();
         }
         if (position == NEWSFEED_SECTION) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new NewsFeedFragment())
+                    .addToBackStack(null)
                     .commit();
         }
         if (position == FRIENDS_SECTION) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new FriendsFragment())
+                    .addToBackStack(null)
                     .commit();
         }
         if (position == MAILBOX_SECTION) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new MailboxFragment())
+                    .addToBackStack(null)
                     .commit();
 
         }
@@ -88,6 +92,7 @@ public class ProfileNavDrawer extends Activity
         if (position == PREVROUTES_SECTION) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new PrevRouteFragment())
+                    .addToBackStack(null)
                     .commit();
 
         }
@@ -98,6 +103,7 @@ public class ProfileNavDrawer extends Activity
         if (position == SETTINGS_SECTION) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, new ProfileSettingsFragment())
+                    .addToBackStack(null)
                     .commit();
 
         }
@@ -163,6 +169,7 @@ public class ProfileNavDrawer extends Activity
             //startActivity(new Intent(this, SettingsActivity.class));
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, new ProfileSettingsFragment())
+                    .addToBackStack(null)
                     .commit();
         }
 

@@ -1,6 +1,5 @@
 package com.murraycole.ucrrunner.view.activities.activities.Map;
 
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -17,7 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.controller.Map.MapInformation;
-import com.murraycole.ucrrunner.view.activities.activities.PostRun.PostRunActivity;
+import com.murraycole.ucrrunner.view.activities.activities.PostRun.PostRunFragment;
 
 import java.text.DecimalFormat;
 
@@ -113,8 +112,9 @@ public class MapRunning extends BaseMapActivity {
                 public void onClick(View v) {
                     pw.dismiss();
                     //Transitions to the post run to news feed scene
-                    startActivity(new Intent(getBaseContext(), PostRunActivity.class));
-
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.container, new PostRunFragment())
+                            .commit();
                 }
             });
 

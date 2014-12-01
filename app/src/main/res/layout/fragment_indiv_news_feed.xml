@@ -14,16 +14,20 @@
         <TextView
             android:id="@+id/indv_newsfeed_author_tv"
             android:layout_width="0dp"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:layout_height="wrap_content"
             android:text="martinTing"
+            android:textColor="@color/blue_500"
             android:textAppearance="?android:textAppearanceLarge"/>
         <TextView
             android:id="@+id/indv_newsfeed_time_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
+            android:gravity="center"
+            android:textColor="@color/grey_600"
+            android:drawableLeft="@drawable/ic_event_grey600_16dp"
+            android:drawablePadding="4dp"
             android:text="6m"
              />
 

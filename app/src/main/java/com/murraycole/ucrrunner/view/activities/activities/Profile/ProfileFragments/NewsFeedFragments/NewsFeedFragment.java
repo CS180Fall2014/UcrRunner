@@ -3,6 +3,7 @@ package com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragm
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                //Get the post object
+                Log.d("NewsFeed", newsFeed.get(position).getPostID());
                IndivNewsFeedFragment indivNewsFeedFragment =
                        IndivNewsFeedFragment.newInstance(newsFeed.get(position));
 

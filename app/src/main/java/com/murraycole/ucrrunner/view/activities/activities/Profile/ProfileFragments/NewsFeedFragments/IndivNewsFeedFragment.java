@@ -30,6 +30,7 @@ public class IndivNewsFeedFragment extends Fragment {
     public static IndivNewsFeedFragment newInstance(Post post) {
         Bundle args = new Bundle();
         args.putString("Post", post.getComment());
+        Log.d("newsFeed",post.getComment()); //correct input
         IndivNewsFeedFragment newsfeedAdapter = new IndivNewsFeedFragment();
         newsfeedAdapter.setArguments(args);
         return newsfeedAdapter;
@@ -47,7 +48,7 @@ public class IndivNewsFeedFragment extends Fragment {
         if (!user_post.equals("")) {
             for (String comment : user_post.split(":")) {
                 Pair<String, String> cPair = Pair.create(comment.split("-")[0], comment.split("-")[1]);
-                Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">");
+                Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">"); //also correct
                 post.add(cPair);
             }
         }
@@ -59,7 +60,7 @@ public class IndivNewsFeedFragment extends Fragment {
 
 
         //populate the listView here with the comment adapter
-
+        commentAdapter.notifyDataSetChanged();
         return rootView;
     }
 

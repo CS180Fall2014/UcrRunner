@@ -9,8 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.activities.activities.Map.MapRunning;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.MessageFragments.MailboxFragment;
 import com.murraycole.ucrrunner.view.activities.activities.SettingsActivity;
@@ -32,6 +35,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        String myNickname = FirebaseManager.getNickname(SharedPrefUtils.getCurrUID(getActivity()));
+        TextView nicknameTV = (TextView) rootView.findViewById(R.id.profile_username_tv);
+        nicknameTV.setText(myNickname);
 
         //buttons here
       //  On_Button_Press(rootView);

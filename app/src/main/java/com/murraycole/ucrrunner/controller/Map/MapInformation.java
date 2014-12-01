@@ -161,6 +161,7 @@ public class MapInformation {
     }
 
     /**
+     * OLD VERSION use stopRoute(int seconds, String UID)
      * stops the current route and saves to Firebase
      *
      * @param seconds is the duration of the run
@@ -175,6 +176,11 @@ public class MapInformation {
         takeImage();
     }
 
+    /**
+     * stops the current route and saves to Firebase
+     * @param seconds is the duration of the run
+     * @param UID is the user identifier
+     */
     public void stopRoute(int seconds, String UID) {
         isStart = isPause = false;
         this.UID = UID;
@@ -197,7 +203,7 @@ public class MapInformation {
     }
 
     /**
-     * (untested)
+     * (untested) & not used, going to use instead update on backend side
      * calculates the total information for a list of routes
      * @param routes is the list of routes that the user has ran
      * @return the stats of the total information
@@ -240,7 +246,6 @@ public class MapInformation {
 
     /**
      * current speed in meters per hour
-     *
      * @return the current speed
      */
     public double getCurrentSpeed() {
@@ -391,7 +396,6 @@ public class MapInformation {
         stats.setElevation(-1.0); // set up elevation Milestone 1
         stats.setTopSpeed(getTopSpeed());
         stats.setDuration(duration);
-        //had to parse date differently, had issues with firebase returning something like yyyy-mm-dd mm:ss etc...
         java.util.Date date = new java.util.Date();
         String formatedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
         stats.setDate(formatedDate);

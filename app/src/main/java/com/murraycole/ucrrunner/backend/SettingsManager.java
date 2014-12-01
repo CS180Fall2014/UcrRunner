@@ -27,6 +27,7 @@ public class SettingsManager {
 
     //TOOD implement userRunCount and implement these methods
     public static double updateUserAvgSpeed(String uid, double newSpeed){
+        //Firebase setRef = new Firebase(FirebaseManager.FIREBASEURL_USERS+uid+/)
         return 0.0;
     }
     public static  double updateUserTopSpeed(String uid, double newSpeed){

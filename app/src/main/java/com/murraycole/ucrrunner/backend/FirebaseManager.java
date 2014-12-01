@@ -52,12 +52,12 @@ public class FirebaseManager {
     }
 
     //=======================
-    private static final String FIREBASEURL = "https://torid-inferno-2246.firebaseio.com/";
-    private static final String FIREBASEURL_MESSAGES = "https://torid-inferno-2246.firebaseio.com/messages/";
-    private static final String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
-    private static final String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
-    private static final String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
-    private static final String FIREBASEURL_NICKNAMES = "https://torid-inferno-2246.firebaseio.com/regrec/";
+    public static final String FIREBASEURL = "https://torid-inferno-2246.firebaseio.com/";
+    public static final String FIREBASEURL_MESSAGES = "https://torid-inferno-2246.firebaseio.com/messages/";
+    public static final String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
+    public static final String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
+    public static final String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
+    public static final String FIREBASEURL_NICKNAMES = "https://torid-inferno-2246.firebaseio.com/regrec/";
 /*
     public static FirebaseError saveRoute(Route currRoute, String uid) {
         if (uid.contains(":")) {
@@ -111,6 +111,7 @@ public class FirebaseManager {
     // Should be working.  use and I will respond to bugs.
     public static ArrayList<Pair<String,String>> getComments(Post obj){
         ArrayList<Pair<String,String>> commentList = new ArrayList<Pair<String, String>>();
+        Log.d("MT", "GetComments is going to be listing comments");
         for(String comment : obj.getComment().split(":")){
             Pair<String, String> cPair = Pair.create(comment.split("-")[0], comment.split("-")[1]);
             Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">");
@@ -156,6 +157,7 @@ public class FirebaseManager {
         try {
             likeJson = readJsonFromUrl(FIREBASEURL_POSTS+postAuthorId+"/"+postId+"/likes.json");
             likeJson = likeJson.replace("\"", "");
+            Log.d("MT", "addLike got json: [" + likeJson + "]");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -166,7 +168,7 @@ public class FirebaseManager {
         }else{
             likeJson += ":" + getNickname(uid);
         }
-
+        Log.d("MT", "addLike is setting: [" + likeJson + "]");
         Firebase likeRef = new Firebase(FIREBASEURL_POSTS+postAuthorId + "/"+postId+"/likes");
         likeRef.setValue(likeJson);
     }
@@ -225,6 +227,7 @@ public class FirebaseManager {
         ArrayList<String> friendUIDList = new ArrayList(Arrays.asList(friendsJson.split(":")));
         for(String frienduid : friendUIDList){
             // TODO Martin did something clever. See if this works.
+            Log.d("MT", "Spawning secondary listener for uid: " + frienduid);
             getPostsForSingleUser(frienduid, fragUpdateListener);
         }
     }

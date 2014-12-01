@@ -7,21 +7,31 @@ public class User {
     String sex = new String();
     String email = new String();
     String nickname = new String();
-
-    public String getFriends() {
-        return friends;
-    }
-
-    public void setFriends(String friends) {
-        this.friends = friends;
-    }
-
     String friends = new String();
     double age = 0.0,
            height = 0.0,
            weight = 0.0;
 
     byte[] picture;
+    Stats stats = new Stats(); // hopefully this doesn't break anything
+    int totalRunCount = 0;
+
+    public int getTotalRunCount() {
+        return totalRunCount;
+    }
+
+    public void setTotalRunCount(int totalRunCount) {
+        this.totalRunCount = totalRunCount;
+    }
+
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
 
 
     public byte[] getPicture() {
@@ -32,8 +42,13 @@ public class User {
         this.picture = picture;
     }
 
+    public String getFriends() {
+        return friends;
+    }
 
-
+    public void setFriends(String friends) {
+        this.friends = friends;
+    }
 
     public String getSex() {
         return sex;

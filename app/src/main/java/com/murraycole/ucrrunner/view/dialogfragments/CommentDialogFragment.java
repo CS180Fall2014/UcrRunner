@@ -15,6 +15,7 @@ import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Post;
 import com.murraycole.ucrrunner.view.DAO.Route;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments.NewsFeedFragment;
 
 import fbutil.firebase4j.service.Firebase;
 
@@ -75,8 +76,12 @@ public class CommentDialogFragment extends DialogFragment {
     public boolean postComment(String message)
     {
         String myUID = SharedPrefUtils.getCurrUID(getActivity());
+        boolean statement  = FirebaseManager.addComment(myUID,post.getAuthorUID(),post.getPostID(),message);
+        //getActivity().notify();
+        ((NewsFeedFragment)getActivity().getFragmentManager().findFragmentById(R.id.container)).notifyOnDataChanged();
+        return statement;
 
-        return FirebaseManager.addComment(myUID,post.getAuthorUID(),post.getPostID(),message);
+
 
     }
 }

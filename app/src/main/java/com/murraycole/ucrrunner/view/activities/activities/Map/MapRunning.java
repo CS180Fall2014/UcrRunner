@@ -104,7 +104,7 @@ public class MapRunning extends BaseMapActivity {
             // display the popup in the center
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
-            TextView Title = (TextView) layout.findViewById(R.id.Popup_Title_editText);
+            final TextView Title = (TextView) layout.findViewById(R.id.Popup_Title_editText);
             Button Ok = (Button) layout.findViewById(R.id.Popup_ok_button);
 
             Ok.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +112,9 @@ public class MapRunning extends BaseMapActivity {
                 public void onClick(View v) {
                     pw.dismiss();
                     //Transitions to the post run to news feed scene
+                    PostRunFragment postRunFragment = PostRunFragment.newInstance(Title.getText().toString());
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.container, new PostRunFragment())
+                            .replace(R.id.container,postRunFragment)
                             .commit();
                 }
             });

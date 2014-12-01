@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.view.DAO.Post;
 import com.murraycole.ucrrunner.view.activities.activities.NavDrawer.ProfileNavDrawer;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileFragment;
 
@@ -17,8 +21,15 @@ import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragme
  * A simple {@link Fragment} subclass.
  */
 public class PostRunFragment extends Fragment {
+    String mTitle;
 
-
+    public static PostRunFragment newInstance (String title){
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        PostRunFragment fragment = new PostRunFragment();
+        fragment.setArguments(bundle);
+        return  fragment;
+    }
     public PostRunFragment() {
         // Required empty public constructor
     }
@@ -29,6 +40,7 @@ public class PostRunFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_post_run, container, false);
+        mTitle = getArguments().getString("title");
         ButtonPress(rootView);
         return rootView;
     }
@@ -36,13 +48,18 @@ public class PostRunFragment extends Fragment {
     private void ButtonPress(View v) {
         Button Post_Run = (Button) v.findViewById(R.id.Post_Run_Button);
         Button Home = (Button) v.findViewById(R.id.Post_Run_Home_Button);
+        final TextView description = (TextView) v.findViewById(R.id.Post_Run_Add_Description_editText);
 
         Post_Run.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new NewsFeedFragment()).addToBackStack(null).commit(); */
+                Post post = new Post();
+                String myID = SharedPrefUtils.getCurrUID(getActivity());
+                post.setAuthorUID(myID);
+                post.setAuthorNickname(mTitle);
+                post.setDescription(description.getText().toString());
+
+                FirebaseManager.savePost(SharedPrefUtils.getCurrUID(getActivity()),post);
                 startActivity(new Intent(getActivity(), ProfileNavDrawer.class));
 
             }

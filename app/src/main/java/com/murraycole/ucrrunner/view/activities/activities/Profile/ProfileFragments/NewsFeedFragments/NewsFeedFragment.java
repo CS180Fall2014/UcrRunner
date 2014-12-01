@@ -72,4 +72,8 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
         mAdapter.notifyDataSetChanged();
 
     }
+
+    public void notifyOnDataChanged(){
+        mAdapter.notifyDataSetChanged();
+    }
 }

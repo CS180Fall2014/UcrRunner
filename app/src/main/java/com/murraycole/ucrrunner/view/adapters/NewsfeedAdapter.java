@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Post;
 import com.murraycole.ucrrunner.view.dialogfragments.CommentDialogFragment;
 
@@ -54,7 +56,7 @@ public class NewsfeedAdapter extends ArrayAdapter {
             descriptionTV.setText(description);
             authorTV.setText(author);
 
-            setupLikeOnClickListener(likeButton);
+            setupLikeOnClickListener(likeButton,currPost);
             setupCommentOnClickListener(commentButton,currPost);
 
 
@@ -63,11 +65,14 @@ public class NewsfeedAdapter extends ArrayAdapter {
         return view;
     }
 
-    private void setupLikeOnClickListener(ImageView imageView) {
+    private void setupLikeOnClickListener(ImageView imageView, final Post currPost) {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Incomplete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Like", Toast.LENGTH_SHORT).show();
+                FirebaseManager.addLike(SharedPrefUtils.getCurrUID(v.getContext()),
+                        currPost.getAuthorUID(),
+                        currPost.getPostID());
 
             }
         });

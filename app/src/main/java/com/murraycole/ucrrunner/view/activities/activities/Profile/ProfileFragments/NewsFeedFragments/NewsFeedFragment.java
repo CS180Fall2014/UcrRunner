@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.murraycole.ucrrunner.R;
@@ -44,6 +45,15 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
 
         ListView listView = (ListView) rootView.findViewById(R.id.newsfeed_listview);
         listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container,new IndivNewsFeedFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         // Inflate the layout for this fragment
         return rootView;
     }

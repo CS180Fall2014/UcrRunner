@@ -605,7 +605,7 @@ public class FirebaseManager {
         return null;
     }
 
-    public static FirebaseError saveImage(byte[] image, String title){
+    public static FirebaseError saveImage(String image, String title){
         Firebase imageRef = new Firebase("https://torid-inferno-2246.firebaseio.com/images/"+ title +"/");
         imageRef.setValue(image);
         return null;

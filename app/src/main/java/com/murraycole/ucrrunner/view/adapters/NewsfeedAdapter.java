@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.DAO.Post;
 
 import java.util.ArrayList;
 
@@ -18,8 +19,10 @@ import java.util.ArrayList;
  * Created by C on 11/22/2014.
  */
 public class NewsfeedAdapter extends ArrayAdapter {
+    ArrayList <Post> newsPosts;
     public NewsfeedAdapter(Context context, ArrayList resource) {
         super(context, 0, resource);
+        newsPosts = resource;
     }
 
     @Override
@@ -32,8 +35,11 @@ public class NewsfeedAdapter extends ArrayAdapter {
 
             Button likeButton = (Button) view.findViewById(R.id.newsfeed_like_button);
             Button commentButton = (Button) view.findViewById(R.id.newsfeed_comment_button);
-            TextView text = (TextView) view.findViewById(R.id.newsfeed_text_textview);
+            TextView descriptionTV = (TextView) view.findViewById(R.id.newsfeed_text_textview);
             ImageView imageView = (ImageView) view.findViewById(R.id.newsfeed_image_imageview);
+
+            String description = newsPosts.get(position).getDescription();
+            descriptionTV.setText(description);
 
             setupLikeOnClickListener(likeButton);
             setupCommentOnClickListener(commentButton);

@@ -1,4 +1,4 @@
-package com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments;
+package com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments;
 
 
 import android.app.Fragment;
@@ -9,15 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
+import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.view.DAO.Post;
 import com.murraycole.ucrrunner.view.adapters.NewsfeedAdapter;
+import com.murraycole.ucrrunner.view.interfaces.ArrayUpdateListener;
 
 import java.util.ArrayList;
 
 /**
  *
  */
-public class NewsFeedFragment extends Fragment {
+public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
     NewsfeedAdapter mAdapter;
+    ArrayList<Post> newsFeed;
 
     public NewsFeedFragment() {
         // Required empty public constructor
@@ -29,10 +34,13 @@ public class NewsFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
-        ArrayList<String> messages = new ArrayList<String>();
-        messages.add("random");
-        messages.add("fakeData");
-        mAdapter = new NewsfeedAdapter(getActivity(), messages);
+        newsFeed = new ArrayList<Post>();
+        mAdapter = new NewsfeedAdapter(getActivity(), newsFeed);
+
+        //Get posts from firebase, uses an interface to populate newsfeed list
+        FirebaseManager.getPostsForFriends(SharedPrefUtils.getCurrUID(getActivity()),this);
+
+
 
         ListView listView = (ListView) rootView.findViewById(R.id.newsfeed_listview);
         listView.setAdapter(mAdapter);
@@ -41,4 +49,10 @@ public class NewsFeedFragment extends Fragment {
     }
 
 
+    @Override
+    public void update(Object o) {
+        newsFeed.add((Post) o);
+        mAdapter.notifyDataSetChanged();
+
+    }
 }

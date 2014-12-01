@@ -17,7 +17,7 @@ import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.activities.activities.Map.MapRunning;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.FriendsFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.MessageFragments.MailboxFragment;
-import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragment;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments.NewsFeedFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.PrevRouteFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileSettingsFragment;

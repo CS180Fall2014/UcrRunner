@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragment;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments.NewsFeedFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.ProfileFragment;
 
 /**

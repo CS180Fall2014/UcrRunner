@@ -37,7 +37,7 @@ public class MapCalculation {
 
         calorie_burn = (BMR / 24) * MET * T;
 
-        System.out.println("Calorie: " + calorie_burn);
+        //System.out.println("Calorie: " + calorie_burn);
         return calorie_burn;
     }
 }

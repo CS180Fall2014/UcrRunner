@@ -25,11 +25,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -106,13 +105,13 @@ public class MapInformation {
     }
 
     /**
-     * (untested)
+     * NOT USED, implemented on UI side with the Map creating the image
      * not going to be used because images will be
      * displays the given route and shows all information
      *
      * @param route is the route to displayed on the map
      */
-//    public void displayRoute(Route route) {
+    public void displayRoute(Route route) {
 //        isPreviouslyCalculatedRoute = true;
 //        for (List<LatLng> pts : route.getCurrentRoute()) {
 //            PolylineOptions options = new PolylineOptions();
@@ -124,7 +123,7 @@ public class MapInformation {
 //
 //        //to display route on map
 //        stopRoute((int) route.getCurrentStats().duration);
-//    }
+    }
 
     /**
      * resumes the current route after the route is paused
@@ -135,7 +134,7 @@ public class MapInformation {
     }
 
     /**
-     * (untested)
+     * NOT USED, implemented bookmarking for all previously ran routes
      * bookmarks the current route
      *
      * @param isBookmarked is true if the route is to be bookmarked, otherwise false
@@ -147,6 +146,7 @@ public class MapInformation {
     /**
      * (untested)
      * displays preran route so user can run route again
+     *
      * @param UID is the user identifier
      * @param RID is the route identifier
      */
@@ -174,14 +174,14 @@ public class MapInformation {
         //zoom map to entire route
         googleMap.setOnMyLocationChangeListener(null);
         zoomToFitRoute();
-
         takeImage();
     }
 
     /**
      * stops the current route and saves to Firebase
+     *
      * @param seconds is the duration of the run
-     * @param UID is the user identifier
+     * @param UID     is the user identifier
      */
     public void stopRoute(int seconds, String UID) {
         isStart = isPause = false;
@@ -190,13 +190,13 @@ public class MapInformation {
         //zoom map to entire route
         googleMap.setOnMyLocationChangeListener(null);
         zoomToFitRoute();
-
         takeImage();
     }
 
     /**
      * (untested)
      * converts byte array to bitmap
+     *
      * @param array
      * @return the bitmap of the byte[] array, or null
      */
@@ -205,22 +205,13 @@ public class MapInformation {
     }
 
     public static Bitmap stringToBitmap(String value) {
-        byte[] bytes = new byte[0];
-        try {
-            bytes = value.getBytes("UTF-8");
-            String string = new String(bytes, "UTF-8");
-            Log.d("GREPSEARCH: ", string);
-            byte[] imageAsBytes = Base64.decode(string, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return decode(value);
     }
 
-     /**
+    /**
      * (untested) & not used, going to use instead update on backend side
      * calculates the total information for a list of routes
+     *
      * @param routes is the list of routes that the user has ran
      * @return the stats of the total information
      */
@@ -262,6 +253,7 @@ public class MapInformation {
 
     /**
      * current speed in meters per hour
+     *
      * @return the current speed
      */
     public double getCurrentSpeed() {
@@ -365,6 +357,8 @@ public class MapInformation {
         if (entireRoute.isEmpty())
             newPolyline();
 
+//        System.out.println("Save Point Spe: " + location.getSpeed() + " Alt: " + location.getAltitude() + " Bea: " + location.getBearing() + " Tim: " + location.getTime()
+//                + " Nan: " + location.getElapsedRealtimeNanos());
         locationEntireRoute.add(location);
         pointsSectionOfRoute.add(new LatLng(location.getLatitude(), location.getLongitude()));
         entireRoute.get(entireRoute.size() - 1).setPoints(pointsSectionOfRoute);
@@ -409,41 +403,31 @@ public class MapInformation {
         stats.setAverageSpeed(getAverageSpeed());
         stats.setCaloriesBurned(getCalories(duration));
         stats.setDistance(getDistance());
-        stats.setElevation(-1.0); // set up elevation Milestone 1
+        stats.setElevation(-1.0); // not needed for Milestone 1
         stats.setTopSpeed(getTopSpeed());
         stats.setDuration(duration);
         java.util.Date date = new java.util.Date();
-        /*String formatedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        */stats.setDate(new Timestamp(date.getTime()).toString().replace(":", "|").replace(" ", "?"));
+        stats.setDate(new Timestamp(date.getTime()).toString().replace(":", "|").replace(" ", "?"));
 
         route.setCurrentRoute(r);
         route.setCurrentStats(stats);
         String title = FirebaseManager.saveRoute(route, UID);
         //save image byte to different table on firebase
-        //if (isValidImage()) {
-             //FirebaseManager.saveImage(UID, imageFileName, title);
-//            System.out.println("Save Image (Again): " + Arrays.toString(image));
-//            System.out.println("saveImage ");
-//             for (byte b: image) {
-//                 System.out.print(" '" + b + "' ");
-//             }
-//            System.out.println("\nEND");
-             FirebaseManager.saveImage(imageFileName, title);
-        // }
+        FirebaseManager.saveImage(imageFileName, title);
 
         //update user information
-        //SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed()); //TODO:
-        //SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
-        //SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
-        //SettingsManager.updateUserTotalDist(UID, stats.getDistance());
-        //SettingsManager.updateUserTotalDuration(UID, stats.getDuration());
+        SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed());
+        SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
+        SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
+        SettingsManager.updateUserTotalDist(UID, stats.getDistance());
+        SettingsManager.updateUserTotalDuration(UID, stats.getDuration());
     }
 
     private void takeImage() {
         googleMap.snapshot(callback);
     }
 
-    private  File getOutputMediaFile(){
+    private File getOutputMediaFile(String header) {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
@@ -453,22 +437,22 @@ public class MapInformation {
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 return null;
             }
         }
         // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
         File mediaFile;
-        String mImageName="MI_"+ timeStamp +".jpg";
+        String mImageName = header + "_" + timeStamp + ".jpg";
         mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
         return mediaFile;
     }
 
 
-    private void storeImage(Bitmap image) {
-        File pictureFile = getOutputMediaFile();
+    private void storeImage(Bitmap image, String header) {
+        File pictureFile = getOutputMediaFile(header);
         if (pictureFile == null) {
             System.out.println("Error creating media file, check storage permissions: ");// e.getMessage());
             return;
@@ -492,6 +476,42 @@ public class MapInformation {
         public void onLocationUpdate(Location location);
     }
 
+    private final static Charset UTF8_CHARSET = Charset.forName("UTF-8");
+
+    private static String encode(Bitmap map) {
+        System.out.println("Encode Called");
+        //storeImage(bitmap);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        map.compress(Bitmap.CompressFormat.JPEG, 10, out);
+        map.recycle();
+        byte[] byteArray = out.toByteArray();
+        String value = null;
+        //Base64.encodeToString(byteArray, Base64.DEFAULT)
+        try {
+            value = new String(byteArray, UTF8_CHARSET);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
+        return value;
+    }
+
+    private static Bitmap decode(String value) {
+        System.out.println("Decode Called");
+        byte[] bytes = new byte[0];
+        Bitmap bitmap = null;
+        try {
+            bytes = value.getBytes(UTF8_CHARSET);
+            //String string = new String(bytes, "UTF-8");
+            //byte[] imageAsBytes = Base64.decode(string, Base64.DEFAULT);
+            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
+            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length); //change back to imagesAsBytes
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
     GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
 
         @Override
@@ -499,24 +519,32 @@ public class MapInformation {
             if (bitmap == null)
                 return;
 
-            //storeImage(bitmap);
-            ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bYtE);
-            bitmap.recycle();
-            byte[] byteArray = bYtE.toByteArray();
-            imageFileName = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            //System.out.println;
-            storeImage(stringToBitmap(imageFileName));
-            System.out.println("Image File Name: " + imageFileName);
-//            System.out.println("Compressed Image & Reconfigured Size: " + image.length + " Contents: " + image.toString());
+            storeImage(bitmap, "ORIGINAL");
+
+            //encoide bitmap to UTF 8 String for Firebase
+            imageFileName = encode(bitmap);
+            if (imageFileName != null) {
+                System.out.println("imageFileName is NOT null");
+            }
+            else {
+                System.out.println("imageFileName is null");
+            }
+
+            //testing purposes only
+//            Bitmap m = decode(imageFileName);
+//            if (m != null) {
+//                System.out.println("decoded bitmap is NOT null");
+//            }
+//            else {
+//                System.out.println("decoded bitmap is null");
+//            }
+//            storeImage(m, "DECODED");
+
+            //previous ides for compression
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            //System.out.println("BITMAP: " + bitmap.getByteCount());
 //            bitmap.reconfigure(100,100, Bitmap.Config.ARGB_8888);
 //            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 //            image = stream.toByteArray();
-//            System.out.println("Compressed Image & Reconfigured Size: " + image.length + " Contents: " + image.toString());
-//            Bitmap m = byteArrayToBitmap(image);
-//            System.out.println("BITMAP (M): " + m.getByteCount());
             saveRoute();
         }
     };

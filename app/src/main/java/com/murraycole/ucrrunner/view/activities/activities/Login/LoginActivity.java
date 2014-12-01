@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.backend.SettingsManager;
 import com.murraycole.ucrrunner.view.listeners.LoginButtonListener;
 
 public class LoginActivity extends Activity implements CreateAccountFragment.OnFragmentInteractionListener {

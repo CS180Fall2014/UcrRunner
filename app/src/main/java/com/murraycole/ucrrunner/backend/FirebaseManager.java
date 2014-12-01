@@ -52,12 +52,12 @@ public class FirebaseManager {
     }
 
     //=======================
-    public static final String FIREBASEURL = "https://torid-inferno-2246.firebaseio.com/";
-    public static final String FIREBASEURL_MESSAGES = "https://torid-inferno-2246.firebaseio.com/messages/";
-    public static final String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
-    public static final String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
-    public static final String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
-    public static final String FIREBASEURL_NICKNAMES = "https://torid-inferno-2246.firebaseio.com/regrec/";
+    public static String FIREBASEURL = "https://torid-inferno-2246.firebaseio.com/";
+    public static String FIREBASEURL_MESSAGES = "https://torid-inferno-2246.firebaseio.com/messages/";
+    public static String FIREBASEURL_USERS = "https://torid-inferno-2246.firebaseio.com/users/";
+    public static String FIREBASEURL_ROUTES = "https://torid-inferno-2246.firebaseio.com/routes/";
+    public static String FIREBASEURL_POSTS = "https://torid-inferno-2246.firebaseio.com/posts/";
+    public static String FIREBASEURL_NICKNAMES = "https://torid-inferno-2246.firebaseio.com/regrec/";
 /*
     public static FirebaseError saveRoute(Route currRoute, String uid) {
         if (uid.contains(":")) {
@@ -77,7 +77,7 @@ public class FirebaseManager {
     // NewsFeed functions =========================================================================
     //Should be working. Use and I will respond to bugs.
     public static ArrayList<String> getLikes(Post obj){
-        ArrayList<String> likesList = new ArrayList<>();
+        ArrayList<String> likesList = new ArrayList<String>();
         Log.d("MT", "getLikes(Post) is going to list the likes.");
         for(String like : obj.getLikes().split(":")){
             Log.d("MT", like);
@@ -325,7 +325,6 @@ public class FirebaseManager {
                 Log.e("MT", "Something went wrong retrieving messages");
             }
         });
-        return;
     }
 
     /*
@@ -606,8 +605,8 @@ public class FirebaseManager {
         return null;
     }
 
-    public static FirebaseError saveImage(String uid, byte[] image, String title){
-        Firebase imageRef = new Firebase("https://torid-inferno-2246.firebaseio.com/images/" + uid + "/"+ title +"/");
+    public static FirebaseError saveImage(String image, String title){
+        Firebase imageRef = new Firebase("https://torid-inferno-2246.firebaseio.com/images/"+ title +"/");
         imageRef.setValue(image);
         return null;
     }
@@ -616,7 +615,7 @@ public class FirebaseManager {
 
 
     // Works FB register and save to regrec table
-    /*
+    /**
     public static FirebaseError saveUser(User currUser, String uid)
     Parameters:
     [uid : String] - uid for the current user.
@@ -671,7 +670,9 @@ public class FirebaseManager {
            //== -1  not taken
            //!= -1 taken
 
-       } catch (IOException | JSONException e) {
+       } catch (IOException e) {
+           e.printStackTrace();
+       } catch (JSONException e) {
            e.printStackTrace();
        }
 
@@ -703,7 +704,9 @@ public class FirebaseManager {
                 return -1;
             }
             return Integer.valueOf(friendsJson);
-        } catch (IOException | JSONException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -770,7 +773,7 @@ public class FirebaseManager {
 
                     //objects to populate
                     Route readRoute = new Route();
-                    List<List<LatLng>> currRoute = new ArrayList<>();
+                    List<List<LatLng>> currRoute = new ArrayList<List<LatLng>>();
                     Stats currStats = new Stats();
 
                     String date = "";
@@ -867,7 +870,7 @@ public class FirebaseManager {
         return sb.toString();
     }
 
-    private static String readJsonFromUrl(String url) throws IOException, JSONException {
+    public static String readJsonFromUrl(String url) throws IOException, JSONException {
         InputStream is = new URL(url).openStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));

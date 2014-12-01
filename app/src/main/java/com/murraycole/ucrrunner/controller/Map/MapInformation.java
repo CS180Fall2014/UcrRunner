@@ -406,13 +406,14 @@ public class MapInformation {
         String title = FirebaseManager.saveRoute(route, UID);
         //save image byte to different table on firebase
         if (isValidImage()) {
-             FirebaseManager.saveImage(UID, image, title);
+             //FirebaseManager.saveImage(UID, imageFileName, title);
 //            System.out.println("Save Image (Again): " + Arrays.toString(image));
 //            System.out.println("saveImage ");
 //             for (byte b: image) {
 //                 System.out.print(" '" + b + "' ");
 //             }
 //            System.out.println("\nEND");
+             FirebaseManager.saveImage(imageFileName, title);
          }
 
         //update user information

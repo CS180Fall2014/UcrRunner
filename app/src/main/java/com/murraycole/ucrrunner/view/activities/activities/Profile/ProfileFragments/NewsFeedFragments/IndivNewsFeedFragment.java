@@ -1,9 +1,8 @@
 package com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments;
 
 
-import android.content.Context;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -45,11 +44,14 @@ public class IndivNewsFeedFragment extends Fragment {
 
         
         String user_post = getArguments().getString("Post");
-        for(String comment : user_post.split(":")){
-            Pair<String, String> cPair = Pair.create(comment.split("-")[0], comment.split("-")[1]);
-            Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">");
-            post.add(cPair);
+        if (!user_post.equals("")) {
+            for (String comment : user_post.split(":")) {
+                Pair<String, String> cPair = Pair.create(comment.split("-")[0], comment.split("-")[1]);
+                Log.d("MT", "The Comment pair is : <" + cPair.first + ", " + cPair.second + ">");
+                post.add(cPair);
+            }
         }
+
 
         commentAdapter = new CommentAdapter(getActivity(), post);
         ListView listView = (ListView) rootView.findViewById(R.id.indv_newsfeed_comment_list_view);

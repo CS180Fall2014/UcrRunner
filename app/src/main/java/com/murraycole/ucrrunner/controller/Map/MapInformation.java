@@ -397,7 +397,7 @@ public class MapInformation {
         String title = FirebaseManager.saveRoute(route, UID);
         //save image byte to different table on firebase
         if (isValidImage()) {
-             FirebaseManager.saveImage(UID, image, title);
+             FirebaseManager.saveImage(image, title);
          }
 
         //update user information

@@ -325,7 +325,6 @@ public class FirebaseManager {
                 Log.e("MT", "Something went wrong retrieving messages");
             }
         });
-        return;
     }
 
     /*
@@ -468,9 +467,7 @@ public class FirebaseManager {
                     nickRef.setValue(stripUID);
                     //save user nickname to user's userroute
                     userRef.setValue(newSetting);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
                 break;
@@ -606,8 +603,8 @@ public class FirebaseManager {
         return null;
     }
 
-    public static FirebaseError saveImage(String uid, byte[] image, String title){
-        Firebase imageRef = new Firebase("https://torid-inferno-2246.firebaseio.com/images/" + uid + "/"+ title +"/");
+    public static FirebaseError saveImage(byte[] image, String title){
+        Firebase imageRef = new Firebase("https://torid-inferno-2246.firebaseio.com/images/"+ title +"/");
         imageRef.setValue(image);
         return null;
     }

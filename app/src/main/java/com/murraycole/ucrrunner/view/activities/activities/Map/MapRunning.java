@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.activities.activities.PostRun.PostRunFragment;
@@ -89,6 +90,13 @@ public class MapRunning extends BaseMapActivity {
 
         setupLocationStatsListener();
         setUpMapIfNeeded();
+        checkforReRunIntent();
+    }
+    private void checkforReRunIntent(){
+        String routeID = getIntent().getStringExtra("ROUTEID");
+        if (routeID != null){
+            mapInfo.reRunRoute(SharedPrefUtils.getCurrUID(this),routeID);
+        }
     }
 
     private void Initiate_PopupWindow() {

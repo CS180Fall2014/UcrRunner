@@ -2,10 +2,6 @@ package com.murraycole.ucrrunner.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.backend.FirebaseManager;
-import com.murraycole.ucrrunner.backend.SettingsManager;
-import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
-import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -40,7 +32,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //get route
-        Route route = getItem(position);
+        final Route route = routes.get(position);
         View rowView = convertView;
 
         //check if existing view is being reused, otherwise inflate
@@ -72,6 +64,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
                 public void onClick(View v) {
                     RerunDialogFragment rerunDialogFragment = RerunDialogFragment.newInstance(
                             R.string.rerun_route_dialog_title);
+                    rerunDialogFragment.setRoute(route);
                     rerunDialogFragment.show(((Activity) mContext).getFragmentManager(), "dialog");
                 }
             });

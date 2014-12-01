@@ -5,16 +5,17 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.widget.Toast;
 
 import com.murraycole.ucrrunner.R;
-import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.PrevRouteFragment;
+import com.murraycole.ucrrunner.view.DAO.Route;
 
 /**
  * Created by C on 11/22/2014.
  */
 public class RerunDialogFragment extends DialogFragment {
+    Route route;
+
     public static RerunDialogFragment newInstance(int title) {
         RerunDialogFragment rerunDialogFragment = new RerunDialogFragment();
         Bundle bundle = new Bundle();
@@ -32,7 +33,8 @@ public class RerunDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(),"Rerun",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Rerun" + route.getCurrentStats().getImageRef(), Toast.LENGTH_SHORT).show();
+
 
                     }
                 })
@@ -45,5 +47,9 @@ public class RerunDialogFragment extends DialogFragment {
                 .create();
         return ad;
 
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }

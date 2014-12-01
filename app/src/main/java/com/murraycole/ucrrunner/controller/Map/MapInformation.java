@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Environment;
+import android.util.Base64;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,10 +20,15 @@ import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.DAO.Stats;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +68,7 @@ public class MapInformation {
     private LocationStatsListener locationStatsListener;
     private Boolean isBookmarked = false;
     private byte[] image = null;
+    private String imageFileName;
     private int duration = -1;
     private String UID;
     private Route reRunRoute;
@@ -398,6 +407,12 @@ public class MapInformation {
         //save image byte to different table on firebase
         if (isValidImage()) {
              FirebaseManager.saveImage(UID, image, title);
+//            System.out.println("Save Image (Again): " + Arrays.toString(image));
+//            System.out.println("saveImage ");
+//             for (byte b: image) {
+//                 System.out.print(" '" + b + "' ");
+//             }
+//            System.out.println("\nEND");
          }
 
         //update user information
@@ -411,6 +426,48 @@ public class MapInformation {
     private void takeImage() {
         googleMap.snapshot(callback);
     }
+
+    private  File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/com.murraycole.ucrrunner/Files");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName="MI_"+ timeStamp +".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+
+
+    private void storeImage(Bitmap image) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            System.out.println("Error creating media file, check storage permissions: ");// e.getMessage());
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("File not found: ", e.getMessage());
+        } catch (IOException e) {
+            Log.d("Error accessing file: ", e.getMessage());
+        }
+    }
+
 
     /**
      * Location listener for UI side
@@ -426,10 +483,21 @@ public class MapInformation {
             if (bitmap == null)
                 return;
 
-
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
-            image = stream.toByteArray();
+            storeImage(bitmap);
+            ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+            bitmap.recycle();
+            byte[] byteArray = bYtE.toByteArray();
+            imageFileName = Base64.encodeToString(byteArray, Base64.DEFAULT);
+//            System.out.println("Compressed Image & Reconfigured Size: " + image.length + " Contents: " + image.toString());
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            //System.out.println("BITMAP: " + bitmap.getByteCount());
+//            bitmap.reconfigure(100,100, Bitmap.Config.ARGB_8888);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+//            image = stream.toByteArray();
+//            System.out.println("Compressed Image & Reconfigured Size: " + image.length + " Contents: " + image.toString());
+//            Bitmap m = byteArrayToBitmap(image);
+//            System.out.println("BITMAP (M): " + m.getByteCount());
             saveRoute();
         }
     };

@@ -39,7 +39,7 @@ public class NewsfeedAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if (view == null) {
+
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item_newsfeed, parent, false);
             currPost = newsPosts.get(position);
@@ -61,7 +61,7 @@ public class NewsfeedAdapter extends ArrayAdapter {
 
 
 
-        }
+
         return view;
     }
 

@@ -15,6 +15,7 @@ import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.view.DAO.Post;
 import com.murraycole.ucrrunner.view.DAO.Route;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments.IndivNewsFeedFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.NewsFeedFragments.NewsFeedFragment;
 
 import fbutil.firebase4j.service.Firebase;
@@ -77,8 +78,10 @@ public class CommentDialogFragment extends DialogFragment {
     {
         String myUID = SharedPrefUtils.getCurrUID(getActivity());
         boolean statement  = FirebaseManager.addComment(myUID,post.getAuthorUID(),post.getPostID(),message);
+        NewsFeedFragment fragment = (NewsFeedFragment)getFragmentManager().findFragmentById(R.id.container);
+        fragment.clearAdapter();
+        FirebaseManager.getPostsForFriends(SharedPrefUtils.getCurrUID(getActivity()), ((NewsFeedFragment)getFragmentManager().findFragmentById(R.id.container)));
         //getActivity().notify();
-        ((NewsFeedFragment)getActivity().getFragmentManager().findFragmentById(R.id.container)).notifyOnDataChanged();
         return statement;
 
 

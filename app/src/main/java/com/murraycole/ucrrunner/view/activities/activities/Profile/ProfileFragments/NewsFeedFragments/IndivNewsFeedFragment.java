@@ -63,6 +63,10 @@ public class IndivNewsFeedFragment extends Fragment {
         commentAdapter.notifyDataSetChanged();
         return rootView;
     }
+    public void notifyOnDataChanged(){
+        commentAdapter.notifyDataSetChanged();
+    }
+
 
 
 }

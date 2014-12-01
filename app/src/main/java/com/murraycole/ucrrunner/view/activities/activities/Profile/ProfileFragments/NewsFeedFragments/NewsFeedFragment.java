@@ -29,7 +29,15 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
     public NewsFeedFragment() {
         // Required empty public constructor
     }
+/*
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        newsFeed.clear();
+        FirebaseManager.getPostsForFriends(SharedPrefUtils.getCurrUID(getActivity()), this);
+    }
+*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,8 +48,7 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
         mAdapter = new NewsfeedAdapter(getActivity(), newsFeed);
 
         //Get posts from firebase, uses an interface to populate newsfeed list
-        FirebaseManager.getPostsForFriends(SharedPrefUtils.getCurrUID(getActivity()),this);
-
+        FirebaseManager.getPostsForFriends(SharedPrefUtils.getCurrUID(getActivity()), this);
 
 
         ListView listView = (ListView) rootView.findViewById(R.id.newsfeed_listview);
@@ -49,10 +56,10 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               //Get the post object
+                //Get the post object
                 Log.d("NewsFeed", newsFeed.get(position).getPostID());
-               IndivNewsFeedFragment indivNewsFeedFragment =
-                       IndivNewsFeedFragment.newInstance(newsFeed.get(position));
+                IndivNewsFeedFragment indivNewsFeedFragment =
+                        IndivNewsFeedFragment.newInstance(newsFeed.get(position));
 
 
                 getFragmentManager().beginTransaction()
@@ -72,8 +79,9 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
         mAdapter.notifyDataSetChanged();
 
     }
-
-    public void notifyOnDataChanged(){
+    public void clearAdapter(){
+        newsFeed.clear();
         mAdapter.notifyDataSetChanged();
     }
 }
+

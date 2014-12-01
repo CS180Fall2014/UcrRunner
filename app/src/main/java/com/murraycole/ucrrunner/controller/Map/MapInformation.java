@@ -203,7 +203,12 @@ public class MapInformation {
         return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
 
-    /**
+    public static Bitmap stringToBitmap(String value) {
+        byte[] imageAsBytes = Base64.decode(value, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+
+     /**
      * (untested) & not used, going to use instead update on backend side
      * calculates the total information for a list of routes
      * @param routes is the list of routes that the user has ran
@@ -405,7 +410,7 @@ public class MapInformation {
         route.setCurrentStats(stats);
         String title = FirebaseManager.saveRoute(route, UID);
         //save image byte to different table on firebase
-        if (isValidImage()) {
+        //if (isValidImage()) {
              //FirebaseManager.saveImage(UID, imageFileName, title);
 //            System.out.println("Save Image (Again): " + Arrays.toString(image));
 //            System.out.println("saveImage ");
@@ -414,14 +419,14 @@ public class MapInformation {
 //             }
 //            System.out.println("\nEND");
              FirebaseManager.saveImage(imageFileName, title);
-         }
+        // }
 
         //update user information
-        SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed());
-        SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
-        SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
-        SettingsManager.updateUserTotalDist(UID, stats.getDistance());
-        SettingsManager.updateUserTotalDuration(UID, stats.getDuration());
+        //SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed()); //TODO:
+        //SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
+        //SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
+        //SettingsManager.updateUserTotalDist(UID, stats.getDistance());
+        //SettingsManager.updateUserTotalDuration(UID, stats.getDuration());
     }
 
     private void takeImage() {
@@ -484,12 +489,14 @@ public class MapInformation {
             if (bitmap == null)
                 return;
 
-            storeImage(bitmap);
+            //storeImage(bitmap);
             ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bYtE);
             bitmap.recycle();
             byte[] byteArray = bYtE.toByteArray();
             imageFileName = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            //storeImage(stringToBitmap(imageFileName));
+            //System.out.println("Image File Name: " + imageFileName);
 //            System.out.println("Compressed Image & Reconfigured Size: " + image.length + " Contents: " + image.toString());
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //            //System.out.println("BITMAP: " + bitmap.getByteCount());

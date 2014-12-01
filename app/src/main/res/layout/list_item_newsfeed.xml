@@ -4,28 +4,58 @@
     android:layout_height="?android:listPreferredItemHeightLarge"
     android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/newsfeed_like_button"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Like" />
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:padding="8dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/newsfeed_comment_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comment" />
+        <ImageView
+            android:id="@+id/newsfeed_like_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_star_outline_grey600_16dp" />
 
-    <TextView
-        android:id="@+id/newsfeed_text_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Text about run" />
+        <ImageView
+            android:id="@+id/newsfeed_comment_button"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_comment_grey600_16dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/newsfeed_author_textview"
+            android:textColor="@color/blue_500"
+            android:gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/newsfeed_text_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Text about run" />
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/newsfeed_image_imageview"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:src="@drawable/ic_launcher" />
 
 

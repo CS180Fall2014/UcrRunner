@@ -48,8 +48,13 @@ public class NewsFeedFragment extends Fragment implements ArrayUpdateListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               //Get the post object
+               IndivNewsFeedFragment indivNewsFeedFragment =
+                       IndivNewsFeedFragment.newInstance(newsFeed.get(position));
+
+
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.container,new IndivNewsFeedFragment())
+                        .replace(R.id.container, indivNewsFeedFragment)
                         .addToBackStack(null)
                         .commit();
             }

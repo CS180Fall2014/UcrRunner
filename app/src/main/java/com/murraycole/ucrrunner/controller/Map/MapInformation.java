@@ -134,17 +134,16 @@ public class MapInformation {
         this.isBookmarked = isBookmarked;
     }
 
-    public void setReRunRoute(Route route) {
-        reRunBookmarkedRoute(route);
-    }
-
     /**
      * (untested)
      * displays preran route so user can run route again
-     *
-     * @param route is the preran route
+     * @param UID is the user identifier
+     * @param RID is the route identifier
      */
-    public void reRunBookmarkedRoute(Route route) {
+
+    public void reRunRoute(String UID, String RID) {
+
+        Route route = new Route();
         for (List<LatLng> pts : route.getCurrentRoute()) {
             PolylineOptions options = new PolylineOptions();
             options.color(Color.GRAY);

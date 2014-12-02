@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.backend.SettingsManager;
+
+import java.text.DecimalFormat;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,9 +31,38 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        final String myNickname = FirebaseManager.getNickname(SharedPrefUtils.getCurrUID(getActivity()));
+        String myUID = SharedPrefUtils.getCurrUID(getActivity());
+        final String myNickname = FirebaseManager.getNickname(myUID);
+        final double avgSpeed = SettingsManager.getUserAvgSpeed(myUID);
+        final double totalDistance = SettingsManager.getUserTotalDist(myUID);
+        final double totalCalories = SettingsManager.getUserTotalCal(myUID);
+        final double age = SettingsManager.getUserAge(myUID);
+        final double height = SettingsManager.getUserHeight(myUID);
+        final double weight = SettingsManager.getUserWeight(myUID);
+
+        String heightInString = String.valueOf(height);
+        String heightParsed = heightInString.replace(".", "\"");
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        DecimalFormat ageFormat = new DecimalFormat("#");
+
         TextView nicknameTV = (TextView) rootView.findViewById(R.id.profile_username_tv);
+        TextView avgSpeedTV = (TextView) rootView.findViewById(R.id.profile_avg_speed_value_tv);
+        TextView totalDistanceTV = (TextView) rootView.findViewById(R.id.profile_miles_value_tv);
+        TextView totalCaloriesTV = (TextView) rootView.findViewById(R.id.profile_total_cal_value_tv);
+        TextView ageOfUser = (TextView) rootView.findViewById(R.id.profile_age_tv);
+        TextView heightTV = (TextView) rootView.findViewById(R.id.profile_height_tv);
+        TextView weightTV = (TextView) rootView.findViewById(R.id.profile_weight_tv);
+
         nicknameTV.setText(myNickname);
+        ageOfUser.setText(String.valueOf(ageFormat.format(age)));
+        heightTV.setText(heightParsed);
+        weightTV.setText(String.valueOf(weight));
+        avgSpeedTV.setText(String.valueOf(decimalFormat.format(avgSpeed)));
+
+        totalDistanceTV.setText(String.valueOf(decimalFormat.format(totalDistance)));
+        totalCaloriesTV.setText(String.valueOf(decimalFormat.format(totalCalories)));
+
 
 
         return rootView;

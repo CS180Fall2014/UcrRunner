@@ -72,7 +72,7 @@ public class MapRunning extends BaseMapActivity {
             @Override
             public void onClick(View v) {
                 DecimalFormat valuesRounded = new DecimalFormat("#.##");
-                time_when_stopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
+                time_when_stopped = SystemClock.elapsedRealtime() - mChronometer.getBase();
                 time_when_paused = 0;
                 isRunning = false;
                 mChronometer.stop();
@@ -82,6 +82,7 @@ public class MapRunning extends BaseMapActivity {
                 PauseRun.setVisibility(View.GONE);
                 String uid = FirebaseManager.getCurrUID(v.getContext());
                 String routeId = mapInfo.stopRoute(time_when_stopped, uid);
+                Log.d("MapRunning", "Time when stopped " + time_when_stopped);
                 Log.d("MapRunning", routeId);
                 postRun(routeId);
             }

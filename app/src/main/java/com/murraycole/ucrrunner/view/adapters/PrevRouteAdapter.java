@@ -40,7 +40,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
         View rowView = convertView;
 
         //check if existing view is being reused, otherwise inflate
-        if (rowView == null) {
+
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.list_item_route, parent, false);
 
@@ -90,7 +90,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             });
 
 
-        }
+
 
         return rowView;
     }

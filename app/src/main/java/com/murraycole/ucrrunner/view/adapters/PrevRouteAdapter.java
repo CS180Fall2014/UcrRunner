@@ -69,9 +69,10 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             Log.d("MT", "PrevRouteAdapter got title (routeId) : " + title);
 
             String imageArr = FirebaseManager.getImage(title);
-
+            Log.d("MTRAW:", imageArr);
             int firstOccurance = imageArr.indexOf(':');
             String formatedArr = imageArr.substring(firstOccurance+1, imageArr.length()-1);
+            Log.d("MTRAW:", "substrung");
             Log.d("Received Image ", formatedArr);
 
 

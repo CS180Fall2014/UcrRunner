@@ -1,5 +1,6 @@
 package com.murraycole.ucrrunner.controller.Map;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -7,11 +8,17 @@ import android.util.*;
 
 import com.murraycole.ucrrunner.view.DAO.User;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -143,8 +150,15 @@ public class MapCalculation {
             bytes = Base64.decode(value.getBytes(), OFFSET, value.getBytes().length, Base64.URL_SAFE);
             System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
             bitmap = BitmapFactory.decodeByteArray(bytes, OFFSET, bytes.length);
+            if (bitmap == null) {
+                System.out.println("NULL MAP");
+            }
+            else {
+                System.out.println("Bitmap Size: " + bitmap.getByteCount());
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Exception Called! " + e.getLocalizedMessage());
         }
         return bitmap;
     }
@@ -198,6 +212,47 @@ public class MapCalculation {
         } catch (IOException e) {
             Log.d("Error accessing file: ", e.getMessage());
         }
+    }
+
+    public static void saveRouteValuesEncodeDecode(String value, String header) {
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+        String filename = header + "_" + timeStamp + ".txt";
+        //String string = "Hello world!";
+        FileOutputStream outputStream;
+
+        //String outputString = "Hello world!";
+        //File myDir = getFilesDir();
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/com.murraycole.ucrrunner/Files");
+        try {
+            File secondFile = new File(mediaStorageDir + "/text/", filename);
+            if (secondFile.getParentFile().mkdirs()) {
+                secondFile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(secondFile);
+
+                fos.write(value.getBytes());
+                fos.flush();
+                fos.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//
+//        try {
+//            File secondInputFile = new File(myDir + "/text/", filename);
+//            InputStream secondInputStream = new BufferedInputStream(new FileInputStream(secondInputFile));
+//            BufferedReader r = new BufferedReader(new InputStreamReader(secondInputStream));
+//            StringBuilder total = new StringBuilder();
+//            String line;
+//            while ((line = r.readLine()) != null) {
+//                total.append(line);
+//            }
+//            r.close();
+//            secondInputStream.close();
+//            Log.d("File", "File contents: " + total);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public double calculateCalories(MapInformation mapInfo, double T) {

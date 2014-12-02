@@ -422,7 +422,6 @@ public class MapInformation {
         FirebaseManager.saveImage(imageFileName, title);
 
         //update user information
-        //TODO: add check for negative values
         SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed());
         SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
         SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
@@ -451,6 +450,7 @@ public class MapInformation {
 
             MapCalculation.storeImage(bitmap, "ORIGINAL");
 
+
             //encode bitmap to for Firebase
             imageFileName = MapCalculation.encode(bitmap);
             if (imageFileName != null) {
@@ -459,6 +459,7 @@ public class MapInformation {
             else {
                 System.out.println("imageFileName is null");
             }
+            MapCalculation.saveRouteValuesEncodeDecode(imageFileName, "ENCODED");
 
             //testing purposes only
             Bitmap m = MapCalculation.decode(imageFileName);

@@ -69,7 +69,7 @@ public class MapInformation {
     private Boolean isBookmarked = false;
     private byte[] image = null;
     private String imageFileName;
-    private int duration = -1;
+    private double duration = -1;
     private String UID;
     private Route reRunRoute;
 
@@ -185,7 +185,7 @@ public class MapInformation {
      * @param seconds is the duration of the run
      * @param UID     is the user identifier
      */
-    public void stopRoute(int seconds, String UID) {
+    public void stopRoute(double seconds, String UID) {
         isStart = isPause = false;
         this.UID = UID;
         duration = seconds;

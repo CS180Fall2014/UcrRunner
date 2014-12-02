@@ -56,7 +56,7 @@ public class MapRunning extends BaseMapActivity {
                     PauseRun.setText("Start");
                     mapInfo.pauseRoute();
                 } else if (PauseRun.getText().equals("Start")) {
-                    mChronometer.setBase(SystemClock.elapsedRealtime() + time_when_paused);
+                    mChronometer.setBase((long)(SystemClock.elapsedRealtime() + time_when_paused));
                     mChronometer.start();
                     isRunning = true;
                     PauseRun.setText("Pause");
@@ -80,7 +80,7 @@ public class MapRunning extends BaseMapActivity {
                 StopRun.setVisibility(View.GONE);
                 PauseRun.setVisibility(View.GONE);
                 String uid = FirebaseManager.getCurrUID(v.getContext());
-                mapInfo.stopRoute(-1, uid);
+                mapInfo.stopRoute(time_when_stopped, uid);
                 //Prompt the user to enter a title
                 Initiate_PopupWindow();
 

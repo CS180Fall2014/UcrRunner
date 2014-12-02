@@ -16,8 +16,8 @@ public abstract class BaseMapActivity extends FragmentActivity {
     MapInformation mapInfo;
     MapInformation.LocationStatsListener locationStatsListener;
     Chronometer mChronometer;
-    long time_when_paused = 0;
-    long time_when_stopped = 0;
+    double time_when_paused = 0;
+    double time_when_stopped = 0;
     long delta_time = 0;
 
 

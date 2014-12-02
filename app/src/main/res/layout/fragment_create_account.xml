@@ -30,7 +30,7 @@
                 android:id="@+id/createaccount_username_edittext"
                 style="@style/DefaultTextInput"
                 android:layout_weight="1"
-                android:hint="@string/username_edittext" />
+                android:hint="@string/email_edittext" />
 
             <EditText
                 android:id="@+id/createaccount_nickname_edittext"

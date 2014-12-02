@@ -28,92 +28,8 @@ import java.util.Date;
  */
 public class MapCalculation {
 
-    private final static Charset UTF8_CHARSET = Charset.forName("UTF-8");
-    private final static int QUALITY = 10;
+    private final static int QUALITY = 50;
     private final static int OFFSET = 0;
-
-    //    /**
-//     * UTF 8 encode
-//     * @param value
-//     * @return
-//     */
-//    private static String encode(Bitmap map) {
-//        System.out.println("Encode Called");
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        map.compress(Bitmap.CompressFormat.JPEG, 10, out);
-//        map.recycle();
-//        byte[] byteArray = out.toByteArray();
-//        String value = null;
-//        try {
-//            value = new String(byteArray, UTF8_CHARSET);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
-//        return value;
-//    }
-
-//    /**
-//     * UTF 8 decode
-//     * @param value
-//     * @return
-//     */
-//    private static Bitmap decode(String value) {
-//        System.out.println("Decode Called");
-//        byte[] bytes = new byte[0];
-//        Bitmap bitmap = null;
-//        try {
-//            bytes = value.getBytes(UTF8_CHARSET);
-//            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
-//            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length); //change back to imagesAsBytes
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return bitmap;
-//    }
-
-//    /**
-//     * Base 64 encode (Base 64.DEFAULT)
-//     * @param map
-//     * @return
-//     */
-//    public static String encode(Bitmap map) {
-//        System.out.println("Encode Called");
-//        //storeImage(bitmap);
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        map.compress(Bitmap.CompressFormat.JPEG, 10, out);
-//        map.recycle();
-//        byte[] byteArray = out.toByteArray();
-//        String value = null;
-//        try {
-//            value = android.util.Base64.encodeToString(byteArray, android.util.Base64.DEFAULT);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
-//        return value;
-//    }
-//
-//    /**
-//     * base 64 decode (Base 64.DEFAULT)
-//     * @param value
-//     * @return
-//     */
-//    public static Bitmap decode(String value) {
-//        System.out.println("Decode Called");
-//        byte[] bytes = new byte[0];
-//        Bitmap bitmap = null;
-//        try {
-//            bytes = value.getBytes();
-//            String string = new String(bytes, "UTF-8");
-//            byte[] imageAsBytes = android.util.Base64.decode(string, android.util.Base64.DEFAULT);
-//            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
-//            bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length); //change back to imagesAsBytes
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return bitmap;
-//    }
 
     /**
      * Base 64 encode (Base64.java)
@@ -123,6 +39,7 @@ public class MapCalculation {
     public static String encode(Bitmap map) {
         System.out.println("Encode (Base64.java) Called");
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        //map.reconfigure(100,100, Bitmap.Config.ARGB_8888);
         map.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
         map.recycle();
         byte[] byteArray = out.toByteArray();
@@ -163,7 +80,7 @@ public class MapCalculation {
             e.printStackTrace();
             System.out.println("Exception Called! " + e.getLocalizedMessage());
         }
-        return bitmap;
+        return Bitmap.createScaledBitmap(bitmap, 300, 300, false);
     }
 
     /**

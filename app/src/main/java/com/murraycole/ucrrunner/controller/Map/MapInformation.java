@@ -271,6 +271,10 @@ public class MapInformation {
      */
     public double getAverageSpeed() {
         double averageSpeed = 0.0;
+        if (locationEntireRoute == null || locationEntireRoute.isEmpty()) {
+            return 0.0;
+        }
+
         for (Location l : locationEntireRoute)
             averageSpeed += l.getSpeed();
 

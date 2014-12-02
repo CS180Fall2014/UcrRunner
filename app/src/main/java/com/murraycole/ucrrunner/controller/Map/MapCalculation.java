@@ -122,7 +122,6 @@ public class MapCalculation {
      */
     public static String encode(Bitmap map) {
         System.out.println("Encode (Base64.java) Called");
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         map.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
         map.recycle();
@@ -134,6 +133,8 @@ public class MapCalculation {
             e.printStackTrace();
         }
         System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
+        saveRouteValuesEncodeDecode(value, "ENCODE");
+        System.out.println("First 10 of ENCODE " + value.substring(0, 9) + "Last 10 of ENCODE: " + value.substring(value.length() - 10));
         return value;
     }
 
@@ -144,6 +145,8 @@ public class MapCalculation {
      */
     public static Bitmap decode(String value) {
         System.out.println("Decode (Base64.java) Called");
+        System.out.println("First 10 of DECODE " + value.substring(0, 9) + "Last 10 of DECODE: " + value.substring(value.length() - 10));
+        saveRouteValuesEncodeDecode(value, "DECODE");
         byte[] bytes = new byte[0];
         Bitmap bitmap = null;
         try {
@@ -215,6 +218,7 @@ public class MapCalculation {
     }
 
     public static void saveRouteValuesEncodeDecode(String value, String header) {
+        System.out.println("save images with header name of " + header + " and size of value of " + value.length());
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
         String filename = header + "_" + timeStamp + ".txt";
         //String string = "Hello world!";
@@ -237,22 +241,6 @@ public class MapCalculation {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//
-//        try {
-//            File secondInputFile = new File(myDir + "/text/", filename);
-//            InputStream secondInputStream = new BufferedInputStream(new FileInputStream(secondInputFile));
-//            BufferedReader r = new BufferedReader(new InputStreamReader(secondInputStream));
-//            StringBuilder total = new StringBuilder();
-//            String line;
-//            while ((line = r.readLine()) != null) {
-//                total.append(line);
-//            }
-//            r.close();
-//            secondInputStream.close();
-//            Log.d("File", "File contents: " + total);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     public double calculateCalories(MapInformation mapInfo, double T) {

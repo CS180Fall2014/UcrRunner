@@ -459,7 +459,6 @@ public class MapInformation {
             else {
                 System.out.println("imageFileName is null");
             }
-            MapCalculation.saveRouteValuesEncodeDecode(imageFileName, "ENCODED");
 
             //testing purposes only
             Bitmap m = MapCalculation.decode(imageFileName);

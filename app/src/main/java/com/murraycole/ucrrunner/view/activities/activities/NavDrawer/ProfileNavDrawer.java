@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.view.activities.activities.Login.LoginActivity;
 import com.murraycole.ucrrunner.view.activities.activities.Map.MapRunning;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.FriendsFragment;
 import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.MessageFragments.MailboxFragment;
@@ -26,12 +27,13 @@ public class ProfileNavDrawer extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     final int PROFILE_SECTION = 0;
+    final int NEWSFEED_SECTION = 1;
     final int FRIENDS_SECTION = 2;
     final int MAILBOX_SECTION = 3;
-    final int NEWSFEED_SECTION = 1;
-    final int SETTINGS_SECTION = 6;
     final int PREVROUTES_SECTION = 4;
     final int STARTRUN_SECTION = 5;
+    final int SETTINGS_SECTION = 6;
+    final int LOGOUT_SECTION = 7;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -107,6 +109,9 @@ public class ProfileNavDrawer extends Activity
                     .commit();
 
         }
+        if (position == LOGOUT_SECTION){
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
     }
 
@@ -132,6 +137,9 @@ public class ProfileNavDrawer extends Activity
                 break;
             case SETTINGS_SECTION:
                 mTitle = getString(R.string.title_section_settings);
+                break;
+            case LOGOUT_SECTION:
+                mTitle = getString(R.string.title_section_logout);
                 break;
         }
     }
@@ -176,44 +184,5 @@ public class ProfileNavDrawer extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_profile_nav_drawer, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((ProfileNavDrawer) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }
 
 }

@@ -737,7 +737,51 @@ public class FirebaseManager {
         return null;
     }
 
+    /*
+    public static void getRoutes(String uid, String rid)
+    Parameters:
+    [uid : String] - uid for the current user.
+    [rid : String] - rid is the unique route id j
 
+    getRoutes returns route object pertaining to the rid
+     */
+   public static Route getRoute(String uid, String rid){
+       if (android.os.Build.VERSION.SDK_INT > 9) {
+           StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+           StrictMode.setThreadPolicy(policy);
+       }
+       String formattedUid = uid.replace("\"", "");
+       String formatedRid = rid.replace("\"", "");
+       Route routeInfo = new Route();
+       List<List<LatLng>> currRoute = new ArrayList<List<LatLng>>();
+       try {
+           String routeURL = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/routes/" + uid + "/" + formatedRid + ".json");
+           JSONObject routeJSON = new JSONObject(routeURL);
+           Log.d("MT", "The routeJson: " + routeJSON);
+           JSONArray routesArray = routeJSON.getJSONArray("currentRoute");
+           for (int i = 0; i < routesArray.length(); ++i) { //iterate each subroute
+               JSONArray subRoute = routesArray.getJSONArray(i);
+
+               currRoute.add(new ArrayList<LatLng>());
+               for (int j = 0; j < subRoute.length(); ++j) { //iterate each coord in subroute
+                   JSONObject coord = subRoute.getJSONObject(j);
+                   double lat = coord.getDouble("latitude");
+                   double lon = coord.getDouble("longitude");
+                   currRoute.get(currRoute.size() - 1).add(new LatLng(lat, lon));
+                   Log.d("MT", "....Coord: " + lat + " , " + lon);
+               }
+           }
+           //currRoute is now populated
+           routeInfo.setCurrentRoute(currRoute);
+       } catch (IOException e) {
+           e.printStackTrace();
+       } catch (JSONException e) {
+           e.printStackTrace();
+       }
+
+       routeInfo.setCurrentRoute(currRoute);
+       return routeInfo;
+   }
 
     // Route functions =============================================================================
     //works

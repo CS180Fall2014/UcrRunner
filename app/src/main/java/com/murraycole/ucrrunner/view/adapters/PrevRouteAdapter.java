@@ -61,6 +61,17 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
 
             routeDist.setText(String.valueOf(valuesRounded.format(routes.get(position).getCurrentStats().getDistance())) + " m.");
+
+
+            //Michael - current route info
+            Route curRoute = routes.get(position);
+            //list of list lat long coordinates
+            curRoute.getCurrentRoute();
+            // you can pass the list of lat long coordinates through intent on onClickListener
+
+
+
+
             String dateFromRoute = routes.get(position).getCurrentStats().getDate();
             /* This is returning null */
             routeDate.setText(dateFromRoute);

@@ -195,20 +195,20 @@ public class MapInformation {
         takeImage();
     }
 
-    /**
-     * (untested)
-     * converts byte array to bitmap
-     *
-     * @param array
-     * @return the bitmap of the byte[] array, or null
-     */
-    public static Bitmap byteArrayToBitmap(byte[] array) {
-        return BitmapFactory.decodeByteArray(array, 0, array.length);
-    }
-
-    public static Bitmap stringToBitmap(String value) {
-        return MapCalculation.decode(value);
-    }
+//    /**
+//     * (untested)
+//     * converts byte array to bitmap
+//     *
+//     * @param array
+//     * @return the bitmap of the byte[] array, or null
+//     */
+//    public static Bitmap byteArrayToBitmap(byte[] array) {
+//        return BitmapFactory.decodeByteArray(array, 0, array.length);
+//    }
+//
+//    public static Bitmap stringToBitmap(String value) {
+//        return MapCalculation.decode(value);
+//    }
 
     /**
      * (untested) & not used, going to use instead update on backend side

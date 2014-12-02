@@ -73,6 +73,27 @@ public class MapCalculation {
         return answer;
     }
 
+
+    /**
+     * base 64 decode (Base64.java)
+     * @param value
+     * @return
+     */
+    public static Bitmap decodeNotScaled(String value) {
+        //saveRouteValuesEncodeDecode(value, "DECODE");
+        byte[] bytes = new byte[0];
+        Bitmap bitmap = null;
+        try {
+            bytes = Base64.decode(value.getBytes(), OFFSET, value.getBytes().length, Base64.URL_SAFE);
+            bitmap = BitmapFactory.decodeByteArray(bytes, OFFSET, bytes.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //Bitmap answer = Bitmap.createScaledBitmap(bitmap, SIZE, SIZE, false);
+        //System.out.println("Size of decoded bitmap (in bytes): " + answer.getByteCount());
+        return bitmap;
+    }
+
     /**
      * only used for testing purposes
      * @param header

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
+import com.murraycole.ucrrunner.Utils.BitmapToUri;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
 import com.murraycole.ucrrunner.controller.Map.MapCalculation;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -80,7 +79,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
         imageArr = imageArr.substring(0, imageArr.length());
 
         Bitmap mapImage = MapCalculation.decode(imageArr);
-        Uri mapImageUri = getImageUri(getContext(), mapImage);
+        Uri mapImageUri = BitmapToUri.getImageUriFromBitmap(getContext(), mapImage);
         mapImage = null;
         Picasso.with(getContext()).load(mapImageUri).fit().centerCrop().into(routeImg);
         /**Bitmap b = MapInformation.stringToBitmap(formatedArr);
@@ -100,10 +99,5 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
         return rowView;
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
+
 }

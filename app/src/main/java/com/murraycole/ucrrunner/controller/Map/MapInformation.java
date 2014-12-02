@@ -152,14 +152,16 @@ public class MapInformation {
      */
 
     public void reRunRoute(String UID, String RID) {
-
-        Route route = new Route();
+        Route route = FirebaseManager.getRoute(UID, RID);
+        Log.d("DN", "rerunRoute function ");
         for (List<LatLng> pts : route.getCurrentRoute()) {
+            Log.d("DN", "ENTERED for loop");
             PolylineOptions options = new PolylineOptions();
             options.color(Color.GRAY);
             Polyline polyline = googleMap.addPolyline(options);
             polyline.setPoints(pts);
         }
+        Log.d("DN", "End of rerunroute ");
     }
 
     /**

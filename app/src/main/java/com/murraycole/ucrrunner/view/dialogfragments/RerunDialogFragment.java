@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.murraycole.ucrrunner.R;
@@ -36,10 +37,11 @@ public class RerunDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "Rerun" + route.getId(), Toast.LENGTH_SHORT).show();
+                        Log.d("DN", route.getId());
                         Intent rerunIntent = new Intent(getActivity(), MapRunning.class);
                         rerunIntent.putExtra("ROUTEID",route.getId());
+
                         startActivity(rerunIntent);
-                        //TODO FOR UI!! STOPSHIP
 
                     }
                 })

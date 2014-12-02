@@ -112,7 +112,7 @@
                 android:id="@+id/profile_miles_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Miles"
+                android:text="Meters"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@color/black_54" />
 

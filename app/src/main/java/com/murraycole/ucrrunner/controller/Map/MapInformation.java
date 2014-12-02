@@ -258,7 +258,7 @@ public class MapInformation {
      */
     public double getCurrentSpeed() {
         if (locationEntireRoute == null || locationEntireRoute.isEmpty())
-            return -1.0;
+            return 0.0;
         return locationEntireRoute.get(locationEntireRoute.size() - 1).getSpeed();
     }
 
@@ -274,6 +274,8 @@ public class MapInformation {
 
         averageSpeed /= locationEntireRoute.size();
 
+        if (averageSpeed < 0.0)
+            return 0.0;
         return averageSpeed;
     }
 
@@ -288,6 +290,8 @@ public class MapInformation {
             if (l.getSpeed() > s)
                 s = l.getSpeed();
 
+        if (s < 0.0)
+            return 0.0;
         return s;
     }
 
@@ -309,6 +313,8 @@ public class MapInformation {
             }
         }
 
+        if (distance < 0.0)
+            return 0.0;
         return distance;
     }
 

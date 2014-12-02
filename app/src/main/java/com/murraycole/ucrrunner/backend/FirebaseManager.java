@@ -723,9 +723,8 @@ public class FirebaseManager {
             StrictMode.setThreadPolicy(policy);
         }
         try {
-            String formatTitle = title.replace("\"", "");
-            Log.d("MT", formatTitle);
-            String imageRef = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/images/" + formatTitle + ".json");
+            Log.d("MT", title);
+            String imageRef = readJsonFromUrl("https://torid-inferno-2246.firebaseio.com/images/" + title + ".json");
             imageRef = imageRef.replace("\"", "");
             return imageRef.toString();
         } catch (IOException e) {

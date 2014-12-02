@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.controller.Map.MapCalculation;
 import com.murraycole.ucrrunner.controller.Map.MapInformation;
 import com.murraycole.ucrrunner.view.DAO.Route;
 import com.murraycole.ucrrunner.view.dialogfragments.RerunDialogFragment;
@@ -69,14 +70,13 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
             Log.d("MT", "PrevRouteAdapter got title (routeId) : " + title);
 
             String imageArr = FirebaseManager.getImage(title);
-            Log.d("MTRAW:", imageArr);
-            int firstOccurance = imageArr.indexOf(':');
-            String formatedArr = imageArr.substring(firstOccurance+1, imageArr.length()-1);
-            Log.d("MTRAW:", "substrung");
-            Log.d("Received Image ", formatedArr);
+            Log.d("MT:", "Got image: " + imageArr);
+            imageArr = imageArr.substring(1, imageArr.length()-1);
+            Log.d("MT", "substrung");
+            Log.d("MT", imageArr);
 
-
-            //routeImg.setImageBitmap(image);
+            Log.d("MT", "Attempting to decode");
+            routeImg.setImageBitmap(MapCalculation.decode(imageArr));
             /**Bitmap b = MapInformation.stringToBitmap(formatedArr);
             routeImg.setImageBitmap(b);
 **/

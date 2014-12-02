@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
+import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.FriendsFragment;
 
 /**
  * Created by dasu on 11/29/14.
@@ -48,6 +49,12 @@ public class AddFriendDialogFragment extends DialogFragment {
                         String msg = msgContentET.getText().toString();
                         if (addFriendToFirebase(recipient, msg)){
                             Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
+                            FriendsFragment friendsFragment = (FriendsFragment) getFragmentManager()
+                                                                .findFragmentById(R.id.container);
+                            friendsFragment.clearAdapter();
+                            FirebaseManager.getFriends(SharedPrefUtils.getCurrUID(getActivity()), friendsFragment);
+
+
                         }else{
                             Toast.makeText(getActivity(),"Invalid User",Toast.LENGTH_LONG).show();
                         }

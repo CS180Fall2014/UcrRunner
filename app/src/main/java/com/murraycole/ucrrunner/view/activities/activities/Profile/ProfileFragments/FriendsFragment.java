@@ -98,4 +98,9 @@ public class FriendsFragment extends Fragment implements ArrayUpdateListener {
             }
         });
     }
+
+    public void clearAdapter(){
+        friendList.clear();
+        mAdapter.notifyDataSetChanged();
+    }
 }

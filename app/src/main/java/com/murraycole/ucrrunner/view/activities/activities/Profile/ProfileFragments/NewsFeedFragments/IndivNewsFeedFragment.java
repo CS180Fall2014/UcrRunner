@@ -21,7 +21,6 @@ import java.util.ArrayList;
  */
 public class IndivNewsFeedFragment extends Fragment {
     CommentAdapter commentAdapter;
-    ArrayList<Pair<String,String>> post;
 
     public IndivNewsFeedFragment() {
         // Required empty public constructor
@@ -30,7 +29,7 @@ public class IndivNewsFeedFragment extends Fragment {
     public static IndivNewsFeedFragment newInstance(Post post) {
         Bundle args = new Bundle();
         args.putString("Post", post.getComment());
-        Log.d("newsFeed",post.getComment()); //correct input
+        Log.d("newsFeed", post.getComment()); //correct input
         IndivNewsFeedFragment newsfeedAdapter = new IndivNewsFeedFragment();
         newsfeedAdapter.setArguments(args);
         return newsfeedAdapter;
@@ -41,6 +40,7 @@ public class IndivNewsFeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_indiv_news_feed, container, false);
+        ArrayList<Pair<String, String>> post;
         post = new ArrayList<Pair<String,String>>();
 
         

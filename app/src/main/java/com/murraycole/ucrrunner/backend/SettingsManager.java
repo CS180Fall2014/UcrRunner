@@ -32,7 +32,30 @@ public class SettingsManager {
         FirebaseManager.changePassword(uid, oldPassword, newPassword, v);
     }
 
-    //TOOD implement userRunCount and implement these methods
+    public static double getUserAvgSpeed(String uid){
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/averageSpeed";
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("0") || jsonData.matches("null") || jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
     public static void updateUserAvgSpeed(String uid, double newSpeed){
         String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/averageSpeed";
 
@@ -46,7 +69,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("0") || jsonData.matches("null")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("0") || jsonData.matches("null")|| jsonData.matches("NaN")){
                 jsonData = new String(Double.valueOf(newSpeed).toString());
                 Log.d("MT", "updateUserAvgSpeed got empty avg speed. new: " + jsonData);
             }else{
@@ -62,6 +85,31 @@ public class SettingsManager {
             e.printStackTrace();
         }
     }
+    public static double getUserTopSpeed(String uid){
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/topSpeed";
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
     public static  void updateUserTopSpeed(String uid, double newSpeed){
         String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/topSpeed";
 
@@ -75,7 +123,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
                 jsonData = new String(Double.valueOf(newSpeed).toString());
                 Log.d("MT", "updateUserTopSpeed got empty avg speed. new: " + jsonData);
             }else{
@@ -91,6 +139,29 @@ public class SettingsManager {
             e.printStackTrace();
         }
     }
+    public static double getUserTotalCal(String uid){
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/caloriesBurned";
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
     public static void updateUserTotalCal(String uid, double newTotalCal){
 
         String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/caloriesBurned";
@@ -105,7 +176,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
                 jsonData = new String(Double.valueOf(newTotalCal).toString());
                 Log.d("MT", "updateUserTotalCal got empty avg speed. new: " + jsonData);
             }else{
@@ -121,6 +192,32 @@ public class SettingsManager {
             e.printStackTrace();
         }
     }
+    public static double getUserTotalDist(String uid){
+
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/distance";
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+
+            if(jsonData == null || jsonData.matches("null") || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")|| jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
     public static void updateUserTotalDist(String uid, double newDistance){
 
         String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/distance";
@@ -135,7 +232,7 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("null") || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")){
+            if(jsonData == null || jsonData.matches("null") || jsonData.matches("") || jsonData.isEmpty()|| jsonData.matches("0.0")|| jsonData.matches("NaN")){
                 jsonData = new String(Double.valueOf(newDistance).toString());
                 Log.d("MT", "updateUserTotalDist got empty avg speed. new: " + jsonData);
             }else{
@@ -151,8 +248,7 @@ public class SettingsManager {
             e.printStackTrace();
         }
     }
-    public static void updateUserTotalDuration(String uid, double newDuration){
-
+    public static double getUserTotalDuration(String uid){
         String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/duration";
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -164,7 +260,31 @@ public class SettingsManager {
             jsonData = jsonData.replace("\"", "");
             Log.d("MT", "Got Json: " + jsonData);
 
-            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0") || jsonData.matches("null")){
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+    public static void updateUserTotalDuration(String uid, double newDuration){
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/stats/duration";
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
                 jsonData = new String(Double.valueOf(newDuration).toString());
                 Log.d("MT", "updateUserTotalDuration got empty avg speed. new: " + jsonData);
             }else{
@@ -180,5 +300,29 @@ public class SettingsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static double getUserAge(String uid){
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/age";
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
     }
 }

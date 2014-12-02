@@ -82,7 +82,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
             String imageArr = FirebaseManager.getImage(title);
             Log.d("MT:", "Got image: " + imageArr);
-            imageArr = imageArr.substring(1, imageArr.length()-1);
+            imageArr = imageArr.substring(1, imageArr.length());
             Log.d("MT", "substrung");
             Log.d("MT", imageArr);
 

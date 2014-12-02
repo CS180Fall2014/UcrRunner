@@ -72,6 +72,7 @@ public class MapInformation {
     private double duration = -1;
     private String UID;
     private Route reRunRoute;
+    private String currentRouteID;
 
 
     /**
@@ -185,14 +186,16 @@ public class MapInformation {
      * @param seconds is the duration of the run
      * @param UID     is the user identifier
      */
-    public void stopRoute(double seconds, String UID) {
+    public String stopRoute(double seconds, String UID) {
         isStart = isPause = false;
         this.UID = UID;
         duration = seconds;
         //zoom map to entire route
         googleMap.setOnMyLocationChangeListener(null);
         zoomToFitRoute();
+        currentRouteID = saveRoute();
         takeImage();
+        return currentRouteID;
     }
 
 //    /**
@@ -404,7 +407,7 @@ public class MapInformation {
         return false;
     }
 
-    public String saveRoute() {
+    private String saveRoute() {
         List<List<LatLng>> r = new ArrayList<List<LatLng>>();
         for (Polyline l : entireRoute)
             r.add(l.getPoints());
@@ -424,8 +427,6 @@ public class MapInformation {
         route.setCurrentRoute(r);
         route.setCurrentStats(stats);
         String title = FirebaseManager.saveRoute(route, UID);
-        //save image byte to different table on firebase
-        FirebaseManager.saveImage(imageFileName, title);
 
         //update user information
         SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed());
@@ -464,7 +465,8 @@ public class MapInformation {
             //testing purposes only
             //Bitmap m = MapCalculation.decode(imageFileName);
             //MapCalculation.storeImage(m, "DECODED");
-
+            //save image byte to different table on firebase
+            FirebaseManager.saveImage(imageFileName, currentRouteID);
             //previous ides for compression
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();
 //            bitmap.reconfigure(100,100, Bitmap.Config.ARGB_8888);

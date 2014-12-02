@@ -325,4 +325,28 @@ public class SettingsManager {
         }
         return 0.0;
     }
+    public static double getUserHeight(String uid){
+        String link = FirebaseManager.FIREBASEURL_USERS+uid+"/height";
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            String jsonData = FirebaseManager.readJsonFromUrl(link+".json");
+            jsonData = jsonData.replace("\"", "");
+            Log.d("MT", "Got Json: " + jsonData);
+
+            if(jsonData == null || jsonData.matches("") || jsonData.isEmpty() || jsonData.matches("0.0") || jsonData.matches("null")|| jsonData.matches("NaN")){
+                return 0.0;
+            }else{
+                return Double.valueOf(jsonData);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
 }

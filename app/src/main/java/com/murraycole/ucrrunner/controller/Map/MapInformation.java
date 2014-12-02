@@ -404,7 +404,7 @@ public class MapInformation {
         return false;
     }
 
-    private void saveRoute() {
+    public String saveRoute() {
         List<List<LatLng>> r = new ArrayList<List<LatLng>>();
         for (Polyline l : entireRoute)
             r.add(l.getPoints());
@@ -433,6 +433,7 @@ public class MapInformation {
         SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
         SettingsManager.updateUserTotalDist(UID, stats.getDistance());
         SettingsManager.updateUserTotalDuration(UID, stats.getDuration());
+        return title;
     }
 
     private void takeImage() {
@@ -469,7 +470,7 @@ public class MapInformation {
 //            bitmap.reconfigure(100,100, Bitmap.Config.ARGB_8888);
 //            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
 //            image = stream.toByteArray();
-            saveRoute();
+            //saveRoute();
         }
     };
 }

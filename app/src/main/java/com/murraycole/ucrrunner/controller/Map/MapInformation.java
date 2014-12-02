@@ -466,6 +466,7 @@ public class MapInformation {
             //Bitmap m = MapCalculation.decode(imageFileName);
             //MapCalculation.storeImage(m, "DECODED");
             //save image byte to different table on firebase
+            System.out.println("Image File Name: " + imageFileName.length() + " Route ID: " + currentRouteID);
             FirebaseManager.saveImage(imageFileName, currentRouteID);
             //previous ides for compression
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();

@@ -3,6 +3,7 @@ package com.murraycole.ucrrunner.view.activities.activities.Map;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,10 +81,9 @@ public class MapRunning extends BaseMapActivity {
                 StopRun.setVisibility(View.GONE);
                 PauseRun.setVisibility(View.GONE);
                 String uid = FirebaseManager.getCurrUID(v.getContext());
-                mapInfo.stopRoute(time_when_stopped, uid);
-                //Prompt the user to enter a title
-                Initiate_PopupWindow();
-
+                String routeId = mapInfo.stopRoute(time_when_stopped, uid);
+                Log.d("MapRunning", routeId);
+                postRun(routeId);
             }
         });
 
@@ -92,6 +92,7 @@ public class MapRunning extends BaseMapActivity {
         setUpMapIfNeeded();
         checkforReRunIntent();
     }
+
     private void checkforReRunIntent(){
         String routeID = getIntent().getStringExtra("ROUTEID");
         if (routeID != null){
@@ -99,37 +100,11 @@ public class MapRunning extends BaseMapActivity {
         }
     }
 
-    private void Initiate_PopupWindow() {
-        try {
-            //We need to get the instance of the LayoutInflater, use the context of this activity
-            LayoutInflater inflater = (LayoutInflater) this
-                    .getSystemService(LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.title_popup_window,
-                    (ViewGroup) findViewById(R.id.popup_element));
-            // create a 300px width and 470px height PopupWindow
-            pw = new PopupWindow(layout, 300, 470, true);
-            // display the popup in the center
-            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
-            final TextView Title = (TextView) layout.findViewById(R.id.Popup_Title_editText);
-            Button Ok = (Button) layout.findViewById(R.id.Popup_ok_button);
-
-            Ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pw.dismiss();
-                    //Transitions to the post run to news feed scene
-                    PostRunFragment postRunFragment = PostRunFragment.newInstance(Title.getText().toString());
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.container,postRunFragment)
-                            .commit();
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void postRun(String rId) {
+        PostRunFragment postRunFragment = PostRunFragment.newInstance(rId);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container,postRunFragment)
+                .commit();
     }
 
 

@@ -55,8 +55,9 @@ public class PostRunFragment extends Fragment {
             public void onClick(View v) {
                 Post post = new Post();
                 String myID = SharedPrefUtils.getCurrUID(getActivity());
+                String myNickName = FirebaseManager.getNickname(myID);
                 post.setAuthorUID(myID);
-                post.setAuthorNickname(mTitle);
+                post.setAuthorNickname(myNickName);
                 post.setDescription(description.getText().toString());
 
                 FirebaseManager.savePost(SharedPrefUtils.getCurrUID(getActivity()),post);

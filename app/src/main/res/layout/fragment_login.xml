@@ -71,15 +71,15 @@
         android:text="Sign up"
         android:textColor="#A0FFFFFF" />
 
-    <!-- <Button
+    <Button
         android:id="@+id/button"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:onClick=""
-        android:text="BYPASS" /> -->
+        android:text="BYPASS" />
 
 
     <!-- <LinearLayout

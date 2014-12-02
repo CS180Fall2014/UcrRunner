@@ -27,12 +27,10 @@ import java.util.ArrayList;
  * Created by C on 11/20/2014.
  */
 public class PrevRouteAdapter extends ArrayAdapter<Route> {
-    Context mContext;
     ArrayList<Route> routes;
 
     public PrevRouteAdapter(Context context, ArrayList<Route> routes) {
         super(context, 0, routes);
-        mContext = context;
         this.routes = routes;
     }
 
@@ -83,8 +81,8 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
         Bitmap mapImage = MapCalculation.decode(imageArr);
         Uri mapImageUri = getImageUri(getContext(), mapImage);
-        // routeImg.setImageBitmap(MapCalculation.decode(imageArr));
-        Picasso.with(getContext()).load(mapImageUri).into(routeImg);
+        mapImage = null;
+        Picasso.with(getContext()).load(mapImageUri).fit().centerCrop().into(routeImg);
         /**Bitmap b = MapInformation.stringToBitmap(formatedArr);
          routeImg.setImageBitmap(b);
          **/
@@ -94,7 +92,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
                 RerunDialogFragment rerunDialogFragment = RerunDialogFragment.newInstance(
                         R.string.rerun_route_dialog_title);
                 rerunDialogFragment.setRoute(route);
-                rerunDialogFragment.show(((Activity) mContext).getFragmentManager(), "dialog");
+                rerunDialogFragment.show(((Activity) getContext()).getFragmentManager(), "dialog");
             }
         });
 
@@ -104,7 +102,7 @@ public class PrevRouteAdapter extends ArrayAdapter<Route> {
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }

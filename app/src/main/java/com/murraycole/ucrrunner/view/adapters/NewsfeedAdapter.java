@@ -50,7 +50,12 @@ public class NewsfeedAdapter extends ArrayAdapter {
         TextView descriptionTV = (TextView) view.findViewById(R.id.newsfeed_text_textview);
         ImageView imageView = (ImageView) view.findViewById(R.id.newsfeed_image_imageview);
 
-        loadImageIntoTextView(imageView, position);
+        loadImageIntoTextView(imageView, currPost);
+      /*  String imageString = FirebaseManager.getImage(currPost.getRouteID());
+        Bitmap mapImage = MapCalculation.decode(imageString);
+        Uri mapImageUri = BitmapToUri.getImageUriFromBitmap(getContext(), mapImage);
+        Picasso.with(getContext()).load(mapImageUri).into(imageView); */
+
         String description = newsPosts.get(position).getDescription();
         String author = newsPosts.get(position).getAuthorNickname();
         descriptionTV.setText(description);
@@ -91,7 +96,7 @@ public class NewsfeedAdapter extends ArrayAdapter {
         });
     }
 
-    private void loadImageIntoTextView(ImageView imageView, int position) {
+    private void loadImageIntoTextView(ImageView imageView, Post currPost) {
         String imageString = FirebaseManager.getImage(currPost.getRouteID());
         Bitmap mapImage = MapCalculation.decode(imageString);
         Uri mapImageUri = BitmapToUri.getImageUriFromBitmap(getContext(), mapImage);

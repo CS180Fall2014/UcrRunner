@@ -28,8 +28,9 @@ import java.util.Date;
  */
 public class MapCalculation {
 
-    private final static int QUALITY = 50;
+    private final static int QUALITY = 10;
     private final static int OFFSET = 0;
+    private final static int SIZE = 300;
 
     /**
      * Base 64 encode (Base64.java)
@@ -37,7 +38,6 @@ public class MapCalculation {
      * @return
      */
     public static String encode(Bitmap map) {
-        System.out.println("Encode (Base64.java) Called");
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //map.reconfigure(100,100, Bitmap.Config.ARGB_8888);
         map.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
@@ -49,9 +49,7 @@ public class MapCalculation {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
-        saveRouteValuesEncodeDecode(value, "ENCODE");
-        System.out.println("First 10 of ENCODE " + value.substring(0, 9) + "Last 10 of ENCODE: " + value.substring(value.length() - 10));
+        //saveRouteValuesEncodeDecode(value, "ENCODE");
         return value;
     }
 
@@ -61,26 +59,18 @@ public class MapCalculation {
      * @return
      */
     public static Bitmap decode(String value) {
-        System.out.println("Decode (Base64.java) Called");
-        System.out.println("First 10 of DECODE " + value.substring(0, 9) + "Last 10 of DECODE: " + value.substring(value.length() - 10));
-        saveRouteValuesEncodeDecode(value, "DECODE");
+        //saveRouteValuesEncodeDecode(value, "DECODE");
         byte[] bytes = new byte[0];
         Bitmap bitmap = null;
         try {
             bytes = Base64.decode(value.getBytes(), OFFSET, value.getBytes().length, Base64.URL_SAFE);
-            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
             bitmap = BitmapFactory.decodeByteArray(bytes, OFFSET, bytes.length);
-            if (bitmap == null) {
-                System.out.println("NULL MAP");
-            }
-            else {
-                System.out.println("Bitmap Size: " + bitmap.getByteCount());
-            }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Exception Called! " + e.getLocalizedMessage());
         }
-        return Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+        Bitmap answer = Bitmap.createScaledBitmap(bitmap, SIZE, SIZE, false);
+        System.out.println("Size of decoded bitmap (in bytes): " + answer.getByteCount());
+        return answer;
     }
 
     /**

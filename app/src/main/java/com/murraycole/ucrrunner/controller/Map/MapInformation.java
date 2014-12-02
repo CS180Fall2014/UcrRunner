@@ -454,27 +454,15 @@ public class MapInformation {
             if (bitmap == null)
                 return;
 
-            MapCalculation.storeImage(bitmap, "ORIGINAL");
+            //MapCalculation.storeImage(bitmap, "ORIGINAL");
 
 
             //encode bitmap to for Firebase
             imageFileName = MapCalculation.encode(bitmap);
-            if (imageFileName != null) {
-                System.out.println("imageFileName is NOT null");
-            }
-            else {
-                System.out.println("imageFileName is null");
-            }
 
             //testing purposes only
-            Bitmap m = MapCalculation.decode(imageFileName);
-            if (m != null) {
-                System.out.println("decoded bitmap is NOT null");
-            }
-            else {
-                System.out.println("decoded bitmap is null");
-            }
-            MapCalculation.storeImage(m, "DECODED");
+            //Bitmap m = MapCalculation.decode(imageFileName);
+            //MapCalculation.storeImage(m, "DECODED");
 
             //previous ides for compression
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();

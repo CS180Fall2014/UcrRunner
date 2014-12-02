@@ -205,7 +205,7 @@ public class MapInformation {
     }
 
     public static Bitmap stringToBitmap(String value) {
-        return decode(value);
+        return MapCalculation.decode(value);
     }
 
     /**
@@ -416,6 +416,7 @@ public class MapInformation {
         FirebaseManager.saveImage(imageFileName, title);
 
         //update user information
+        //TODO: add check for negative values
         SettingsManager.updateUserAvgSpeed(UID, stats.getAverageSpeed());
         SettingsManager.updateUserTopSpeed(UID, stats.getTopSpeed());
         SettingsManager.updateUserTotalCal(UID, stats.getCaloriesBurned());
@@ -427,48 +428,6 @@ public class MapInformation {
         googleMap.snapshot(callback);
     }
 
-    private File getOutputMediaFile(String header) {
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/com.murraycole.ucrrunner/Files");
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                return null;
-            }
-        }
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
-        File mediaFile;
-        String mImageName = header + "_" + timeStamp + ".jpg";
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
-        return mediaFile;
-    }
-
-
-    private void storeImage(Bitmap image, String header) {
-        File pictureFile = getOutputMediaFile(header);
-        if (pictureFile == null) {
-            System.out.println("Error creating media file, check storage permissions: ");// e.getMessage());
-            return;
-        }
-        try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
-            fos.close();
-        } catch (FileNotFoundException e) {
-            Log.d("File not found: ", e.getMessage());
-        } catch (IOException e) {
-            Log.d("Error accessing file: ", e.getMessage());
-        }
-    }
-
-
     /**
      * Location listener for UI side
      */
@@ -476,41 +435,6 @@ public class MapInformation {
         public void onLocationUpdate(Location location);
     }
 
-    private final static Charset UTF8_CHARSET = Charset.forName("UTF-8");
-
-    private static String encode(Bitmap map) {
-        System.out.println("Encode Called");
-        //storeImage(bitmap);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        map.compress(Bitmap.CompressFormat.JPEG, 10, out);
-        map.recycle();
-        byte[] byteArray = out.toByteArray();
-        String value = null;
-        //Base64.encodeToString(byteArray, Base64.DEFAULT)
-        try {
-            value = new String(byteArray, UTF8_CHARSET);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
-        return value;
-    }
-
-    private static Bitmap decode(String value) {
-        System.out.println("Decode Called");
-        byte[] bytes = new byte[0];
-        Bitmap bitmap = null;
-        try {
-            bytes = value.getBytes(UTF8_CHARSET);
-            //String string = new String(bytes, "UTF-8");
-            //byte[] imageAsBytes = Base64.decode(string, Base64.DEFAULT);
-            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
-            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length); //change back to imagesAsBytes
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
 
     GoogleMap.SnapshotReadyCallback callback = new GoogleMap.SnapshotReadyCallback() {
 
@@ -519,10 +443,10 @@ public class MapInformation {
             if (bitmap == null)
                 return;
 
-            storeImage(bitmap, "ORIGINAL");
+            MapCalculation.storeImage(bitmap, "ORIGINAL");
 
-            //encoide bitmap to UTF 8 String for Firebase
-            imageFileName = encode(bitmap);
+            //encode bitmap to for Firebase
+            imageFileName = MapCalculation.encode(bitmap);
             if (imageFileName != null) {
                 System.out.println("imageFileName is NOT null");
             }
@@ -531,14 +455,14 @@ public class MapInformation {
             }
 
             //testing purposes only
-//            Bitmap m = decode(imageFileName);
-//            if (m != null) {
-//                System.out.println("decoded bitmap is NOT null");
-//            }
-//            else {
-//                System.out.println("decoded bitmap is null");
-//            }
-//            storeImage(m, "DECODED");
+            Bitmap m = MapCalculation.decode(imageFileName);
+            if (m != null) {
+                System.out.println("decoded bitmap is NOT null");
+            }
+            else {
+                System.out.println("decoded bitmap is null");
+            }
+            MapCalculation.storeImage(m, "DECODED");
 
             //previous ides for compression
 //            ByteArrayOutputStream stream = new ByteArrayOutputStream();

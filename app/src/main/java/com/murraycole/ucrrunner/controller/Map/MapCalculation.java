@@ -1,11 +1,204 @@
 package com.murraycole.ucrrunner.controller.Map;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.util.*;
+
 import com.murraycole.ucrrunner.view.DAO.User;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by mbrevard on 11/10/14.
  */
 public class MapCalculation {
+
+    private final static Charset UTF8_CHARSET = Charset.forName("UTF-8");
+    private final static int QUALITY = 10;
+    private final static int OFFSET = 0;
+
+    //    /**
+//     * UTF 8 encode
+//     * @param value
+//     * @return
+//     */
+//    private static String encode(Bitmap map) {
+//        System.out.println("Encode Called");
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        map.compress(Bitmap.CompressFormat.JPEG, 10, out);
+//        map.recycle();
+//        byte[] byteArray = out.toByteArray();
+//        String value = null;
+//        try {
+//            value = new String(byteArray, UTF8_CHARSET);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
+//        return value;
+//    }
+
+//    /**
+//     * UTF 8 decode
+//     * @param value
+//     * @return
+//     */
+//    private static Bitmap decode(String value) {
+//        System.out.println("Decode Called");
+//        byte[] bytes = new byte[0];
+//        Bitmap bitmap = null;
+//        try {
+//            bytes = value.getBytes(UTF8_CHARSET);
+//            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
+//            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length); //change back to imagesAsBytes
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return bitmap;
+//    }
+
+//    /**
+//     * Base 64 encode (Base 64.DEFAULT)
+//     * @param map
+//     * @return
+//     */
+//    public static String encode(Bitmap map) {
+//        System.out.println("Encode Called");
+//        //storeImage(bitmap);
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        map.compress(Bitmap.CompressFormat.JPEG, 10, out);
+//        map.recycle();
+//        byte[] byteArray = out.toByteArray();
+//        String value = null;
+//        try {
+//            value = android.util.Base64.encodeToString(byteArray, android.util.Base64.DEFAULT);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
+//        return value;
+//    }
+//
+//    /**
+//     * base 64 decode (Base 64.DEFAULT)
+//     * @param value
+//     * @return
+//     */
+//    public static Bitmap decode(String value) {
+//        System.out.println("Decode Called");
+//        byte[] bytes = new byte[0];
+//        Bitmap bitmap = null;
+//        try {
+//            bytes = value.getBytes();
+//            String string = new String(bytes, "UTF-8");
+//            byte[] imageAsBytes = android.util.Base64.decode(string, android.util.Base64.DEFAULT);
+//            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
+//            bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length); //change back to imagesAsBytes
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return bitmap;
+//    }
+
+    /**
+     * Base 64 encode (Base64.java)
+     * @param map
+     * @return
+     */
+    public static String encode(Bitmap map) {
+        System.out.println("Encode (Base64.java) Called");
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        map.compress(Bitmap.CompressFormat.JPEG, QUALITY, out);
+        map.recycle();
+        byte[] byteArray = out.toByteArray();
+        String value = null;
+        try {
+            value = Base64.encodeBytes(byteArray,OFFSET, byteArray.length, Base64.URL_SAFE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Value length: " + value.length() + " Bitmap size: (byte count) " + map.getByteCount());
+        return value;
+    }
+
+    /**
+     * base 64 decode (Base64.java)
+     * @param value
+     * @return
+     */
+    public static Bitmap decode(String value) {
+        System.out.println("Decode (Base64.java) Called");
+        byte[] bytes = new byte[0];
+        Bitmap bitmap = null;
+        try {
+            bytes = Base64.decode(value.getBytes(), OFFSET, value.getBytes().length, Base64.URL_SAFE);
+            System.out.println("Size of value (in bytes) " + bytes.length + " value size " + value.length());
+            bitmap = BitmapFactory.decodeByteArray(bytes, OFFSET, bytes.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
+    /**
+     * only used for testing purposes
+     * @param header
+     * @return
+     */
+    public static File getOutputMediaFile(String header) {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/com.murraycole.ucrrunner/Files");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+        File mediaFile;
+        String mImageName = header + "_" + timeStamp + ".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+
+
+    /**
+     * only used for testing purposes
+     * @param image
+     * @param header
+     */
+   public static void storeImage(Bitmap image, String header) {
+        File pictureFile = getOutputMediaFile(header);
+        if (pictureFile == null) {
+            System.out.println("Error creating media file, check storage permissions: ");// e.getMessage());
+            return;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d("File not found: ", e.getMessage());
+        } catch (IOException e) {
+            Log.d("Error accessing file: ", e.getMessage());
+        }
+    }
 
     public double calculateCalories(MapInformation mapInfo, double T) {
         //seconds -> hours?

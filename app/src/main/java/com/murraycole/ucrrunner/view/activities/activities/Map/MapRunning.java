@@ -83,7 +83,7 @@ public class MapRunning extends BaseMapActivity {
                 String uid = FirebaseManager.getCurrUID(v.getContext());
                 String routeId = mapInfo.stopRoute(time_when_stopped, uid);
                 Log.d("MapRunning", routeId);
-                postRun();
+                postRun(routeId);
             }
         });
 
@@ -100,7 +100,7 @@ public class MapRunning extends BaseMapActivity {
         }
     }
 
-    private void postRun() {
+    private void postRun(final String routeId) {
         try {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) this
@@ -121,7 +121,7 @@ public class MapRunning extends BaseMapActivity {
                 public void onClick(View v) {
                     pw.dismiss();
                     //Transitions to the post run to news feed scene
-                    PostRunFragment postRunFragment = PostRunFragment.newInstance(Title.getText().toString());
+                    PostRunFragment postRunFragment = PostRunFragment.newInstance(routeId);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.container,postRunFragment)
                             .commit();

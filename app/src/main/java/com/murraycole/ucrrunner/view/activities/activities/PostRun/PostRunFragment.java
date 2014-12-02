@@ -27,6 +27,7 @@ public class PostRunFragment extends Fragment {
     public static PostRunFragment newInstance (String r){
         PostRunFragment fragment = new PostRunFragment();
         fragment.routeID = r;
+        //System.out.println("Fragment " + fragment.routeID + " " + r);
         return  fragment;
     }
     public PostRunFragment() {
@@ -57,6 +58,7 @@ public class PostRunFragment extends Fragment {
                 post.setAuthorUID(myID);
                 post.setAuthorNickname(myNickName);
                 post.setDescription(description.getText().toString());
+                //System.out.println("Route ID (PRF): " + routeID);
                 post.setRouteID(routeID);
 
                 FirebaseManager.savePost(SharedPrefUtils.getCurrUID(getActivity()),post);

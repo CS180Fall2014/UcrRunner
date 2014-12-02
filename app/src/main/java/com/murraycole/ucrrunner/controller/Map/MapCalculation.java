@@ -69,7 +69,7 @@ public class MapCalculation {
             e.printStackTrace();
         }
         Bitmap answer = Bitmap.createScaledBitmap(bitmap, SIZE, SIZE, false);
-        System.out.println("Size of decoded bitmap (in bytes): " + answer.getByteCount());
+        //System.out.println("Size of decoded bitmap (in bytes): " + answer.getByteCount());
         return answer;
     }
 

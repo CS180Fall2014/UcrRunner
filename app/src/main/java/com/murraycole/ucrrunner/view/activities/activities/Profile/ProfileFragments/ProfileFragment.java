@@ -2,27 +2,20 @@ package com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragm
 
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.Utils.SharedPrefUtils;
 import com.murraycole.ucrrunner.backend.FirebaseManager;
-import com.murraycole.ucrrunner.view.activities.activities.Map.MapRunning;
-import com.murraycole.ucrrunner.view.activities.activities.Profile.ProfileFragments.MessageFragments.MailboxFragment;
-import com.murraycole.ucrrunner.view.activities.activities.SettingsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -35,12 +28,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        String myNickname = FirebaseManager.getNickname(SharedPrefUtils.getCurrUID(getActivity()));
+        final String myNickname = FirebaseManager.getNickname(SharedPrefUtils.getCurrUID(getActivity()));
         TextView nicknameTV = (TextView) rootView.findViewById(R.id.profile_username_tv);
         nicknameTV.setText(myNickname);
-
-        //buttons here
-      //  On_Button_Press(rootView);
 
 
         return rootView;

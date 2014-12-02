@@ -2,16 +2,12 @@ package com.murraycole.ucrrunner.view.activities.activities.NavDrawer;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.murraycole.ucrrunner.R;
 import com.murraycole.ucrrunner.view.activities.activities.Login.LoginActivity;
@@ -109,7 +105,7 @@ public class ProfileNavDrawer extends Activity
                     .commit();
 
         }
-        if (position == LOGOUT_SECTION){
+        if (position == LOGOUT_SECTION) {
             startActivity(new Intent(this, LoginActivity.class));
         }
 
